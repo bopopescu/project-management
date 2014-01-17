@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+
+</head>
+<body>
+
+<div id="container" style="width:100%">
+
+	<div id="header" style="background-color:#FFA500;">
+	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
+
+
+
+
+
+	<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
+		
+		{{ project.name_project }}{{expense_for_current_quarter}}
+		{% for expenses in previous_expensestype %}
+		{{ expenses.expenses_type }}
+		{% endfor %}
+		<br>
+		<br>
+		<form action="" method="post">{% csrf_token %}
+			<center>
+			
+			
+			<p>Name: <input id="name" maxlength="254" name="name" type="text" /></p>
+			<p>Expected Cost:<input type="number" min="1" max="1000" placeholder="search" name="expected_cost"/></p>
+			
+			
+
+			
+			<p><input type="submit" value="submit" /></p>
+			<center>
+
+		</form>
+		
+
+	</div>
+
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+Copyright © Cisco</div>
+
+</div>
+
+</body>
+</html> 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+
+</head>
+<body>
+
+<div id="container" style="width:100%">
+
+	<div id="header" style="background-color:#FFA500;">
+	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
+
+
+
+
+
+	<!--<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
+		
+		{{ project.name_project }}{{expense_for_current_quarter}}
+		{% for expenses in previous_expensestype %}
+		{{ expenses.expenses_type }}
+		{% endfor %}
+		<br>
+		<br>
+		<form action="" method="post">{% csrf_token %}
+			<center>
+			{% for current_expenses in expense_for_current_quarter %}
+			{{ current_expenses.expenses_type}}
+			<p>Expected Cost:<input type="number" min="1" max="1000" placeholder="search" name="expected_cost{{current_expenses.expenses_type}}"/></p>
+			{{ expense_for_current_quarter.expenses_type }}
+			<p>Actual Cost:<input type="number" min="1" max="1000" placeholder="search"  name="actual_cost{{current_expenses.expenses_type}}"/></p>
+
+			
+			{% endfor %}
+			<p><input type="submit" value="submit" /></p>
+			<center>
+
+		</form>
+		
+
+	</div>-->
+	<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
+		<form method="post" action="">{% csrf_token %}
+			<center>
+			<table>
+				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
+				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %}  </tr>
+
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for previous_exp in previous_expensestype %}
+				<tr><td>{{ previous_exp.expenses_type }}</td><td>{{ previous_exp.estimated_cost }}</td><td>{{ previous_exp.actual_cost }}</td></tr>
+				{% endfor %}
+			</table>
+			<table>
+				<tr>Q {{quarter_number}}</tr>
+
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for previous_exp in expense_for_current_quarter %}
+				<tr><td>{{ previous_exp.expenses_type }}</td><td>{{ previous_exp.estimated_cost }}</td><td><input type="number" min="1" max="1000" placeholder="search"  name="actual_cost{{current_expenses.expenses_type}}"/></td></tr>
+				{% endfor %}
+			</table>
+
+			<table>
+				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
+				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
+
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for previous_exp in expense_for_current_quarter %}
+				<tr><td>{{ previous_exp.expenses_type }}</td><td><input type="number" min="1" max="1000" placeholder="search" name="expected_cost{{current_expenses.expenses_type}}"/></td><td>--</td></tr>
+				{% endfor %}
+			</table>
+			<p><input type="submit" value="submit" /></p>
+		</center>
+
+
+
+
+		</form>
+
+
+	</div>
+
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+Copyright © Cisco</div>
+
+</div>
+
+</body>
+</html> 
