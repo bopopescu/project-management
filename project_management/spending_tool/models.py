@@ -25,15 +25,10 @@ class Project(models.Model):
 
 
 class ExpensesType(models.Model):
-    EXPENSES_TYPE=(
-		('Collaborator', 'Collaborator'),
-		('Travel', 'Travel'),
-		('Equipment', 'Equipment'),
-		)
-    expenses_type=models.CharField(max_length=100,choices=EXPENSES_TYPE, null=True)
+    expenses_type=models.CharField(max_length=100, null=True)
     estimated_cost = models.DecimalField(max_digits=5, decimal_places=0)
     actual_cost = models.DecimalField(max_digits=5, decimal_places=0)
-
+    relates_to=models.ForeignKey('self', null=True, default=None)
     project=models.ForeignKey(Project)
     year = models.DecimalField(max_digits=4, decimal_places=0)
 

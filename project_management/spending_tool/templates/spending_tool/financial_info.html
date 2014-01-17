@@ -10,7 +10,20 @@
 
 	<div id="header" style="background-color:#FFA500;">
 	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
+	<div id="menu" style="background-color:#FFD700;height:200px;width:15%;float:left;">
+	<b>Menu</b><br>
+	<a href="/home">Home</a><br>
+	<a href="/financial_info">Edit Current Expenses</a>
+	<a href="/review_info">Review Expenses</a><br>
+	<a href="/add_field">Add Spending</a><br>
+	<a href="/edit_project">Edit Project's Description</a><br>
 
+	<br>
+	<br>
+	<br>
+	<a href="/logout">Logout</a>
+
+	</div>
 
 
 
@@ -40,7 +53,7 @@
 		
 
 	</div>-->
-	<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
+	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
 		<form method="post" action="">{% csrf_token %}
 			<center>
 			<table>
@@ -57,7 +70,7 @@
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
 				{% for previous_exp in expense_for_current_quarter %}
-				<tr><td>{{ previous_exp.expenses_type }}</td><td>{{ previous_exp.estimated_cost }}</td><td><input type="number" min="1" max="1000" placeholder="search"  name="actual_cost{{current_expenses.expenses_type}}"/></td></tr>
+				<tr><td>{{ previous_exp.expenses_type }}</td><td>{{ previous_exp.estimated_cost }}</td><td><input type="number" min="1" max="1000" placeholder="{{previous_exp.actual_cost}}"  name="actual_cost"/></td></tr>
 				{% endfor %}
 			</table>
 
@@ -67,7 +80,7 @@
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
 				{% for previous_exp in expense_for_current_quarter %}
-				<tr><td>{{ previous_exp.expenses_type }}</td><td><input type="number" min="1" max="1000" placeholder="search" name="expected_cost{{current_expenses.expenses_type}}"/></td><td>--</td></tr>
+				<tr><td>{{ previous_exp.expenses_type }}</td><td><input type="number" min="1" max="1000" placeholder="{{previous_exp.estimated_cost}}" name="expected_cost"/></td><td>--</td></tr>
 				{% endfor %}
 			</table>
 			<p><input type="submit" value="submit" /></p>

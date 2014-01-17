@@ -12,10 +12,25 @@
 	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
 
 
+	<div id="menu" style="background-color:#FFD700;height:200px;width:15%;float:left;">
+	<b>Menu</b><br>
+	<a href="/home">Home</a><br>
+	<a href="/financial_info">Edit Current Expenses</a>
+	<a href="/review_info">Review Expenses</a><br>
+	<a href="/add_field">Add Spending</a><br>
+	<a href="/edit_project">Edit Project's Description</a><br>
+
+	<br>
+	<br>
+	<br>
+	<a href="/logout">Logout</a>
+
+	</div>
 
 
 
-	<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
+
+	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
 		
 		{{ project.name_project }}{{expense_for_current_quarter}}
 		{% for expenses in previous_expensestype %}
@@ -25,8 +40,16 @@
 		<br>
 		<form action="" method="post">{% csrf_token %}
 			<center>
-			
-			
+			<h4>Expenses for Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
+				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %}</h4>
+			<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
+				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
+			<table>
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for expenses in expense_for_current_quarter %}
+				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
+				{% endfor %}
+			</table>
 			<p>Name: <input id="name" maxlength="254" name="name" type="text" /></p>
 			<p>Expected Cost:<input type="number" min="1" max="1000" placeholder="search" name="expected_cost"/></p>
 			
