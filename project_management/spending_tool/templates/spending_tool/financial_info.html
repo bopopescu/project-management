@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>Home</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -10,7 +11,7 @@
 
 	<div id="header" style="background-color:#FFA500;">
 	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
-	<div id="menu" style="background-color:#FFD700;height:200px;width:15%;float:left;">
+	<div id="menu" style="background-color:#FFD700;height:80%;width:15%;float:left;">
 	<b>Menu</b><br>
 	<a href="/home">Home</a><br>
 	<a href="/financial_info">Edit Current Expenses</a>
@@ -25,38 +26,10 @@
 
 	</div>
 
-
-
-
-	<!--<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
-		
-		{{ project.name_project }}{{expense_for_current_quarter}}
-		{% for expenses in previous_expensestype %}
-		{{ expenses.expenses_type }}
-		{% endfor %}
-		<br>
-		<br>
-		<form action="" method="post">{% csrf_token %}
-			<center>
-			{% for current_expenses in expense_for_current_quarter %}
-			{{ current_expenses.expenses_type}}
-			<p>Expected Cost:<input type="number" min="1" max="1000" placeholder="search" name="expected_cost{{current_expenses.expenses_type}}"/></p>
-			{{ expense_for_current_quarter.expenses_type }}
-			<p>Actual Cost:<input type="number" min="1" max="1000" placeholder="search"  name="actual_cost{{current_expenses.expenses_type}}"/></p>
-
-			
-			{% endfor %}
-			<p><input type="submit" value="submit" /></p>
-			<center>
-
-		</form>
-		
-
-	</div>-->
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
 		<form method="post" action="">{% csrf_token %}
 			<center>
-			<table>
+			<!--<table class="table">
 				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
 				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %}  </tr>
 
@@ -65,7 +38,7 @@
 				<tr><td>{{ previous_exp.expenses_type }}</td><td>{{ previous_exp.estimated_cost }}</td><td>{{ previous_exp.actual_cost }}</td></tr>
 				{% endfor %}
 			</table>
-			<table>
+			<table class="table">
 				<tr>Q {{quarter_number}}</tr>
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
@@ -74,15 +47,92 @@
 				{% endfor %}
 			</table>
 
-			<table>
+			<table class="table">
 				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
 				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
 				{% for previous_exp in expense_for_current_quarter %}
-				<tr><td>{{ previous_exp.expenses_type }}</td><td><input type="number" min="1" max="1000" placeholder="{{previous_exp.estimated_cost}}" name="expected_cost"/></td><td>--</td></tr>
+				<tr><td>{{ previous_exp.expenses_type }}</td><td><input type="number" min="1" max="1000" placeholder="{{previous_exp.estimated_cost}}" name="expected_cost"/></td><td></td></tr>
+				{% endfor %}
+			</table> -->
+			<!--<table class="table table-striped">
+				<tr>
+					<td></td>
+					<th>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
+				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %} </th>
+				 	<td></td>
+				     <th>Q {{quarter_number}}</th>
+				 	<td></td>
+				     <th>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
+				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %}</th>
+				 	<td></td>
+				</tr>
+				<tr>
+					<th>Type</th>
+					<th>Estimated Cost</th><th>Actual Cost</th>
+					<th>Estimated Cost</th><th>Actual Cost</th>
+					<th>Estimated Cost</th><th>Actual Cost</th>
+				</tr>
+				{% for expense in expense_for_current_quarter %}
+				<tr>
+					<td>{{ expense.expenses_type }}</td>
+					<td> {{ expense.relates_to.estimated_cost }} </td>
+					<td> {{ expense.relates_to.actual_cost }} </td>
+					<td> {{ expense.estimated_cost }} </td>
+					<td> <input value="{{ expense.actual_cost }}" type="number" min="1" max="1000" placeholder="{{expense.actual_cost}}"  name="actual_cost"/> </td>
+					<td><input value="{{ expense.estimated_cost }}" type="number" min="1" max="1000" placeholder="{{expense.estimated_cost}}" name="expected_cost"/></td>
+					<td></td>
+
+				</tr>	
+				{% endfor %}
+			</table> -->
+			<div id="container">
+	<table class="table">
+		<tr>
+			<td>
+		<div id="#table1" class="table-responsive">
+			<table class="table table-striped">
+				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
+				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %} </tr>
+
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for expenses in expenses_for_previous_quarter %}
+				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
 				{% endfor %}
 			</table>
+		</div>
+	</td>
+	<td>
+		<div id="#table2" class="table-responsive">
+			<table class="table table-striped">
+				<tr>Q {{quarter_number}} </tr>
+
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for expenses in expenses_for_current_quarter %}
+				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td><input value="{{ expenses.actual_cost }}" type="number" min="1" max="1000" placeholder="{{expenses.actual_cost}}"  name="actual_cost"/></td></tr>
+				{% endfor %}
+				<tr><td><input onClick="location.href='/add_current_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for this quarter"></td></tr>
+			</table>
+		</div>
+	</td>
+	<td>
+		<div id="#table3" class="table-responsive">
+			<table class="table table-striped">
+				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
+				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
+
+				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				{% for expenses in expenses_for_next_quarter %}
+				<tr><td>{{ expenses.expenses_type }}</td><td><input value="{{ expenses.estimated_cost }}" type="number" min="1" max="1000" placeholder="{{expenses.estimated_cost}}" name="expected_cost"/></td><td>{{ expenses.actual_cost}}</td></tr>
+				{% endfor %}
+				<!--<tr><td><input onClick="location.href='/add_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for next quarter"></td></tr>-->
+			</table>
+		</div>
+	</td>
+	</tr>
+	</table>
+	</div>
 			<p><input type="submit" value="submit" /></p>
 		</center>
 
@@ -93,8 +143,10 @@
 
 
 	</div>
-
-
+<script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
+<script src="/https://code.jquery.com/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/static/dist/js/dropdown.js"></script>
 <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
 Copyright © Cisco</div>
 
@@ -102,3 +154,8 @@ Copyright © Cisco</div>
 
 </body>
 </html> 
+
+
+
+
+

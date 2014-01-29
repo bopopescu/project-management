@@ -2,16 +2,24 @@
 <html>
 <head>
 	<title>Home</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+table{float: left;}
+#table1 {float:left;}
+#table2 {float: :left;}
+#table3 {display:inline-block;margin-right:10px;}
+</style>
 </head>
 <body>
 
 <div id="container" style="width:100%">
 
 	<div id="header" style="background-color:#FFA500;">
-	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
+	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1>
+    </div>
 
-	<div id="menu" style="background-color:#FFD700;height:200px;width:15%;float:left;">
+	<div id="menu" style="background-color:#FFD700;height:80%;width:15%;float:left;">
 	<b>Menu</b><br>
 	<a href="/home">Home</a><br>
 	<a href="/financial_info">Edit Current Expenses</a>
@@ -57,7 +65,12 @@
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
 
 			<center>
-			<table>
+	<div id="container">
+	<table class="table">
+		<tr>
+			<td>
+		<div id="#table1" class="table-responsive">
+			<table class="table table-striped">
 				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
 				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %} </tr>
 
@@ -66,7 +79,11 @@
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
 				{% endfor %}
 			</table>
-			<table>
+		</div>
+	</td>
+	<td>
+		<div id="#table2" class="table-responsive">
+			<table class="table table-striped">
 				<tr>Q {{quarter_number}} </tr>
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
@@ -74,7 +91,11 @@
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
 				{% endfor %}
 			</table>
-			<table>
+		</div>
+	</td>
+	<td>
+		<div id="#table3" class="table-responsive">
+			<table class="table table-striped">
 				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
 				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
 
@@ -83,22 +104,29 @@
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
 				{% endfor %}
 			</table>
+		</div>
+	</td>
+	</tr>
+	</table>
+	</div>
+	</div>
 
 		</center>
 
 
 
 
+</div>
 
 
+	
 
-	</div>
-
-
+<script src="/static/dist/js/bootstrap.min.js"></script>
+<script src="/https://code.jquery.com/jquery.js"></script>
 <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
 Copyright © Cisco</div>
 
-</div>
+
 
 </body>
 </html> 

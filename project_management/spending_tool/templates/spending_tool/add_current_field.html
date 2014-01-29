@@ -41,10 +41,8 @@
 		<br>
 		<form action="" method="post">{% csrf_token %}
 			<center>
-			<h4>Expenses for Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
-				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %}</h4>
-			<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
-				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
+			<h4>Expenses for Q {{ quarter_number }}</h4>
+			<tr>Q {{ quarter_number }} </tr>
 			<table>
 				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
 				{% for expenses in expense_for_current_quarter %}
@@ -52,7 +50,8 @@
 				{% endfor %}
 			</table>
 			<p>Name: <input id="name" maxlength="254" name="name" type="text" /></p>
-			<p>Expected Cost:<input type="number" min="1" max="1000" placeholder="search" name="expected_cost"/></p>
+			<p>Actual Cost:<input type="number" min="1" max="1000" name="actual_cost"/></p>
+			<p>Expected Cost:<input type="number" min="1" max="1000"  name="expected_cost"/></p>
 			
 			
 
