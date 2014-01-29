@@ -16,7 +16,7 @@
 	<a href="/home">Home</a><br>
 	<a href="/financial_info">Edit Current Expenses</a>
 	<a href="/review_info">Review Expenses</a><br>
-	<a href="/add_field">Add Spending</a><br>
+	
 	<a href="/edit_project">Edit Project's Description</a><br>
 
 	<br>
@@ -88,49 +88,50 @@
 				{% endfor %}
 			</table> -->
 			<div id="container">
-	<table class="table">
+	<table class="table" width="100%" >
 		<tr>
 			<td>
 		<div id="#table1" class="table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped" width="30%">
 				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
 				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %} </tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual Cost</td><td>Dept #</td></tr>
 				{% for expenses in expenses_for_previous_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
+				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td><td>{{expenses.department_number }}</td></tr>
 				{% endfor %}
 			</table>
 		</div>
 	</td>
 	<td>
 		<div id="#table2" class="table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped" width="30%" >
 				<tr>Q {{quarter_number}} </tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual Cost</td><td>Dept #</td></tr>
 				{% for expenses in expenses_for_current_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td><input value="{{ expenses.actual_cost }}" type="number" min="1" max="1000" placeholder="{{expenses.actual_cost}}"  name="actual_cost"/></td></tr>
+				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td><input size="5" value="{{ expenses.direct_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.direct_charge_actual_cost}}"  name="actual_cost"/></td><td><input size="5" value="{{ expenses.cross_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.cross_charge_actual_cost}}"  name="actual_cost"/><td> <input size="5" value="{{ expenses.department_number }}" maxlength="254" name="department_number" placeholder="{{expenses.department_number }}" type="text" /></td></td></tr>
 				{% endfor %}
 				<tr><td><input onClick="location.href='/add_current_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for this quarter"></td></tr>
 			</table>
 		</div>
 	</td>
 	<td>
-		<div id="#table3" class="table-responsive">
+		<div id="#table3" class="table-responsive" width="30%" >
 			<table class="table table-striped">
 				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
 				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
+				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual Cost</td><td>Dept #</td></tr>
 				{% for expenses in expenses_for_next_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td><input value="{{ expenses.estimated_cost }}" type="number" min="1" max="1000" placeholder="{{expenses.estimated_cost}}" name="expected_cost"/></td><td>{{ expenses.actual_cost}}</td></tr>
+				<tr><td>{{ expenses.expenses_type }}</td><td><input size="5" value="{{ expenses.estimated_cost }}" type="number" min="1" max="1000" placeholder="{{expenses.estimated_cost}}" name="expected_cost"/></td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td><td>{{ expenses.department_number }}</td></tr>
 				{% endfor %}
 				<!--<tr><td><input onClick="location.href='/add_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for next quarter"></td></tr>-->
 			</table>
 		</div>
 	</td>
 	</tr>
+
 	</table>
 	</div>
 			<p><input type="submit" value="submit" /></p>

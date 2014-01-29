@@ -18,7 +18,7 @@
 	<a href="/home">Home</a><br>
 	<a href="/financial_info">Edit Current Expenses</a>
 	<a href="/review_info">Review Expenses</a><br>
-	<a href="/add_field">Add Spending</a><br>
+	
 	<a href="/edit_project">Edit Project's Description</a><br>
 
 	<br>
@@ -42,16 +42,14 @@
 		<form action="" method="post">{% csrf_token %}
 			<center>
 			<h4>Expenses for Q {{ quarter_number }}</h4>
-			<tr>Q {{ quarter_number }} </tr>
-			<table>
-				<tr><td>Type</td><td>Expected Cost</td><td>Actual cost</td></tr>
-				{% for expenses in expense_for_current_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.actual_cost}}</td></tr>
-				{% endfor %}
-			</table>
+			
 			<p>Name: <input id="name" maxlength="254" name="name" type="text" /></p>
-			<p>Actual Cost:<input type="number" min="1" max="1000" name="actual_cost"/></p>
-			<p>Expected Cost:<input type="number" min="1" max="1000"  name="expected_cost"/></p>
+			<p>Expected Cost:<input type="number" min="0" max="99999"  name="expected_cost"/></p>
+			<p>Cross Charge Actual Cost:<input type="number" min="0" max="99999" name="cross_charge_actual_cost"/></p>
+			<p>Direct Charge Actual Cost:<input type="number" min="0" max="99999" name="direct_charge_actual_cost"/></p>
+			<p>Department Number (Optional if only direct charge applicable): <input id="name" maxlength="254" name="department_number" type="text" /></p>
+
+			
 			
 			
 

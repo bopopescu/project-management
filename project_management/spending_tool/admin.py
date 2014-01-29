@@ -23,7 +23,7 @@ class ProjectAdmin(admin.ModelAdmin):
 	model=Project
 
 	fieldsets=[
-	('Info',{'fields':['name_project','fellow_engineer','description']})
+	('Info',{'fields':['status' ,'name_project','fellow_engineer','description']})
 	]
 admin.site.register(Project, ProjectAdmin)
 
@@ -31,6 +31,7 @@ class ExpensesTypeAdmin(admin.ModelAdmin):
 	model=ExpensesType
 
 	fieldsets=[
-	('Info',{'fields':['expenses_type', 'year', 'quarter_number','estimated_cost','actual_cost','project']})
+	('Info',{'fields':['expenses_type', 'year', 'quarter_number','estimated_cost','direct_charge_actual_cost',
+		'cross_charge_actual_cost','department_number' ,'project']})
 	]
 admin.site.register(ExpensesType, ExpensesTypeAdmin)

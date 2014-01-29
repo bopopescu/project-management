@@ -18,6 +18,11 @@ class EngineerProfile(UserProfile):
         return unicode(self.last_name) or u''
 
 class Project(models.Model):
+    STATUS=(
+      ('Complete','Complete'),
+      ('Ended','Ended'),
+      ('Need Review','Need Review'))
+    status=models.CharField(max_length=100, choices=STATUS, default=None, null=True)
     name_project=models.CharField(max_length=100, null=True)
     description = models.TextField(max_length=200, null=True)
     fellow_engineer = models.ForeignKey(EngineerProfile)
@@ -29,10 +34,13 @@ class Project(models.Model):
 class ExpensesType(models.Model):
     expenses_type=models.CharField(max_length=100, null=True)
     estimated_cost = models.DecimalField(max_digits=5, decimal_places=0)
-    actual_cost = models.DecimalField(max_digits=5, decimal_places=0)
+    
     relates_to=models.ForeignKey('self', null=True, default=None)
     project=models.ForeignKey(Project)
     year = models.DecimalField(max_digits=4, decimal_places=0)
+    cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=0)
+    direct_charge_actual_cost = models.DecimalField(max_digits=5, decimal_places=0)
+    department_number=models.CharField(max_length=100, null=True, default=None)
 
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     def __unicode__(self):  # Python 3: def __str__(self):
@@ -53,7 +61,8 @@ def create_default_expenses(sender, instance, created, **kwargs):
           expenses_type= t,
           year=date[1],
           quarter_number=date[0],
-          actual_cost=0,
+          direct_charge_actual_cost=0,
+          cross_charge_actual_cost=0,
           estimated_cost=0,
           project=instance
           )

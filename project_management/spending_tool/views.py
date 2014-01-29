@@ -1,6 +1,7 @@
 # Create your views here.
 import os
-
+import csv
+from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, render_to_response, redirect
@@ -85,16 +86,18 @@ def financial_info(request):
         										year=year,
         										quarter_number=quarter_number+1,
         										expenses_type=expense.expenses_type,
-        										actual_cost=0,
-        										estimated_cost=0) )
+        										estimated_cost=0,
+        										cross_charge_actual_cost=0,
+        										direct_charge_actual_cost=0) )
         		if quarter_number == 4:
         			expenses_for_next_quarter.append( ExpensesType.objects.create( project=project,
         										relates_to=expense,
         										year=year+1,
         										quarter_number=1,
         										expenses_type=expense.expenses_type,
-        										actual_cost=0,
-        										estimated_cost=0) )
+        										estimated_cost=0,
+        										cross_charge_actual_cost=0,
+        										direct_charge_actual_cost=0) )
         	else:
         	    #if not ExpensesType.objects.get(relates_to=expense) in expenses_for_next_quarter:
         	    expenses_for_next_quarter.append(ExpensesType.objects.get(relates_to=expense))
@@ -310,14 +313,18 @@ def add_current_field(request):
         year=date[1]
         if request.method=='POST':
             name = request.POST['name']
-            actual_cost=request.POST['actual_cost']
+            department_number=request.POST.get('department_number','')
+            cross_charge_actual_cost=request.POST.get('cross_charge_actual_cost','')
+            direct_charge_actual_cost=request.POST.get('direct_charge_actual_cost','')
             expected_cost=request.POST['expected_cost']
             current=ExpensesType.objects.create(project=project,
             							expenses_type=name,
             							estimated_cost=expected_cost,
-            							actual_cost=actual_cost,
+            							cross_charge_actual_cost=cross_charge_actual_cost,
+            							direct_charge_actual_cost=direct_charge_actual_cost,
             							year=year,
-            							quarter_number=quarter_number)
+            							quarter_number=quarter_number,
+            							department_number=department_number)
             '''
             if quarter_number == 1 or quarter_number == 2 or quarter_number == 3:
             	ExpensesType.objects.create(project=project,
@@ -375,16 +382,12 @@ def review_info(request):
 
 
 
-import csv
-from django.http import HttpResponse
+
 
 def report(request):
-	
     projects=Project.object.all()
     time=datetime.now()
     year=time.year
-
-
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
@@ -392,16 +395,21 @@ def report(request):
     for project in projects:
         writer.writerow[project.name_project]
         list_year=[]
-        expenses_for_project=ExpensesType.objects.get(project=project)
+        expenses_for_project_previous_year=ExpensesType.objects.get(project=project, year=year-1)
+        expenses_for_project_current_year=ExpensesType.objects.get(project=project, year=year)
+        expenses_for_project_next_year=ExpensesType.objects.get(project=project, year=year)
         for expenses in expenses_for_project:
             if not expenses.year in list_year:
                 list_year.apppend(expenses.year)
+            writer.writerow[list_year]
+            #for year in list_year:
+    return response
+
 
     
-    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+    #writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
+    #writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
 
-    return response
 
 
 
