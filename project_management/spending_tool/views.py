@@ -1,6 +1,8 @@
 # Create your views here.
 import os
+import xlsxwriter
 import csv
+import time, threading
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail, BadHeaderError
@@ -383,35 +385,63 @@ def review_info(request):
 
 
 
-
-def report(request):
-    projects=Project.object.all()
+def print_report():
     time=datetime.now()
     year=time.year
-    # Create the HttpResponse object with the appropriate CSV header.
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
-    writer = csv.writer(response)
-    for project in projects:
-        writer.writerow[project.name_project]
-        list_year=[]
-        expenses_for_project_previous_year=ExpensesType.objects.get(project=project, year=year-1)
-        expenses_for_project_current_year=ExpensesType.objects.get(project=project, year=year)
-        expenses_for_project_next_year=ExpensesType.objects.get(project=project, year=year)
-        for expenses in expenses_for_project:
-            if not expenses.year in list_year:
-                list_year.apppend(expenses.year)
-            writer.writerow[list_year]
-            #for year in list_year:
-    return response
+    day=time.day
+    month=time.month
+    workbook=xlsxwriter.Workbook('report.xlsx')
+    #workbook = xlsxwriter.Workbook('tech_fund_report_'+ str(month) +'/'+ str(day) +'/' + str(year) +'.xlsx')
+    worksheet = workbook.add_worksheet()
+    projects=Project.objects.all() 
+    line=0
+    list_quarters=[]
+    for i in range(len(projects)):
+        for m in range(4):
+            if len(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))>0:
+                list_quarters.append(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))
+        cell=0
+        for p in range(len(list_quarters)):
+            worksheet.write(line, 1+cell, 'Expense Type' )
+            worksheet.write(line, 2+cell, 'Estimates' )
+            worksheet.write(line, 3+cell, 'Direct Charge' )
+            worksheet.write(line, 4+cell, 'Cross Charge' )
+            for n in range(len(list_quarters[p])):
+                worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
+                worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
+                worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
+                worksheet.write(n+line+1, 4+cell, list_quarters[p][n].quarter_number)
+            cell=cell+5
+        line=line+20
+    workbook.close()
 
+def send_email_before_end():
+    time=datetime.now()
+    year=time.year
+    month=time.month
+    day=time.day
+    if month==10 and day<27 and day>20:
+        send_mail()
+    if month==1 and day<26 and day>19:
+        send_mail()
+    if month==4 and day<27 and day>20:
+    	send_mail()
+    if month==7 and day<27 and day>20:
+    	send_mail()
+    threading.Timer(172800, send_email_before_end).start()
 
-    
-    #writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    #writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
-
-
-
+def send_mail():
+    subject='ACTION REQUIRED: Please fill Tech Fund fields'
+    message='Please complete the spending review for your project on Tech Fund'
+    from_email='ciip.team.1@gmail.com'
+    email_engineers = EngineerProfile.objects.all()
+    to_email=[]
+    for email in email_engineers:
+        to_email.append(email.user.email)
+    try:
+        send_mail(subject, message, from_email , to_email)
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.')	
 
 def return_quarter_year():
     time=datetime.now()
