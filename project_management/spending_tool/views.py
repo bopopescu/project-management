@@ -1,6 +1,6 @@
 # Create your views here.
 import os
-import xlsxwriter
+import xlsxwriter 
 import csv
 import time, threading
 from django.http import HttpResponse
@@ -14,6 +14,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as django_logout
 from django.template import RequestContext
 from datetime import *
+
 def login(request):
     username=password=''
     if request.method == 'POST':
@@ -479,5 +480,14 @@ def return_quarter_year():
     	quarter_number=4
     date=[quarter_number, year]
     return date
+
+def status(request):
+    return render(request, 'spending_tool/status.html')
+
+def project_summary(request):
+    return render(request, 'spending_tool/project_summary.html')
+
+def milestones(request):
+    return render(request, 'spending_tool/milestones.html')
 
 
