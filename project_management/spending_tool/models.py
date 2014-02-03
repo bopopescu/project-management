@@ -50,7 +50,7 @@ class DescriptionType(models.Model):
     current_challenges = models.TextField(max_length=500, null=True)
     next_steps = models.TextField(max_length=500, null=True)
     major_milestone = models.TextField(max_length=100, null=True)
-    due_date = models.DecimalField(max_digits=8, decimal_places=0)
+    due_date = models.CharField(max_length=11, null=True)
     percentage_complete = models.DecimalField(max_digits=3, decimal_places=0)
     project = models.ForeignKey(Project)
 

@@ -1,6 +1,6 @@
 # Create your views here.
 import os
-import xlsxwriter 
+import xlsxwriter  
 import csv
 import time, threading
 from django.http import HttpResponse
@@ -482,12 +482,53 @@ def return_quarter_year():
     return date
 
 def status(request):
-    return render(request, 'spending_tool/status.html')
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer)
+        description = DescriptionType.objects.get(project=project)  
+        recent_accomplishments = description.recent_accomplishments
+        current_challenges = description.current_challenges
+        next_steps = description.next_steps
+              
+    return render(request, 'spending_tool/status.html',{'project':project, 'recent_accomplishments':recent_accomplishments,
+                                                    'current_challenges':current_challenges,
+                                                    'next_steps':next_steps})
 
 def project_summary(request):
-    return render(request, 'spending_tool/project_summary.html')
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer)
+        project_overview = project.project_overview
+        business_value_to_cisco = project.business_value_to_cisco
+    return render(request, 'spending_tool/project_summary.html',{'project':project,
+                'project_overview':project_overview,
+                'business_value_to_cisco':business_value_to_cisco})
+
 
 def milestones(request):
-    return render(request, 'spending_tool/milestones.html')
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer)
+        description = DescriptionType.objects.get(project=project)  
+        major_milestone = description.major_milestone
+        due_date = description.due_date
+        percentage_complete = description.percentage_complete
+    return render(request, 'spending_tool/milestones.html',{'project':project,
+                                'major_milestone':major_milestone, 'due_date':due_date,
+                                'percentage_complete':percentage_complete})
+
+def project_details(request):
+    return render(request, 'spending_tool/project_details.html')
+
+
 
 
