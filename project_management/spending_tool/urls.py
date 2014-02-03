@@ -11,7 +11,12 @@ urlpatterns = patterns('',
    # url(r'^add_field/$', views.add_field, name='add_field'),
     url(r'^add_current_field/$', views.add_current_field, name='add_current_field'),
     url(r'^review_info/$', views.review_info, name='review_info'),
+    url(r'^status/$', views.status, name='status'),
+  	url(r'^project_summary/$', views.project_summary, name='project_summary'),
+  	url(r'^milestones/$', views.milestones, name='milestones'),
 
     url(r'^report/$', views.report, name='report'),
+
+  
 
   )
