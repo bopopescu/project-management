@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="container" style="width:100%">
+
+	<div id="header" style="background-color:#FFA500;">
+	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
+	<div id="menu" style="background-color:#FFD700;height:80%;width:15%;float:left;">
+	<b>Menu</b><br>
+	<a href="/home">Home</a><br>
+	<a href="/financial_info">Edit Current Expenses</a><br>
+	<a href="/review_info">Review Expenses</a><br>
+	<br>
+	<p><strong>Descriptions</strong></p>
+	<a href="/status/" >Status</a><br>
+	<a href="/project_summary/" >Project Summary</a><br>
+	<a href="/milestones/" >Milestone Schedule</a><br>
+
+	<br>
+	<br>
+	<br>
+	<a href="/logout">Logout</a>
+
+	</div>
+
+	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
+		<form method="post" action="">{% csrf_token %}
+
+
+			<div id="container">
+			<h2>Description: to updated each quarter</h2>
+
+			<h4>Recent Accomplishments</h4>
+			<p>
+			Highlight any results or findings that will have value to Cisco or the industry
+			</p>
+			<p>{{recent_accomplishments}}</p>
+				<br>
+			<h4>Current Challenges</h4>
+			<p>
+			Highlight any results or findings that will have value to Cisco or the industry
+			</p>
+			<p>{{current_challenges}}</p>
+				<br>
+			<h4>Next Steps</h4>
+			<p>
+			Highlight any of the challenges that are likely to risk to the project
+			</p>
+			<p>{{next_steps}}</p>
+				<br>
+			</div>
+
+			<p><input type="submit" value="submit" /></p>
+
+		</form>
+	</div>
+
+<script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
+<script src="/https://code.jquery.com/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/static/dist/js/dropdown.js"></script>
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+Copyright © Cisco</div>
+
+</div>
+
+</body>
+</html> 
+
