@@ -24,12 +24,11 @@ class Project(models.Model):
       ('Need Review','Need Review'))
     status=models.CharField(max_length=100, choices=STATUS, default=None, null=True)
     name_project=models.CharField(max_length=100, null=True)
-    description = models.TextField(max_length=200, null=True)
+    project_overview = models.TextField(max_length=500, null=True)
+    business_value_to_cisco = models.TextField(max_length=500, null=True)
     fellow_engineer = models.ForeignKey(EngineerProfile)
     def __unicode__(self):
         return unicode(self.name_project) or u''
-
-
 
 class ExpensesType(models.Model):
     expenses_type=models.CharField(max_length=100, null=True)
@@ -46,10 +45,14 @@ class ExpensesType(models.Model):
     def __unicode__(self):  # Python 3: def __str__(self):
         return unicode(self.expenses_type) or u''
 
-
-
-
-
+class DescriptionType(models.Model):
+    recent_accomplishments = models.TextField(max_length=500, null=True)
+    current_challenges = models.TextField(max_length=500, null=True)
+    next_steps = models.TextField(max_length=500, null=True)
+    major_milestone = models.TextField(max_length=100, null=True)
+    due_date = models.DecimalField(max_digits=8, decimal_places=0)
+    percentage_complete = models.DecimalField(max_digits=3, decimal_places=0)
+    project = models.ForeignKey(Project)
 
 
 def create_default_expenses(sender, instance, created, **kwargs):
@@ -108,3 +111,4 @@ def return_quarter_year():
 
 
 post_save.connect(create_default_expenses, sender=Project)
+
