@@ -35,19 +35,24 @@
 
 
 			<div id="container">
-			<h2>Project Summary</h2>
 
-			<h4>Project Overview</h4>
-			
-			<p>{{form.project_overview}}</p>
-				<br>
-			<h4>Business Value to Cisco</h4>
-			
-			<p>{{form.business_value_to_cisco}}</p>
-				<br>
-			
+			<h2>Milestones: Q1</h2>
+
+			<table class="table" class="table-responsive" width="100%">
+				<tr>
+					<td>Major Milestone Schedule</td><td>Due Date (MM/DD/YYYY)</td><td>% Complete</td>
+				</tr>
+				<tr>
+					<td>{{form.major_milestone}}</td><td>{{form.due_date}}</td><td>{{form.percentage_complete}}</td>
+				</tr>
+			</table>
+
+	
+
 			</div>
+
 			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
+	
 
 		</form>
 	</div>
@@ -63,4 +68,3 @@ Copyright © Cisco</div>
 
 </body>
 </html> 
-

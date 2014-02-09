@@ -19,10 +19,11 @@
 	<br>
 	<p><strong>Descriptions</strong></p>
 	<a href="/project_summary/" >Project Summary</a><br>
-	<a href="/status/" >Status</a><br>
-	<a href="/milestones/" >Milestone Schedule</a><br>
+	<a href="/edit_status/" >Status</a><br>
+	<a href="/input_milestones/" >Milestone Schedule</a><br>
 	<a href="/project_details/" >Project Details</a><br>
 	<br>
+	<a href="/admin/" >Admin</a><br>
 	<br>
 	<br>
 	<a href="/logout">Logout</a>
@@ -30,9 +31,7 @@
 	</div>
 
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
-		<form method="post" action="">{% csrf_token %}
-
-
+	<form method="get" action="">{% csrf_token %}
 			<div id="container">
 			<h2>Description: to updated each quarter</h2>
 
@@ -55,9 +54,6 @@
 			<p>{{next_steps}}</p>
 				<br>
 			</div>
-
-			<p><input type="submit" value="submit" /></p>
-
 		</form>
 	</div>
 

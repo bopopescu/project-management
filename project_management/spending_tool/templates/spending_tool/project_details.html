@@ -19,8 +19,8 @@
 	<br>
 	<p><strong>Descriptions</strong></p>
 	<a href="/project_summary/" >Project Summary</a><br>
-	<a href="/status/" >Status</a><br>
-	<a href="/milestones/" >Milestone Schedule</a><br>
+	<a href="/edit_status/" >Status</a><br>
+	<a href="/input_milestones/" >Milestone Schedule</a><br>
 	<a href="/project_details/" >Project Details</a><br>
 	<br>
 	<br>
@@ -32,27 +32,41 @@
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
 		<form method="post" action="">{% csrf_token %}
 
-
 			<div id="container">
+
 			<h2>Project Details</h2>
+
 			<table class="table table-striped" class="table-responsive" width="100%">
 				<tr>
-					<td>Project Start Date</td><td></td><td>Funding Approved</td><td></td><td>Engineering Mgr</td><td></td>
+					<td>Project Start Date</td><td>{{form.start_date}}</td>
 				</tr>
 				<tr>
-					<td>Target Completion</td><td></td><td>Spent (k) As Of</td><td></td><td></td><td>Executive Sponsor</td><td></td>
-				<tr>
-					<td>IP Generated (patents, papers, standards)</td><td></td><td>Planned Adoptor(s) of Project Results</td><td></td>
+					<td>Funding Approved</td><td>{{form.funding_approved}}</td>
 				</tr>
 				<tr>
-					<td>Review Committee</td><td></td>
+					<td>Engineering Mgr</td><td>{{form.engineering_mgr}}</td>
+				</tr>
+				<tr>
+					<td>Target Completion</td><td>{{form.target_completion}}</td>
+				<tr>
+				<tr>
+					<td>Spent (k) As Of</td><td>{{form.spent_qrt}}</td><td>{{form.spent_cost}}
+				</tr>
+				<tr>
+					<td>Executive Sponsor</td><td>{{form.executive_sponsor}}</td>
+				</tr>
+					<td>IP Generated (patents, papers, standards)</td><td>{{form.ip_generated}}</td>
+				</tr>
+				<tr>
+					<td>Planned Adoptor(s) of Project Results</td><td>{{form.adoptor}}</td>
+				</tr>
+				<tr>
+					<td>Review Committee</td><td>{{form.committee}}</td>
 				</tr>
 				</tr>
 			</table>
 			</div>
-
-	
-
+			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
 		</form>
 	</div>
 

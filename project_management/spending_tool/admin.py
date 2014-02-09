@@ -23,9 +23,14 @@ class ProjectAdmin(admin.ModelAdmin):
 	model=Project
 
 	fieldsets=[
-	('Info',{'fields':['status' ,'name_project','fellow_engineer']})
+
+	('Info',{'fields':['status' ,'name_project','fellow_engineer','project_overview','business_value_to_cisco','start_date',
+	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_qrt', 'spent_cost', 'executive_sponsor',
+	 'ip_generated', 'adoptor', 'committee']}),
+
 	]
 admin.site.register(Project, ProjectAdmin)
+
 
 class ExpensesTypeAdmin(admin.ModelAdmin):
 	model=ExpensesType
@@ -35,3 +40,12 @@ class ExpensesTypeAdmin(admin.ModelAdmin):
 		'cross_charge_actual_cost','department_number' ,'project']})
 	]
 admin.site.register(ExpensesType, ExpensesTypeAdmin)
+
+class DescriptionTypeAdmin(admin.ModelAdmin):
+	model = DescriptionType
+
+	fieldsets = [
+	('Status',{'fields':['project','recent_accomplishments','current_challenges','next_steps',
+		'major_milestone','due_date','percentage_complete',]}),
+	]
+admin.site.register(DescriptionType, DescriptionTypeAdmin)
