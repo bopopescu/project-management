@@ -23,7 +23,7 @@ class ProjectAdmin(admin.ModelAdmin):
 	model=Project
 
 	fieldsets=[
-	('Info',{'fields':['status' ,'name_project','fellow_engineer','description']})
+	('Info',{'fields':['status' ,'name_project','fellow_engineer']})
 	]
 admin.site.register(Project, ProjectAdmin)
 

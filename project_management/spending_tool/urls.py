@@ -16,7 +16,7 @@ urlpatterns = patterns('',
   	url(r'^milestones/$', views.milestones, name='milestones'),
   	url(r'^project_details/$', views.project_details, name='project_details'),
 
-    url(r'^report/$', views.report, name='report'),
+   # url(r'^report/$', views.report, name='report'),
 
   
 
