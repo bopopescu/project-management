@@ -81,7 +81,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
+AUTH_PROFILE_MODULE='spending_tool.EngineerProfile'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'tnel)lp92fbg!)qh)0an=a%93h59)nns3+n=ac*^*6#&=c3+(+'
 

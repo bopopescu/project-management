@@ -134,7 +134,7 @@ def financial_info(request):
     															'project':project,
     															'quarter_number':quarter_number
     															})
-
+'''
 def financial_info(request):
     i=0
     expenses_for_next_quarter=current_expenses=''
@@ -254,7 +254,7 @@ def financial_info(request):
                                                                 })    
             
 
- 
+ '''
 
 def add_field(request):
     if not request.user.is_authenticated():
@@ -517,7 +517,7 @@ def status(request):
   
   # This needs to change .... 
 
-        description = DescriptionType.objects.get(project=project)  
+        description = DescriptionType.objects.filter(project=project)  
 
         if request.method == 'GET':
             recent_accomplishments = description.recent_accomplishments
@@ -557,7 +557,24 @@ def project_summary(request):
         else:
             form = ProjectsummaryForm(instance = request.user.get_profile())
     return render(request, 'spending_tool/project_summary.html',{'project':project,'form':form})
-
+'''
+def input_milestones(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer) 
+        if request.method == 'POST':
+            form = MilestoneForm(request.POST or None, instance=request.user.get_profile())
+            if form.is_valid():
+                form.save()
+                new_user = form.save()
+                return HttpResponseRedirect('/milestones/')
+        else:
+            form = MilestoneForm(instance = request.user.get_profile())              
+    return render(request, 'spending_tool/input_milestones.html',{'project':project,'form':form})
+'''
 def input_milestones(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/')
