@@ -31,25 +31,34 @@
 	</div>
 
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
-		<form method="post" action="">{% csrf_token %}
+	<form method="post" action="">{% csrf_token %}
+		<div id="container">
+			<h2>Description: to updated each quarter</h2>
 
-
-			<div id="container">
-			<h2>Project Summary</h2>
-
-			<h4>Project Overview</h4>
-			
-			<p>{{form.project_overview}}</p>
+			<h4>Recent Accomplishments</h4>
+			<p>
+			Highlight any results or findings that will have value to Cisco or the industry
+			</p>
+			<p>{{form.recent_accomplishments}}</p>
 				<br>
-			<h4>Business Value to Cisco</h4>
-			
-			<p>{{form.business_value_to_cisco}}</p>
+			<h4>Current Challenges</h4>
+			<p>
+			Highlight any results or findings that will have value to Cisco or the industry
+			</p>
+			<p>{{form.current_challenges}}</p>
 				<br>
-			
+			<h4>Next Steps</h4>
+			<p>
+			Highlight any of the challenges that are likely to risk to the project
+			</p>
+			<p>{{form.next_steps}}</p>
+				<br>
 			</div>
-			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
 
+			<p><input type="submit" href="/status/" class="btn btn-primary btn-large" value="submit" /></p>
 		</form>
+
+		
 	</div>
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
@@ -63,4 +72,3 @@ Copyright © Cisco</div>
 
 </body>
 </html> 
-

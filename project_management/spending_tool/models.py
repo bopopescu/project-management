@@ -26,6 +26,18 @@ class Project(models.Model):
     name_project=models.CharField(max_length=100, null=True)
     project_overview = models.TextField(max_length=500, null=True)
     business_value_to_cisco = models.TextField(max_length=500, null=True)
+
+    start_date = models.CharField(max_length=50, null=True)
+    funding_approved = models.DecimalField(max_digits=20, decimal_places=2)
+    engineering_mgr = models.CharField(max_length=50, null=True)
+    target_completion = models.CharField(max_length=50, null=True)
+    spent_qrt = models.CharField(max_length=1, null=True)
+    spent_cost = models.DecimalField(max_digits=20, decimal_places=2) 
+    executive_sponsor = models.CharField(max_length=30, null=True)
+    ip_generated = models.CharField(max_length=100, null=True)
+    adoptor = models.CharField(max_length=100, null=True)
+    committee = models.CharField(max_length=100, null=True)
+
     fellow_engineer = models.ForeignKey(EngineerProfile)
     def __unicode__(self):
         return unicode(self.name_project) or u''
@@ -49,10 +61,11 @@ class DescriptionType(models.Model):
     recent_accomplishments = models.TextField(max_length=500, null=True)
     current_challenges = models.TextField(max_length=500, null=True)
     next_steps = models.TextField(max_length=500, null=True)
-    major_milestone = models.TextField(max_length=100, null=True)
+    major_milestone = models.CharField(max_length=100, null=True)
     due_date = models.CharField(max_length=11, null=True)
     percentage_complete = models.DecimalField(max_digits=3, decimal_places=0)
     project = models.ForeignKey(Project)
+   
 
 
 def create_default_expenses(sender, instance, created, **kwargs):
