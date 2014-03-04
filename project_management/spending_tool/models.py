@@ -24,8 +24,8 @@ class Project(models.Model):
       ('Need Review','Need Review'))
     status=models.CharField(max_length=100, choices=STATUS, default=None, null=True)
     name_project=models.CharField(max_length=100, null=True)
-    project_overview = models.TextField(max_length=500, null=True)
-    business_value_to_cisco = models.TextField(max_length=500, null=True)
+    project_overview = models.TextField(max_length=500, null=True, default=None)
+    business_value_to_cisco = models.TextField(max_length=500, null=True, default=None)
 
     start_date = models.CharField(max_length=50, null=True)
     funding_approved = models.DecimalField(max_digits=20, decimal_places=2)
@@ -61,12 +61,16 @@ class DescriptionType(models.Model):
     recent_accomplishments = models.TextField(max_length=500, null=True)
     current_challenges = models.TextField(max_length=500, null=True)
     next_steps = models.TextField(max_length=500, null=True)
+    quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
+    year = models.DecimalField(max_digits=4, decimal_places=0)
     project = models.ForeignKey(Project)
  
 class Milestone(models.Model):
     major_milestone = models.CharField(max_length=100, null=True)  
     due_date = models.CharField(max_length=11, null=True)
     percentage_complete = models.DecimalField(max_digits=3, decimal_places=0)
+    quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
+    year = models.DecimalField(max_digits=4, decimal_places=0)
     project = models.ForeignKey(Project)
 
 def create_default_expenses(sender, instance, created, **kwargs):

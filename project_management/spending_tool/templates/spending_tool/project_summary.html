@@ -31,6 +31,7 @@
 	</div>
 
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
+		
 		<form method="post" action="">{% csrf_token %}
 
 
@@ -38,16 +39,27 @@
 			<h2>Project Summary</h2>
 
 			<h4>Project Overview</h4>
-			
+			{% if project.project_overview == None %}
 			<p>{{form.project_overview}}</p>
+			{% endif %}
+			{% if not project.project_overview == None %}
+			<p>{{project.project_overview}}</p>
+			{% endif %}
 				<br>
 			<h4>Business Value to Cisco</h4>
 			
+			{% if project.business_value_to_cisco == None %}
 			<p>{{form.business_value_to_cisco}}</p>
+			{% endif %}
+			{% if not project.business_value_to_cisco == None %}
+			<p>{{project.business_value_to_cisco}}</p>
+			{% endif %}
 				<br>
 			
 			</div>
+			{% if project.business_value_to_cisco == None and project.project_overview == None%}
 			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
+			{% endif %}
 
 		</form>
 	</div>

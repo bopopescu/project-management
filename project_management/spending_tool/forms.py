@@ -8,12 +8,12 @@ class StatusForm(ModelForm):
 	class Meta:
 		model = DescriptionType
 		fields = ('recent_accomplishments', 'current_challenges', 'next_steps')
-
+'''
 class MilestoneForm(ModelForm):
 	class Meta:
 		model = DescriptionType
 		fields = ('major_milestone', 'due_date', 'percentage_complete')
-
+'''
 class DetailsForm(ModelForm):
 	class Meta:
 		model = Project

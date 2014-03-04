@@ -36,14 +36,17 @@
 
 			<div id="container">
 
-			<h2>Milestones: Q1</h2>
+			<h2>Milestones: {{quarter_number}}</h2>
 
 			<table class="table" class="table-responsive" width="100%">
 				<tr>
 					<td>Major Milestone Schedule</td><td>Due Date (MM/DD/YYYY)</td><td>% Complete</td>
 				</tr>
+				{% for milestone in previous_milestones %}
+				<tr><td>{{milestone.major_milestone}}</td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
+				{% endfor %}
 				<tr>
-					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="MM/DD/YYYY"></td><td><input type="text" ></td>
+					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="MM/DD/YYYY"></td><td><input size="3" type="number" min="0" max="100"  name="percentage"/></td>
 					<!--<td>{{form.major_milestone}}</td><td>{{form.due_date}}</td><td>{{form.percentage_complete}}</td>-->
 				</tr>
 			</table>

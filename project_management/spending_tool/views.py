@@ -4,7 +4,7 @@ import os
 import csv
 import time, threading
 from django.http import HttpResponse
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import *
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponseRedirect, HttpResponse
@@ -16,7 +16,7 @@ from django.template import RequestContext
 from datetime import *
 from spending_tool.forms import *
 from django.contrib.auth.forms import UserCreationForm
-
+from utils import *
 
 # Create your views here.
 import smtplib
@@ -451,43 +451,8 @@ def send_mail():
     except BadHeaderError:
         return HttpResponse('Invalid header found.')	'''
 
-def return_quarter_year():
-    time=datetime.now()
-    year=time.year
-    month=time.month
-    day=time.day	  
-    if month==7 and day>=27:
-    	quarter_number==1
-    	year=year+1
-    if month==8 or month==9:
-    	quarter_number=1
-    	year=year+1
-    if month == 10 and day <27:
-    	quarter_number=1
-    	year=year+1
-    if month==10 and day >= 26:
-    	quarter_number=2
-    	year=year+1
-    if month==11 or month == 12:
-    	quarter_number=2
-    	year=year+1
-    if month==1 and day <26:
-    	quarter_number=2
-    if month==1 and day >=26:
-    	quarter_number=3
-    if month==2 or month==3:
-    	quarter_number=3
-    if month==4 and day<27:
-    	quarter_number=3
-    if month==4 and day >=27:
-    	quarter_number=4
-    if month==5 or month==6:
-    	quarter_number=4
-    if month==7 and day<27:
-    	quarter_number=4
-    date=[quarter_number, year]
-    return date
 
+'''
 
 def edit_status(request):
     if not request.user.is_authenticated():
@@ -505,6 +470,31 @@ def edit_status(request):
         else:
             form = StatusForm(instance = request.user)              
     return render(request, 'spending_tool/edit_status.html',{'project':project, 'form':form})
+'''
+
+def edit_status(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer)
+        previous_status=DescriptionType.objects.filter(project=project)
+        quarter_number=return_quarter_year()[0]
+        year=return_quarter_year()[1] 
+        if request.method == 'POST':
+            recent_accomplishments=request.POST['recent_accomplishments']
+            current_challenges=request.POST['current_challenges']
+            next_steps=request.POST['next_steps']
+            DescriptionType.objects.create(project=project,
+                                           quarter_number=quarter_number,
+                                           year=year,
+                                           recent_accomplishments=recent_accomplishments,
+                                           next_steps=next_steps,
+                                           current_challenges=current_challenges
+                )
+            return HttpResponseRedirect('/edit_status/')              
+    return render(request, 'spending_tool/edit_status.html',{'project':project, 'quarter_number':quarter_number,'previous_status':previous_status})
 
 
 def status(request):
@@ -581,16 +571,26 @@ def input_milestones(request):
     else:
         current_user = request.user
         engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer) 
+        project = Project.objects.get(fellow_engineer=engineer)
+        previous_milestones = Milestone.objects.filter(project=project)
+        quarter_number=return_quarter_year()[0]
+        year=return_quarter_year()[1]
         if request.method == 'POST':
-            form = MilestoneForm(request.POST or None, instance=request.user.get_profile())
-            if form.is_valid():
-                form.save()
-                new_user = form.save()
-                return HttpResponseRedirect('/milestones/')
-        else:
-            form = MilestoneForm(instance = request.user.get_profile())              
-    return render(request, 'spending_tool/input_milestones.html',{'project':project,'form':form})
+            try:
+                date=request.POST['date']
+                percentage=request.POST['percentage']
+                schedule=request.POST['schedule']
+                Milestone.objects.create( due_date=date,
+                                      major_milestone=schedule,
+                                      percentage_complete=percentage,
+                                      project=project,
+                                      quarter_number=quarter_number,
+                                      year=year
+                )
+            except ValidationError:
+                pass
+            return HttpResponseRedirect('/input_milestones/')              
+    return render(request, 'spending_tool/input_milestones.html',{'quarter_number':quarter_number ,'project':project,'previous_milestones':previous_milestones})
 
 def milestones(request):
     if not request.user.is_authenticated():
