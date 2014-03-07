@@ -3,6 +3,7 @@ from spending_tool.models import *
 from django.contrib.auth.models import User
 from datetime import *
 import xlsxwriter 
+from django.http import HttpResponse
 
 class EngineerAdmin(admin.ModelAdmin):
 	model=EngineerProfile
@@ -30,13 +31,22 @@ class ProjectAdmin(admin.ModelAdmin):
 
 	]
 	actions=['print_report']
+
 	def print_report(modeladmin, request, queryset):
+		try:
+			import cStringIO as StringIO
+		except ImportError:
+			import StringIO
 		time=datetime.now()
 		year=time.year
 		day=time.day
 		month=time.month
+		hour=time.hour
+		minute=time.minute
+		output = StringIO.StringIO()
+		title=str('report_date_%d_%d_%d_time_%d_%d.xlsx' %(month, day, year, hour, minute))
 		#workbook=xlsxwriter.Workbook('report_%s.xlsx' %(queryset.test))    
-		workbook=xlsxwriter.Workbook('report_%d_%d_%d.xlsx' %(month, day, year))
+		workbook=xlsxwriter.Workbook(title)
 		#workbook=xlsxwriter.Workbook('blablabla.xlsx')
 		worksheet = workbook.add_worksheet()
 		line=0
@@ -61,9 +71,19 @@ class ProjectAdmin(admin.ModelAdmin):
 				cell=cell+5
 			line=line+20
 		workbook.close()
+		output.seek(0)
+		response = HttpResponse(output.read(), mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+		response['Content-Disposition'] = "attachment; filename="+title
+		return response
+
 	print_report.short_description = "Print report"
 
 admin.site.register(Project, ProjectAdmin)
+
+class ReportAdmin(admin.ModelAdmin):
+	model=Report
+	fieldsets=[('Info',{'fields':['datetime_created','file_name']})]
+admin.site.register(Report, ReportAdmin)
 
 
 class ExpensesTypeAdmin(admin.ModelAdmin):
