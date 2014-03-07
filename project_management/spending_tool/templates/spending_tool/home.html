@@ -46,37 +46,14 @@
 
 
 	<div class="span4">
-	<h2 class="page-header">Project Summary</h2>	
-		<form method="post" action="">{% csrf_token %}
+	<h2 class="page-header">Tech Fund Tool: Guidelines</h2>	
+		<ul>
+			<li><strong>Edit Current Expenses:</strong> This information should be updated at the beginning of each quarter. You can view expesnse from the previous, current and future quarter.</li>
+			<li><strong>Review Expenses:</strong> Once expenses have been entered for the current quarter you are able to review them here</li>
+			<li><strong>Project Summary:</strong> Enter a description for the Project Overview and the Business Value to Cisco. This is to be entered only once at the start of the project, but can be changed throughout if the project changes.</li>
+			<li><strong>Status:</strong></li>
 
 
-			<div id="container">
-
-
-			<h4>Project Overview</h4>
-			{% if project.project_overview == None %}
-			<p>{{form.project_overview}}</p>
-			{% endif %}
-			{% if not project.project_overview == None %}
-			<p>{{project.project_overview}}</p>
-			{% endif %}
-				<br>
-			<h4>Business Value to Cisco</h4>
-			
-			{% if project.business_value_to_cisco == None %}
-			<p>{{form.business_value_to_cisco}}</p>
-			{% endif %}
-			{% if not project.business_value_to_cisco == None %}
-			<p>{{project.business_value_to_cisco}}</p>
-			{% endif %}
-				<br>
-			
-			</div>
-			{% if project.business_value_to_cisco == None and project.project_overview == None%}
-			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
-			{% endif %}
-
-		</form>
 	</div>
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
