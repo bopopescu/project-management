@@ -12,6 +12,7 @@
       		<div class="navbar-inner">
         		<div class="container-fluid-nav">
           			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
+
         		</div>
       		</div>
 		</div>
@@ -24,7 +25,6 @@
     <div class="span2">
       	<div class="container-fluid-content">
 			<div class="row">
-
 			
 				<ul class="nav nav-sidebar navbar-left">
 					<li><a href="/home">Home</a></li>
@@ -44,38 +44,40 @@
 		</div>
 	</div>
 
+
 	<div class="span4">
-					<h2 class="page-header">Milestones: Q{{quarter_number}}</h2>
+	<h2 class="page-header">Project Summary</h2>	
 		<form method="post" action="">{% csrf_token %}
+
 
 			<div id="container">
 
-								
 
-			<table class="table" class="table-responsive" width="100%">
-				<tr>
-					<td>Major Milestone Schedule</td><td>Due Date (MM/DD/YYYY)</td><td>% Complete</td>
-				</tr>
-				{% for milestone in previous_milestones %}
-				<tr><td>{{milestone.major_milestone}} / Q {{milestone.quarter_number}}</td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
-				{% endfor %}
-				<tr>
-					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="MM/DD/YYYY"></td><td><input size="3" type="number" min="0" max="100"  name="percentage"/></td>
-					<!--<td>{{form.major_milestone}}</td><td>{{form.due_date}}</td><td>{{form.percentage_complete}}</td>-->
-				</tr>
-			</table>
-
-	
-
+			<h4>Project Overview</h4>
+			{% if project.project_overview == None %}
+			<p>{{form.project_overview}}</p>
+			{% endif %}
+			{% if not project.project_overview == None %}
+			<p>{{project.project_overview}}</p>
+			{% endif %}
+				<br>
+			<h4>Business Value to Cisco</h4>
+			
+			{% if project.business_value_to_cisco == None %}
+			<p>{{form.business_value_to_cisco}}</p>
+			{% endif %}
+			{% if not project.business_value_to_cisco == None %}
+			<p>{{project.business_value_to_cisco}}</p>
+			{% endif %}
+				<br>
+			
 			</div>
-
-
+			{% if project.business_value_to_cisco == None and project.project_overview == None%}
 			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
-	
+			{% endif %}
 
 		</form>
 	</div>
-</div>
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
 <script src="/https://code.jquery.com/jquery.js"></script>
@@ -89,3 +91,4 @@ Copyright © Cisco</div>
 
 </body>
 </html> 
+
