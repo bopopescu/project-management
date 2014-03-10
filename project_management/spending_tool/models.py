@@ -27,13 +27,13 @@ class Project(models.Model):
     project_overview = models.TextField(max_length=500, null=True, default=None)
     business_value_to_cisco = models.TextField(max_length=500, null=True, default=None)
 
-    start_date = models.CharField(max_length=50, null=True)
+    start_date = models.DateField( null=True)
     funding_approved = models.DecimalField(max_digits=20, decimal_places=2)
     engineering_mgr = models.CharField(max_length=50, null=True)
-    target_completion = models.CharField(max_length=50, null=True)
+    target_completion =models.DateField( null=True)
     spent_qrt = models.CharField(max_length=1, null=True)
     spent_cost = models.DecimalField(max_digits=20, decimal_places=2) 
-    executive_sponsor = models.CharField(max_length=30, null=True)
+    executive_sponsor = models.CharField(max_length=50, null=True)
     ip_generated = models.CharField(max_length=100, null=True)
     adoptor = models.CharField(max_length=100, null=True)
     committee = models.CharField(max_length=100, null=True)
@@ -49,8 +49,8 @@ class ExpensesType(models.Model):
     relates_to=models.ForeignKey('self', null=True, default=None)
     project=models.ForeignKey(Project)
     year = models.DecimalField(max_digits=4, decimal_places=0)
-    cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=0)
-    direct_charge_actual_cost = models.DecimalField(max_digits=5, decimal_places=0)
+    cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=1)
+    direct_charge_actual_cost = models.DecimalField(max_digits=5, decimal_places=1)
     department_number=models.CharField(max_length=100, null=True, default=None)
 
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
@@ -67,11 +67,18 @@ class DescriptionType(models.Model):
  
 class Milestone(models.Model):
     major_milestone = models.CharField(max_length=100, null=True)  
-    due_date = models.CharField(max_length=11, null=True)
+    due_date = models.DateField( null=True)
     percentage_complete = models.DecimalField(max_digits=3, decimal_places=0)
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     year = models.DecimalField(max_digits=4, decimal_places=0)
     project = models.ForeignKey(Project)
+
+
+class Report(models.Model):
+    datetime_created=models.DateTimeField(null=True)
+    file_name=models.FileField(upload_to='media/%Y/%m/%d')
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return unicode(self.datetime_created) or u''
 
 def create_default_expenses(sender, instance, created, **kwargs):
     if created:
@@ -87,6 +94,7 @@ def create_default_expenses(sender, instance, created, **kwargs):
           estimated_cost=0,
           project=instance
           )
+
 
 
 def return_quarter_year():

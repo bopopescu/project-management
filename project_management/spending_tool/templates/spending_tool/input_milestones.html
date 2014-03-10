@@ -57,7 +57,7 @@
 					<td>Major Milestone Schedule</td><td>Due Date (MM/DD/YYYY)</td><td>% Complete</td>
 				</tr>
 				{% for milestone in previous_milestones %}
-				<tr><td>{{milestone.major_milestone}}</td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
+				<tr><td>{{milestone.major_milestone}} / Q {{milestone.quarter_number}}</td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
 				{% endfor %}
 				<tr>
 					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="MM/DD/YYYY"></td><td><input size="3" type="number" min="0" max="100"  name="percentage"/></td>

@@ -39,7 +39,7 @@ def login(request):
             else:
                 return HttpResponseRedirect('/login/')
         else:
-            return HttpResponseRedirect('spending_tool/login/')
+            return HttpResponseRedirect('/login/')
     return render(request, 'spending_tool/login.html', {'username':username, 'password':password})
 
 def logout(request):
@@ -125,9 +125,14 @@ def financial_info(request):
         if request.method=='POST':
             i=0
             expected_cost=request.POST.getlist('expected_cost')
+            direct_charge_actual_cost=request.POST.getlist('direct_charge_actual_cost')
+            cross_charge_actual_cost=request.POST.getlist('cross_charge_actual_cost')
+            department_number=request.POST.getlist('department_number')
             actual_cost=request.POST.getlist('actual_cost')
             for expense in expenses_for_current_quarter:
-            	expense.actual_cost=actual_cost[i]
+            	expense.direct_charge_actual_cost=direct_charge_actual_cost[i]
+                expense.cross_charge_actual_cost=cross_charge_actual_cost[i]
+                expense.department_number=department_number[i]
             	expense.save()
             	expense_for_next_quarter=ExpensesType.objects.get(relates_to=expense)
                 expense_for_next_quarter.estimated_cost=expected_cost[i]
@@ -621,13 +626,13 @@ def project_details(request):
         engineer = EngineerProfile.objects.get(user=current_user)
         project = Project.objects.get(fellow_engineer=engineer) 
         if request.method == 'POST':
-            form = DetailsForm(request.POST or None, instance=request.user.get_profile())
+            form = DetailsForm(request.POST or None, instance=project)
             if form.is_valid():
-                form.save()
+                #form.save()
                 new_user = form.save()
                 return HttpResponseRedirect('/project_details/')
         else:
-            form = DetailsForm(instance = request.user.get_profile()) 
+            form = DetailsForm(instance = project) 
     return render(request, 'spending_tool/project_details.html',{'project':project,'form':form})
 
 
