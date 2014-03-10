@@ -46,6 +46,12 @@ def logout(request):
     django_logout(request)
     return HttpResponseRedirect('/login/')
 
+def home(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    return render(request,'spending_tool/home.html')
+
+
 
 def financial_info(request):
     if not request.user.is_authenticated():
