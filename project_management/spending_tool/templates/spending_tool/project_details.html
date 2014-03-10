@@ -3,38 +3,55 @@
 <head>
 	<title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/dist/css/cisco-css.css" rel="stylesheet">
 </head>
 <body>
 
-<div id="container" style="width:100%">
+<header>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+      		<div class="navbar-inner">
+        		<div class="container-fluid-nav">
+          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
 
-	<div id="header" style="background-color:#FFA500;">
-	<h1 style="margin-bottom:0;">Fellow Engineers Management Tool (FEMT)</h1></div>
-	<div id="menu" style="background-color:#FFD700;height:80%;width:15%;float:left;">
-	<b>Menu</b><br>
-	<a href="/home">Home</a><br>
-	<a href="/financial_info">Edit Current Expenses</a><br>
-	<a href="/review_info">Review Expenses</a><br>
-	<br>
-	<p><strong>Descriptions</strong></p>
-	<a href="/project_summary/" >Project Summary</a><br>
-	<a href="/edit_status/" >Status</a><br>
-	<a href="/input_milestones/" >Milestone Schedule</a><br>
-	<a href="/project_details/" >Project Details</a><br>
-	<br>
-	<br>
-	<br>
-	<a href="/logout">Logout</a>
+        		</div>
+      		</div>
+		</div>
+    </header>
+    
+    <br /><br /><br /><br />
+	
+<!-- Nav bar !-->
+<div class="row-fluid">
+    <div class="span2">
+      	<div class="container-fluid-content">
+			<div class="row">
 
+			
+				<ul class="nav nav-sidebar navbar-left">
+					<li><a href="/home">Home</a></li>
+					<li><a href="/financial_info">Edit Current Expenses</a></li>
+					<li><a href="/review_info">Review Expenses</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="/project_summary/" >Project Summary</a></li>
+					<li><a href="/edit_status/" >Status</a></li>
+					<li><a href="/input_milestones/" >Milestone Schedule</a></li>
+					<li><a href="/project_details/" >Project Details</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
+<div class="span10">
+		<h2 class="page-header">Project Details</h2>
+
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
+
 		<form method="post" action="">{% csrf_token %}
-
 			<div id="container">
-
-			<h2>Project Details</h2>
 
 			<table class="table table-striped" class="table-responsive" width="100%">
 				<tr>
@@ -69,13 +86,18 @@
 			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" /></p>
 		</form>
 	</div>
+</div>
+</div>
+
+
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
 <script src="/https://code.jquery.com/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/static/dist/js/dropdown.js"></script>
-<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+<div id="footer" style="clear:both;text-align:center;">
 Copyright © Cisco</div>
+<br /><br /><br /><br />
 
 </div>
 
