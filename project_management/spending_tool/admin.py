@@ -26,7 +26,7 @@ class ProjectAdmin(admin.ModelAdmin):
 	fieldsets=[
 
 	('Info',{'fields':['status' ,'name_project','fellow_engineer','project_overview','business_value_to_cisco','start_date',
-	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_qrt', 'spent_cost', 'executive_sponsor',
+	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost', 'executive_sponsor',
 	 'ip_generated', 'adoptor', 'committee']}),
 
 	]
@@ -46,7 +46,7 @@ class ProjectAdmin(admin.ModelAdmin):
 		output = StringIO.StringIO()
 		title=str('report_date_%d_%d_%d_time_%d_%d.xlsx' %(month, day, year, hour, minute))
 		#workbook=xlsxwriter.Workbook('report_%s.xlsx' %(queryset.test))    
-		workbook=xlsxwriter.Workbook(title)
+		workbook=xlsxwriter.Workbook(output)
 		#workbook=xlsxwriter.Workbook('blablabla.xlsx')
 		worksheet = workbook.add_worksheet()
 		line=0

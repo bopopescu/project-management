@@ -121,12 +121,12 @@ def financial_info(request):
             expected_cost=request.POST.getlist('expected_cost')
             direct_charge_actual_cost=request.POST.getlist('direct_charge_actual_cost')
             cross_charge_actual_cost=request.POST.getlist('cross_charge_actual_cost')
-            department_number=request.POST.getlist('department_number')
+            #department_number=request.POST.getlist('department_number')
             actual_cost=request.POST.getlist('actual_cost')
             for expense in expenses_for_current_quarter:
             	expense.direct_charge_actual_cost=direct_charge_actual_cost[i]
                 expense.cross_charge_actual_cost=cross_charge_actual_cost[i]
-                expense.department_number=department_number[i]
+                #expense.department_number=department_number[i]
             	expense.save()
             	expense_for_next_quarter=ExpensesType.objects.get(relates_to=expense)
                 expense_for_next_quarter.estimated_cost=expected_cost[i]
@@ -328,7 +328,7 @@ def add_current_field(request):
         year=date[1]
         if request.method=='POST':
             name = request.POST['name']
-            department_number=request.POST.get('department_number','')
+            #department_number=request.POST.get('department_number','')
             cross_charge_actual_cost=request.POST.get('cross_charge_actual_cost','')
             direct_charge_actual_cost=request.POST.get('direct_charge_actual_cost','')
             expected_cost=request.POST['expected_cost']
@@ -339,7 +339,7 @@ def add_current_field(request):
             							direct_charge_actual_cost=direct_charge_actual_cost,
             							year=year,
             							quarter_number=quarter_number,
-            							department_number=department_number)
+            							#department_number=department_number)
             '''
             if quarter_number == 1 or quarter_number == 2 or quarter_number == 3:
             	ExpensesType.objects.create(project=project,

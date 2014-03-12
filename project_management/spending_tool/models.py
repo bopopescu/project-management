@@ -31,7 +31,7 @@ class Project(models.Model):
     funding_approved = models.DecimalField(max_digits=20, decimal_places=2)
     engineering_mgr = models.CharField(max_length=50, null=True)
     target_completion =models.DateField( null=True)
-    spent_qrt = models.CharField(max_length=1, null=True)
+    #spent_qrt = models.CharField(max_length=1, null=True)
     spent_cost = models.DecimalField(max_digits=20, decimal_places=2) 
     executive_sponsor = models.CharField(max_length=50, null=True)
     ip_generated = models.CharField(max_length=100, null=True)
@@ -51,12 +51,15 @@ class ExpensesType(models.Model):
     year = models.DecimalField(max_digits=4, decimal_places=0)
     cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=1)
     direct_charge_actual_cost = models.DecimalField(max_digits=5, decimal_places=1)
-    department_number=models.CharField(max_length=100, null=True, default=None)
+    #department_number=models.CharField(max_length=100, null=True, default=None)
 
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     def __unicode__(self):  # Python 3: def __str__(self):
         return unicode(self.expenses_type) or u''
-
+class DepartmentNumber(models.Model):
+    department_number=models.CharField(max_length=100, null=True, default=None)
+    relates_to=models.ForeignKey(ExpensesType)
+    
 class DescriptionType(models.Model):
     recent_accomplishments = models.TextField(max_length=500, null=True)
     current_challenges = models.TextField(max_length=500, null=True)

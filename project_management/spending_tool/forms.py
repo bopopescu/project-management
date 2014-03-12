@@ -17,7 +17,7 @@ class MilestoneForm(ModelForm):
 class DetailsForm(ModelForm):
 	class Meta:
 		model = Project
-		fields = ('start_date', 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_qrt', 'spent_cost',
+		fields = ('start_date', 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost',
 		 'executive_sponsor', 'ip_generated', 'adoptor', 'committee')
 			
 class ProjectsummaryForm(ModelForm):
