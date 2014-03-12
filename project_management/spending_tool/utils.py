@@ -1,5 +1,5 @@
 from datetime import *
-
+from spending_tool.models import *
 def return_quarter_year():
     time=datetime.now()
     year=time.year
@@ -36,3 +36,6 @@ def return_quarter_year():
     	quarter_number=4
     date=[quarter_number, year]
     return date
+
+
+

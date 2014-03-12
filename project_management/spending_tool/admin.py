@@ -91,7 +91,7 @@ class ExpensesTypeAdmin(admin.ModelAdmin):
 
 	fieldsets=[
 	('Info',{'fields':['expenses_type', 'year', 'quarter_number','estimated_cost','direct_charge_actual_cost',
-		'cross_charge_actual_cost','department_number' ,'project']})
+		'cross_charge_actual_cost' ,'project']})
 	]
 admin.site.register(ExpensesType, ExpensesTypeAdmin)
 '''

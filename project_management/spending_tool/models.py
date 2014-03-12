@@ -58,6 +58,7 @@ class ExpensesType(models.Model):
         return unicode(self.expenses_type) or u''
 class DepartmentNumber(models.Model):
     department_number=models.CharField(max_length=100, null=True, default=None)
+    cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=1)
     relates_to=models.ForeignKey(ExpensesType)
     
 class DescriptionType(models.Model):
@@ -66,6 +67,7 @@ class DescriptionType(models.Model):
     next_steps = models.TextField(max_length=500, null=True)
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     year = models.DecimalField(max_digits=4, decimal_places=0)
+    date=models.DateField( null=True)
     project = models.ForeignKey(Project)
  
 class Milestone(models.Model):
@@ -74,6 +76,7 @@ class Milestone(models.Model):
     percentage_complete = models.DecimalField(max_digits=3, decimal_places=0)
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     year = models.DecimalField(max_digits=4, decimal_places=0)
+    date=models.DateField( null=True)
     project = models.ForeignKey(Project)
 
 

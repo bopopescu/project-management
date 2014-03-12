@@ -45,50 +45,7 @@
 	</div>
 
 <div class="span4">
-
-	<h2 class="page-header">Project Description</h2>
-	<form method="post" action="">{% csrf_token %}
-		<div id="container">
-
-            <h3> Q {{quarter_number}}</h3>
-			<h4>Recent Accomplishments</h4>
-			<p>
-			Highlight any results or findings that will have value to Cisco or the industry
-			</p>
-			<!--<p>{{form.recent_accomplishments}}</p>-->
-			<textarea rows="4" cols="42" name="recent_accomplishments"></textarea>
-			   <br> 
-			<h4>Current Challenges</h4>
-			<p>
-			Highlight any results or findings that will have value to Cisco or the industry
-			</p>
-			<!--<p>{{form.current_challenges}}</p>-->
-			<textarea rows="4" cols="42" name="current_challenges"></textarea> 
-				<br>
-			<h4>Next Steps</h4>
-			<p>
-			Highlight any of the challenges that are likely to risk to the project
-			</p>
-			<!--<p>{{form.next_steps}}</p>-->
-			<textarea rows="4" cols="42" name="next_steps"></textarea> 
-				<br>
-			</div>
-
-			<p><input type="submit" class="btn btn-primary btn-large" value="submit" /></p>
-		</form>
-        <h2>Previous Status</h2>
-        {% for status in previous_status %}
-        <p><b>Recent Accomplishments - {{status.quarter_number}} / {{status.year}} </b></p>
-        <p>{{status.recent_accomplishments}}</p>
-        <p><b>Current Challenges - {{status.quarter_number}} / {{status.year}} </b></p>
-        <p>{{status.current_challenges}}</p>
-        <p><b>Next Steps - {{status.quarter_number}} / {{status.year}} </b></p>
-        <p>{{status.next_steps}}</p>
-        <p><i><a href="/edit?status={{status.id}}">Edit status</a></i></p>
-
-        {% endfor %}
-		
-	</div>
+	{% block content %}{% endblock %}
 </div>
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>

@@ -100,6 +100,7 @@
 				{% for expenses in current_quarter %}
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
 				{% endfor %}
+				<tr><td>Total Direct Charge:</td><td>{{total_exp_current_direct}}</td><td>Total Cross Charge:</td><td>{{total_exp_current_cross}}</td></tr>
 			</table>
 		</div>
 	</td>
