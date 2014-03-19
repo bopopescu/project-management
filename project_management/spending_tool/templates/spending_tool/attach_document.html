@@ -1,3 +1,17 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
+<h3>Attach Documents</h3>
+<form enctype="multipart/form-data" method="post">{% csrf_token %}
+{{form}}
+<br><br>
+<p><input type="submit" href="/attach_document/" class="btn btn-primary " value="Upload"></p>
+</form>
+<hr class="featurette-divider">
+{% for document in documents %}
+<p><b>{{document.file_name}}</b></p>
+<ul>
+	<li><i><a href="http://127.0.0.1:8000/media/{{document.document}}">View</a></i></li>
+	<li>Date uploaded: {{document.date}}</li>
+</ul>
+{% endfor %}
 {% endblock %}

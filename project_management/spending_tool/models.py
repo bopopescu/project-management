@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from datetime import *
 # Create your models here.
-
+import os
+from project_management.settings import *
 class UserProfile(models.Model):
     first_name = models.CharField(max_length=20, null=True)
     last_name = models.CharField(max_length = 20, null=True)
@@ -41,7 +42,13 @@ class Project(models.Model):
     fellow_engineer = models.ForeignKey(EngineerProfile)
     def __unicode__(self):
         return unicode(self.name_project) or u''
+class Document(models.Model):
+  document = models.FileField(upload_to=os.path.join(MEDIA_ROOT,'media/%Y/%m/%d'))
+  date=models.DateField( null=True)
+  project=models.ForeignKey(Project)
+  file_name = models.CharField(max_length=50, null=True)
 
+  
 class ExpensesType(models.Model):
     expenses_type=models.CharField(max_length=100, null=True)
     estimated_cost = models.DecimalField(max_digits=5, decimal_places=0)

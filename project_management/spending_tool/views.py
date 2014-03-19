@@ -456,5 +456,34 @@ def project_details(request):
     return render(request, 'spending_tool/project_details.html',{'project':project,'form':form})
 
 
+def attach_document(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer)
+        documents=Document.objects.filter(project=project)
+        if request.method == 'POST':
+           form = UploadFileForm(request.POST, request.FILES)
+           if form.is_valid():
+               time=datetime.now()
 
-
+            # file is saved
+               new_document=form.save(commit = False)
+               new_document.project=project
+               new_document.date=time
+               new_document.save()
+               return HttpResponseRedirect('/attach_document/')
+        else:
+           form = UploadFileForm()
+    return render(request,'spending_tool/attach_document.html',{'project':project, 'form':form, 'documents':documents})
+'''
+def download_document(request):
+    id_doc=request.GET['id']
+    document=Document.objects.get(pk=id_doc)
+    title=document.document
+    response = HttpResponse(output.read(), mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = "attachment; filename="+title
+    return response
+'''
