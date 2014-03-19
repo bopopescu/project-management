@@ -478,12 +478,12 @@ def attach_document(request):
         else:
            form = UploadFileForm()
     return render(request,'spending_tool/attach_document.html',{'project':project, 'form':form, 'documents':documents})
-'''
-def download_document(request):
-    id_doc=request.GET['id']
-    document=Document.objects.get(pk=id_doc)
-    title=document.document
-    response = HttpResponse(output.read(), mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    response['Content-Disposition'] = "attachment; filename="+title
-    return response
-'''
+
+def home(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        current_user = request.user
+        engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(fellow_engineer=engineer)
+    return render(request,'spending_tool/home.html',{'project':project})

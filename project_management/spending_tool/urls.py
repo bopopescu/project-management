@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     #url(r'^home/$', views.home, name='home'),
     url(r'^edit/$', views.edit, name='edit'),
     url(r'^attach_document/$', views.attach_document, name='attach_document'),
-    url(r'^edit/$', views.edit, name='edit'),
+    url(r'^home/$', views.home, name='home'),
     #url(r'^download_document/$', views.download_document, name='download_document'),
    # url(r'^report/$', views.report, name='report'),
 
