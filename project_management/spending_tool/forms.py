@@ -24,3 +24,8 @@ class ProjectsummaryForm(ModelForm):
 	class Meta:
 		model = Project
 		fields = ('project_overview', 'business_value_to_cisco')
+
+class UploadFileForm(ModelForm):
+    class Meta:
+        model = Document
+        fields =('file_name', 'document')
