@@ -30,6 +30,9 @@ class ProjectAdmin(admin.ModelAdmin):
 	 'ip_generated', 'adoptor', 'committee']}),
 
 	]
+	readonly_fields=['project_overview','business_value_to_cisco','start_date',
+	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost', 'executive_sponsor',
+	 'ip_generated', 'adoptor', 'committee']
 	actions=['print_report']
 
 	def print_report(modeladmin, request, queryset):
@@ -76,7 +79,7 @@ class ProjectAdmin(admin.ModelAdmin):
 		response['Content-Disposition'] = "attachment; filename="+title
 		return response
 
-	print_report.short_description = "Print report"
+	print_report.short_description = "Export to Excel"
 
 admin.site.register(Project, ProjectAdmin)
 

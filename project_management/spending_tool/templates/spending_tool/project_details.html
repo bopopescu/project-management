@@ -1,51 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/static/dist/css/cisco-css.css" rel="stylesheet">
-</head>
-<body>
-
-<header>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-      		<div class="navbar-inner">
-        		<div class="container-fluid-nav">
-          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
-
-        		</div>
-      		</div>
-		</div>
-    </header>
-    
-    <br /><br /><br /><br />
-	
-<!-- Nav bar !-->
-<div class="row-fluid">
-    <div class="span2">
-      	<div class="container-fluid-content">
-			<div class="row">
-
-			
-				<ul class="nav nav-sidebar navbar-left">
-					<li><a href="/home">Home</a></li>
-					<li><a href="/financial_info">Edit Current Expenses</a></li>
-					<li><a href="/review_info">Review Expenses</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="/project_summary/" >Project Summary</a></li>
-					<li><a href="/edit_status/" >Status</a></li>
-					<li><a href="/input_milestones/" >Milestone Schedule</a></li>
-					<li><a href="/project_details/" >Project Details</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-<div class="span10">
+{% extends "spending_tool/layout.html" %}
+{% block content %}
 		<h2 class="page-header">Project Details</h2>
 
 	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
@@ -67,7 +21,7 @@
 					<td>Target Completion</td><td>{{form.target_completion}}</td>
 				<tr>
 				<tr>
-					<td>Spent (k) As Of</td><td>{{form.spent_qrt}}</td><td>{{form.spent_cost}}
+					<td>Spent (k) As Of</td><td>{{form.spent_cost}}
 				</tr>
 				<tr>
 					<td>Executive Sponsor</td><td>{{form.executive_sponsor}}</td>
@@ -83,23 +37,10 @@
 				</tr>
 			</table>
 			</div>
-			<p><input type="submit"class="btn btn-primary btn-large" value="submit" /></p>
+			<p><input type="submit"class="btn btn-primary btn-medium" value="submit" /></p>
 		</form>
 	</div>
-</div>
-</div>
+{% endblock %}
 
 
 
-<script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
-<script src="/https://code.jquery.com/jquery.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="/static/dist/js/dropdown.js"></script>
-<div id="footer" style="clear:both;text-align:center;">
-Copyright © Cisco</div>
-<br /><br /><br /><br />
-
-</div>
-
-</body>
-</html> 

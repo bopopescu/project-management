@@ -10,10 +10,10 @@
 			<td>
 		<div id="#table1" class="table-responsive">
 			<table class="table table-striped" >
-				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
-				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %} </tr>
+				<tr><b>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
+				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %}</b> </tr>
 
-				<tr><td >Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual Cost</td><td>Dept #</td></tr>
+				<tr><th >Type</th><th>Expected Cost</th><th>Direct Charge Actual cost</th><th>Cross Charge Actual Cost</th><th>Dept #</th></tr>
 				{% for expenses in expenses_for_previous_quarter %}
 				<tr><td >{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td><td>{{expenses.department_number }}</td></tr>
 				{% endfor %}
@@ -23,9 +23,9 @@
 	<td>
 		<div id="#table2" class="table-responsive">
 			<table class="table table-striped"  >
-				<tr>Q {{quarter_number}} </tr>
+				<tr><b>Q {{quarter_number}}</b> </tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual Cost</td></tr>
+				<tr><th>Type</th><th>Expected Cost</th><th>Direct Charge Actual cost</th><th>Cross Charge Actual Cost</th></tr>
 				{% for expenses in expenses_for_current_quarter %}
 				<tr><td >{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td><input style="width:80px"size="5" value="{{ expenses.direct_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.direct_charge_actual_cost}}"  name="direct_charge_actual_cost"/></td><td><input style="width:80px" size="5" value="{{ expenses.cross_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.cross_charge_actual_cost}}"  name="cross_charge_actual_cost"/></td> </tr>
 				{% endfor %}
@@ -36,13 +36,13 @@
 	<td>
 		<div id="#table3" class="table-responsive"  >
 			<table class="table table-striped">
-				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
-				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
+				<tr><b>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
+				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %}</b> </tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual Cost</td></tr>
+				<tr><th>Type</th><th>Expected Cost</th><th>Direct Charge Actual cost</th><th>Cross Charge Actual Cost</th></tr>
 				{% for expenses in expenses_for_next_quarter %}
 				<tr><td>{{ expenses.expenses_type }}</td><td><input style="width:80px" size="5" value="{{ expenses.estimated_cost }}" type="number" min="0" max="1000" placeholder="{{expenses.estimated_cost}}" name="expected_cost"/></td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td></tr>
-				{% endfor %}-->
+				{% endfor %}
 				<!--<tr><td><input onClick="location.href='/add_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for next quarter"></td></tr>-->
 		</table>
 	

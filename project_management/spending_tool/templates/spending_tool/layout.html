@@ -3,7 +3,10 @@
 <head>
 	<title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="/static/dist/css/cisco-css.css" rel="stylesheet">
+<link href="/static/dist/css/datepicker.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -13,6 +16,8 @@
         		<div class="container-fluid-nav">
           			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
         		</div>
+        		<p style="margin-left:300px;" class="navbar-text">Tech Fund  /  <i>{{project}}</i></p>
+
       		</div>
 		</div>
     </header>
@@ -45,12 +50,12 @@
 		</div>
 	</div>
 
-<div class="span4">
+<div class="span6">
 	{% block content %}{% endblock %}
 </div>
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
-<script src="/https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/static/dist/js/dropdown.js"></script>
 <div id="footer" style="clear:both;text-align:center;">

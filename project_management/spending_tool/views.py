@@ -51,14 +51,18 @@ def financial_info(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/')
     else:
+        
+        current_user=request.user
         cross_charge_actual_cost_specific=direct_charge_actual_cost=[]
-    	current_user=request.user
+        
         engineer=EngineerProfile.objects.get(user=current_user)
         project=Project.objects.get(fellow_engineer=engineer)
-        
+        expenses_for_previous_quarter, expenses_for_current_quarter, expenses_for_next_quarter=returnExpenses(project)
         date = return_quarter_year()
         quarter_number=date[0]
         year=date[1]
+        '''
+        
         expenses_for_next_quarter=[]
         expenses_for_current_quarter=ExpensesType.objects.filter(
         														year=year,
@@ -116,6 +120,7 @@ def financial_info(request):
         	else:
         	    #if not ExpensesType.objects.get(relates_to=expense) in expenses_for_next_quarter:
         	    expenses_for_next_quarter.append(ExpensesType.objects.get(relates_to=expense))
+        '''
         list_for_cross_charge=[]
         current_cross_dept=[]
         for exp in expenses_for_current_quarter:
@@ -154,10 +159,12 @@ def financial_info(request):
                 expense_for_next_quarter.save()
             	i=i+1
             return HttpResponseRedirect('/financial_info/')
+            
+        #info=financialInfo(request)
     return render(request,'spending_tool/financial_info.html',{ 'expenses_for_next_quarter':expenses_for_next_quarter,
     															'expenses_for_current_quarter':expenses_for_current_quarter,
     															'expenses_for_previous_quarter':expenses_for_previous_quarter,
-    															'project':project,
+    														    'project':project,
     															'quarter_number':quarter_number,
                                                                 'list_for_cross_charge':list_for_cross_charge,
     															'current_cross_dept':current_cross_dept,
@@ -284,18 +291,18 @@ def review_info(request):
         quarter_number=date[0]
         year=date[1]
         if quarter_number==1:
-            previous_quarter=ExpensesType.objects.filter(project=project, year=year-1, quarter_number=4)
+            previous_quarter=ExpensesType.objects.filter(project=project, year=year-1, quarter_number=4).order_by('expenses_type')
         if quarter_number==2:
-            previous_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number=1)
+            previous_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number=1).order_by('expenses_type')
         if quarter_number==3:
-            previous_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number=2)
+            previous_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number=2).order_by('expenses_type')
         if quarter_number==4:
-            previous_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number=3)
-        current_quarter = ExpensesType.objects.filter(project=project, year=year, quarter_number=quarter_number)
+            previous_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number=3).order_by('expenses_type')
+        current_quarter = ExpensesType.objects.filter(project=project, year=year, quarter_number=quarter_number).order_by('expenses_type')
         if quarter_number== 1 or quarter_number==2 or quarter_number == 3:
-            next_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number= quarter_number+1)
+            next_quarter=ExpensesType.objects.filter(project=project, year=year, quarter_number= quarter_number+1).order_by('expenses_type')
         if quarter_number== 4:
-            next_quarter=ExpensesType.objects.filter(project=project, year=year+1, quarter_number= 1)
+            next_quarter=ExpensesType.objects.filter(project=project, year=year+1, quarter_number= 1).order_by('expenses_type')
         total_exp_current_direct=total_exp_current_cross=total_exp_next_direct=total_exp_next_cross=total_current=0
         for exp in current_quarter:
             total_exp_current_direct=total_exp_current_direct+exp.direct_charge_actual_cost
@@ -314,13 +321,17 @@ def review_info(request):
 
 def edit_status(request):
     time=datetime.now()
+    today=time
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/')
     else:
         current_user = request.user
         engineer = EngineerProfile.objects.get(user=current_user)
         project = Project.objects.get(fellow_engineer=engineer)
-        previous_status=DescriptionType.objects.filter(project=project)
+        previous_status=DescriptionType.objects.filter(project=project).order_by('date')
+        l=len(previous_status)
+        one_status=previous_status[l-1]
+        previous_status=previous_status[:l-1]
         quarter_number=return_quarter_year()[0]
         year=return_quarter_year()[1] 
         if request.method == 'POST':
@@ -337,7 +348,13 @@ def edit_status(request):
                 )
    
             return HttpResponseRedirect('/edit_status/')              
-    return render(request, 'spending_tool/edit_status.html',{'project':project, 'quarter_number':quarter_number,'previous_status':previous_status})
+    return render(request, 'spending_tool/edit_status.html',{'project':project, 
+                                                             'quarter_number':quarter_number,
+                                                             'one_status':one_status,
+                                                             'today':today,
+                                                             'previous_status':previous_status})
+
+
 def edit(request):
     time=datetime.now()
     if not request.user.is_authenticated():
@@ -403,20 +420,24 @@ def input_milestones(request):
         current_user = request.user
         engineer = EngineerProfile.objects.get(user=current_user)
         project = Project.objects.get(fellow_engineer=engineer)
-        previous_milestones = Milestone.objects.filter(project=project)
+        previous_milestones = Milestone.objects.filter(project=project).order_by('due_date')
         quarter_number=return_quarter_year()[0]
+        today=datetime.today()
         year=return_quarter_year()[1]
         if request.method == 'POST':
             try:
-                date=request.POST['date']
+                due_date=request.POST['date']
                 percentage=request.POST['percentage']
                 schedule=request.POST['schedule']
-                Milestone.objects.create( due_date=date,
+                Milestone.objects.create( 
+                                      date=today,
+                                      due_date=due_date,
                                       major_milestone=schedule,
                                       percentage_complete=percentage,
                                       project=project,
                                       quarter_number=quarter_number,
-                                      year=year
+                                      year=year,
+
                 )
             except ValidationError:
                 pass

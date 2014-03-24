@@ -1,6 +1,6 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-					<h2 class="page-header">Milestones: Q{{quarter_number}}</h2>
+	<h2 class="page-header">Milestones: Q{{quarter_number}}</h2>
 		<form method="post" action="">{% csrf_token %}
 
 			<div id="container">
@@ -9,13 +9,26 @@
 
 			<table class="table" class="table-responsive" width="100%">
 				<tr>
-					<td>Major Milestone Schedule</td><td>Due Date (MM/DD/YYYY)</td><td>% Complete</td>
+					<th>Major Milestone Schedule</th><th>Due Date (MM/DD/YYYY)</th><th>% Complete</th>
 				</tr>
 				<tr>
-					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="MM/DD/YYYY"></td><td><input size="3" type="number" min="0" max="100"  name="percentage"/></td>
+					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="YYYY-MM-DD"></td><td>
+ <select name="percentage">
+<option value="0">0%</option>
+<option value="10">10%</option>
+<option value="20">20%</option>
+<option value="30">30%</option>
+<option value="40">40%</option>
+<option value="50">50%</option>
+<option value="60">60%</option>
+<option value="70">70%</option>
+<option value="80">80%</option>
+<option value="90">90%</option>
+<option value="100">100%</option>
+</select></p></td>
 					<!--<td>{{form.major_milestone}}</td><td>{{form.due_date}}</td><td>{{form.percentage_complete}}</td>-->
 					<td>
-						<input type="submit" href="/milestones/" class="btn btn-primary btn-large" value="submit" />
+						<input type="submit" href="/milestones/" class="btn btn-primary btn-medium" value="submit" />
 					</td>
 				</tr>
 				{% for milestone in previous_milestones %}
@@ -29,6 +42,22 @@
 			</div>
 
 	
-
+                 <div class="container">
+            <div class="hero-unit">
+                <input  type="text" placeholder="click to show datepicker"  id="example1">
+            </div>
+        </div>
 		</form>
+        <script src="/static/dist/js/jquery.js"></script>
+        <script src="/static/dist/js/datepicker.js"></script>
+        <script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
+                
+                $('#example1').datepicker({
+                    format: "dd/mm/yyyy"
+                });  
+            
+            });
+        </script>
 {% endblock %}

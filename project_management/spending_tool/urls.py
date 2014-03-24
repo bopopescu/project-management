@@ -4,7 +4,7 @@ from django.views.generic import RedirectView
 from spending_tool import views
 
 urlpatterns = patterns('',
-
+    url(r'^$', RedirectView.as_view(url='home/', permanent=False), name='index'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^financial_info/$', views.financial_info, name='financial_info'),

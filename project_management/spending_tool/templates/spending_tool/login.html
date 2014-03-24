@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en-us" >
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/dist/css/cisco-css.css" rel="stylesheet">
 <title>Log in</title>
 </head>
 
 
 <body>
-<br>
-<br>
-<br>
+<header>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+      		<div class="navbar-inner">
+        		<div class="container-fluid-nav">
+          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
+        		</div>
+      		</div>
+		</div>
+    </header>
+ <br /><br /><br /><br /> 
 <!-- Container -->
 <center>
-<div id="container" style="width:30%;background-color:#FFA500;">
+<div id="container">
   <br>
 <form action="" method="post" id="login-form">{% csrf_token %}
   <div class="form-row">
