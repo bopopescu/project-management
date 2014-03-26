@@ -330,8 +330,9 @@ def edit_status(request):
         project = Project.objects.get(fellow_engineer=engineer)
         previous_status=DescriptionType.objects.filter(project=project).order_by('date')
         l=len(previous_status)
-        one_status=previous_status[l-1]
-        previous_status=previous_status[:l-1]
+        index=l-1
+        one_status=previous_status[index]
+        previous_status=previous_status[:index]
         quarter_number=return_quarter_year()[0]
         year=return_quarter_year()[1] 
         if request.method == 'POST':
