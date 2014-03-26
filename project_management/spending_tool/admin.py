@@ -26,10 +26,13 @@ class ProjectAdmin(admin.ModelAdmin):
 	fieldsets=[
 
 	('Info',{'fields':['status' ,'name_project','fellow_engineer','project_overview','business_value_to_cisco','start_date',
-	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_qrt', 'spent_cost', 'executive_sponsor',
+	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost', 'executive_sponsor',
 	 'ip_generated', 'adoptor', 'committee']}),
 
 	]
+	readonly_fields=['project_overview','business_value_to_cisco','start_date',
+	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost', 'executive_sponsor',
+	 'ip_generated', 'adoptor', 'committee']
 	actions=['print_report']
 
 	def print_report(modeladmin, request, queryset):
@@ -46,7 +49,7 @@ class ProjectAdmin(admin.ModelAdmin):
 		output = StringIO.StringIO()
 		title=str('report_date_%d_%d_%d_time_%d_%d.xlsx' %(month, day, year, hour, minute))
 		#workbook=xlsxwriter.Workbook('report_%s.xlsx' %(queryset.test))    
-		workbook=xlsxwriter.Workbook(title)
+		workbook=xlsxwriter.Workbook(output)
 		#workbook=xlsxwriter.Workbook('blablabla.xlsx')
 		worksheet = workbook.add_worksheet()
 		line=0
@@ -76,7 +79,7 @@ class ProjectAdmin(admin.ModelAdmin):
 		response['Content-Disposition'] = "attachment; filename="+title
 		return response
 
-	print_report.short_description = "Print report"
+	print_report.short_description = "Export to Excel"
 
 admin.site.register(Project, ProjectAdmin)
 
@@ -91,7 +94,7 @@ class ExpensesTypeAdmin(admin.ModelAdmin):
 
 	fieldsets=[
 	('Info',{'fields':['expenses_type', 'year', 'quarter_number','estimated_cost','direct_charge_actual_cost',
-		'cross_charge_actual_cost','department_number' ,'project']})
+		'cross_charge_actual_cost' ,'project']})
 	]
 admin.site.register(ExpensesType, ExpensesTypeAdmin)
 '''

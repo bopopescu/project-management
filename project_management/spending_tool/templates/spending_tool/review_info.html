@@ -1,79 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/static/dist/css/cisco-css.css" rel="stylesheet">
-</head>
-<body>
+{% extends "spending_tool/layout.html" %}
+{% block content %}
 
-<header>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-      		<div class="navbar-inner">
-        		<div class="container-fluid-nav">
-          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
-        		</div>
-      		</div>
-		</div>
-    </header>
-    
-    <br /><br /><br /><br />
-	
-<!-- Nav bar !-->
-<div class="row-fluid">
-    <div class="span2">
-      	<div class="container-fluid-content">
-			<div class="row">
-
-			
-				<ul class="nav nav-sidebar navbar-left">
-					<li><a href="/home">Home</a></li>
-					<li><a href="/financial_info">Edit Current Expenses</a></li>
-					<li><a href="/review_info">Review Expenses</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="/project_summary/" >Project Summary</a></li>
-					<li><a href="/edit_status/" >Status</a></li>
-					<li><a href="/input_milestones/" >Milestone Schedule</a></li>
-					<li><a href="/project_details/" >Project Details</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-
-	<!--<div id="content" style="background-color:#EEEEEE;height:200px;width:85%;float:left;">
-		
-		{{ project.name_project }}{{expense_for_current_quarter}}
-		{% for expenses in previous_expensestype %}
-		{{ expenses.expenses_type }}
-		{% endfor %}
-		<br>
-		<br>
-		<form action="" method="post">{% csrf_token %}
-			<center>
-			{% for current_expenses in expense_for_current_quarter %}
-			{{ current_expenses.expenses_type}}
-			<p>Expected Cost:<input type="number" min="1" max="1000" placeholder="search" name="expected_cost{{current_expenses.expenses_type}}"/></p>
-			{{ expense_for_current_quarter.expenses_type }}
-			<p>Actual Cost:<input type="number" min="1" max="1000" placeholder="search"  name="actual_cost{{current_expenses.expenses_type}}"/></p>
-
-			
-			{% endfor %}
-			<p><input type="submit" value="submit" /></p>
-			<center>
-
-		</form>
-		
-
-	</div>-->
-
-
-
-<div class="span4">
 		<h2 class="page-header">Tech Fund Finance</h2>
 			<div class="table-responsive">
 			<table class="table">
@@ -100,6 +27,7 @@
 				{% for expenses in current_quarter %}
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
 				{% endfor %}
+				<tr><td>Total Direct Charge:</td><td>{{total_exp_current_direct}}</td><td>Total Cross Charge:</td><td>{{total_exp_current_cross}}</td></tr>
 			</table>
 		</div>
 	</td>
@@ -122,21 +50,4 @@
 	</div>
 	</div>
 
-
-</div>
-</div>
-</div>
-</div>
-
-	
-
-<script src="/static/dist/js/bootstrap.min.js"></script>
-<script src="/https://code.jquery.com/jquery.js"></script>
-<div id="footer" style="clear:both;text-align:center;">
-Copyright © Cisco</div>
-<br /><br /><br /><br />
-
-
-
-</body>
-</html> 
+{% endblock %}

@@ -1,103 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/static/dist/css/cisco-css.css" rel="stylesheet">
-</head>
-<body>
-
-<header>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-      		<div class="navbar-inner">
-        		<div class="container-fluid-nav">
-          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
-        		</div>
-      		</div>
-		</div>
-    </header>
-    
-    <br /><br /><br /><br />
-	
-<!-- Nav bar !-->
-<div class="row-fluid">
-    <div class="span2">
-      	<div class="container-fluid-content">
-			<div class="row">
-
-			
-				<ul class="nav nav-sidebar navbar-left">
-					<li><a href="/home">Home</a></li>
-					<li><a href="/financial_info">Edit Current Expenses</a></li>
-					<li><a href="/review_info">Review Expenses</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="/project_summary/" >Project Summary</a></li>
-					<li><a href="/edit_status/" >Status</a></li>
-					<li><a href="/input_milestones/" >Milestone Schedule</a></li>
-					<li><a href="/project_details/" >Project Details</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-<div class="span4">
+{% extends "spending_tool/layout.html" %}
+{% block content %}
 
 	<h2 class="page-header">Project Description</h2>
 	<form method="post" action="">{% csrf_token %}
 		<div id="container">
+			<table class="table table-striped" style="width:5000px">
+				<tr><td></td><th >Previous Status</th><th>Current Status</th></tr>
+				<tr><th>Date</th><td>{{one_status.date}}</td><td>{{ today }}</td></tr>
+				<tr><th>Recent Accomplishments</th><td>{{one_status.recent_accomplishments}}</td><td><textarea rows="4" cols="42" name="recent_accomplishments"></textarea></td></tr>
+				<tr><th>Current Challlenges</th><td>{{one_status.current_challenges}}</td><td><textarea rows="4" cols="42" name="current_challenges"></textarea></td></tr>
+				<tr><th>Next Steps</th><td>{{one_status.next_steps}}</td><td><textarea rows="4" cols="42" name="next_steps"></textarea></td></tr>
+				<tr><td></td><td><p><i><a href="/edit?status={{one_status.id}}">Edit status</a></i></p></td><td><input type="submit" class="btn btn-primary btn-medium" value="submit" /></td></tr>
+			</table>
 
-            <h3> Q {{quarter_number}}</h3>
+           <!-- <h3> Q {{quarter_number}}</h3>
 			<h4>Recent Accomplishments</h4>
 			<p>
 			Highlight any results or findings that will have value to Cisco or the industry
 			</p>
-			<!--<p>{{form.recent_accomplishments}}</p>-->
+			
 			<textarea rows="4" cols="42" name="recent_accomplishments"></textarea>
 			   <br> 
 			<h4>Current Challenges</h4>
 			<p>
 			Highlight any results or findings that will have value to Cisco or the industry
 			</p>
-			<!--<p>{{form.current_challenges}}</p>-->
+			
 			<textarea rows="4" cols="42" name="current_challenges"></textarea> 
 				<br>
 			<h4>Next Steps</h4>
 			<p>
 			Highlight any of the challenges that are likely to risk to the project
 			</p>
-			<!--<p>{{form.next_steps}}</p>-->
+			
 			<textarea rows="4" cols="42" name="next_steps"></textarea> 
-				<br>
-			</div>
+				<br>-->
+			</div> 
 
-			<p><input type="submit" class="btn btn-primary btn-large" value="submit" /></p>
+		
 		</form>
-        <h2>Previous Status</h2>
+		<br>
+		<br>
+        <h2>Previous Statuses</h2>
+        <hr class="featurette-divider">
         {% for status in previous_status %}
-        <p><b>Recent Accomplishments - {{status.quarter_number}} / {{status.year}} </b></p>
+        <p><b>Recent Accomplishments / {{status.date}}  </b></p>
         <p>{{status.recent_accomplishments}}</p>
-        <p><b>Current Challenges - {{status.quarter_number}} / {{status.year}} </b></p>
+        <p><b>Current Challenges / {{status.date}}  </b></p>
         <p>{{status.current_challenges}}</p>
-        <p><b>Next Steps - {{status.quarter_number}} / {{status.year}} </b></p>
+        <p><b>Next Steps / {{status.date}} </b></p>
         <p>{{status.next_steps}}</p>
+        <p><i><a href="/edit?status={{status.id}}">Edit status</a></i></p>
+         <hr class="featurette-divider">   
         {% endfor %}
 		
-	</div>
-</div>
-
-<script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
-<script src="/https://code.jquery.com/jquery.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="/static/dist/js/dropdown.js"></script>
-<div id="footer" style="clear:both;text-align:center;">
-Copyright © Cisco</div>
-<br /><br /><br /><br />
-
-</div>
-
-</body>
-</html> 
+{% endblock %}
