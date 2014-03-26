@@ -9,7 +9,7 @@ class EngineerAdmin(admin.ModelAdmin):
 	model=EngineerProfile
 
 	fieldsets=[
-       ('Info',{'fields':['user','first_name','last_name']}),
+	   ('Info',{'fields':['user','first_name','last_name']}),
 	]
 
 	def first_name(self, instance):
@@ -48,11 +48,11 @@ class ProjectAdmin(admin.ModelAdmin):
 		minute=time.minute
 		output = StringIO.StringIO()
 		title=str('report_date_%d_%d_%d_time_%d_%d.xlsx' %(month, day, year, hour, minute))
-		#workbook=xlsxwriter.Workbook('report_%s.xlsx' %(queryset.test))    
+		#workbook=xlsxwriter.Workbook('report_%s.xlsx' %(queryset.test))	
 		workbook=xlsxwriter.Workbook(output)
 		#workbook=xlsxwriter.Workbook('blablabla.xlsx')
 		worksheet = workbook.add_worksheet()
-		line=0
+		line=1
 		
 		list_quarters=[]
 		#project_id=queryset.id
@@ -62,6 +62,8 @@ class ProjectAdmin(admin.ModelAdmin):
 				if len(ExpensesType.objects.filter(project=query, year=year, quarter_number=m+1))>0:
 					list_quarters.append(ExpensesType.objects.filter(project=query, year=year, quarter_number=m+1))
 			for p in range(len(list_quarters)):
+				worksheet.write(line-1, 1+cell, 'Year'+str(list_quarters[p][0].year))
+				worksheet.write(line-1, 2+cell, 'Quarter'+str(list_quarters[p][0].quarter_number))
 				worksheet.write(line, 1+cell, 'Expense Type' )
 				worksheet.write(line, 2+cell, 'Estimates' )
 				worksheet.write(line, 3+cell, 'Direct Charge' )
@@ -70,7 +72,22 @@ class ProjectAdmin(admin.ModelAdmin):
 					worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
 					worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
 					worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
-					worksheet.write(n+line+1, 4+cell, list_quarters[p][n].quarter_number)
+					worksheet.write(n+line+1, 4+cell, list_quarters[p][n].cross_charge_actual_cost)
+				
+				#get departments
+				list_dept=[]
+				worksheet.write(line+10, 1+cell, 'Cross Charges')
+				worksheet.write(line+11, 1+cell, 'Expense Type')
+				worksheet.write(line+11, 2+cell, 'Cross Charge')
+				worksheet.write(line+11, 3+cell, 'Dept #')
+				tmp=0
+				for dept in list_quarters[p]:
+					departments=DepartmentNumber.objects.filter(relates_to=dept)
+					for department in departments:
+						worksheet.write(line+11+tmp, 1+cell, dept.expenses_type)
+						worksheet.write(line+11+tmp, 2+cell, department.cross_charge_actual_cost)
+						worksheet.write(line+11+tmp, 3+cell, department.department_number)
+						tmp=tmp+1
 				cell=cell+5
 			line=line+20
 		workbook.close()
@@ -108,62 +125,62 @@ class DescriptionTypeAdmin(admin.ModelAdmin):
 admin.site.register(DescriptionType, DescriptionTypeAdmin)
 
 def print_report(modeladmin, request, queryset):
-    time=datetime.now()
-    year=time.year
-    day=time.day
-    month=time.month
-    workbook=xlsxwriter.Workbook('report.xlsx')    
-    worksheet = workbook.add_worksheet()
-    line=0
+	time=datetime.now()
+	year=time.year
+	day=time.day
+	month=time.month
+	workbook=xlsxwriter.Workbook('report.xlsx')	
+	worksheet = workbook.add_worksheet()
+	line=0
 
-    #project_id=queryset.id
+	#project_id=queryset.id
 	for m in range(4):
 		if len(ExpensesType.objects.filter(project=query, year=year, quarter_number=m+1))>0:
 			list_quarters.append(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))
 		cell=0
-    for p in range(len(list_quarters)):
-        worksheet.write(line, 1+cell, 'Expense Type' )
-        worksheet.write(line, 2+cell, 'Estimates' )
-        worksheet.write(line, 3+cell, 'Direct Charge' )
-        worksheet.write(line, 4+cell, 'Cross Charge' )
-        for n in range(len(list_quarters[p])):
-            worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
-            worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
-            worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
-            worksheet.write(n+line+1, 4+cell, list_quarters[p][n].quarter_number)
-        cell=cell+5
-    workbook.close()
+	for p in range(len(list_quarters)):
+	worksheet.write(line, 1+cell, 'Expense Type' )
+	worksheet.write(line, 2+cell, 'Estimates' )
+	worksheet.write(line, 3+cell, 'Direct Charge' )
+	worksheet.write(line, 4+cell, 'Cross Charge' )
+	for n in range(len(list_quarters[p])):
+	worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
+	worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
+	worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
+	worksheet.write(n+line+1, 4+cell, list_quarters[p][n].quarter_number)
+	cell=cell+5
+	workbook.close()
 print_report.short_description = "Print report"
 def print_report_all(modeladmin, request, queryset):
-    time=datetime.now()
-    year=time.year
-    day=time.day
-    month=time.month
-    workbook=xlsxwriter.Workbook('report.xlsx')
-    #workbook = xlsxwriter.Workbook('tech_fund_report_'+ str(month) +'/'+ str(day) +'/' + str(year) +'.xlsx')
-    worksheet = workbook.add_worksheet()
+	time=datetime.now()
+	year=time.year
+	day=time.day
+	month=time.month
+	workbook=xlsxwriter.Workbook('report.xlsx')
+	#workbook = xlsxwriter.Workbook('tech_fund_report_'+ str(month) +'/'+ str(day) +'/' + str(year) +'.xlsx')
+	worksheet = workbook.add_worksheet()
 
 
 
-    projects=Project.objects.all() 
-    line=0
-    list_quarters=[]
-    for i in range(len(projects)):
-        for m in range(4):
-            if len(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))>0:
-                list_quarters.append(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))
-        cell=0
-        for p in range(len(list_quarters)):
-            worksheet.write(line, 1+cell, 'Expense Type' )
-            worksheet.write(line, 2+cell, 'Estimates' )
-            worksheet.write(line, 3+cell, 'Direct Charge' )
-            worksheet.write(line, 4+cell, 'Cross Charge' )
-            for n in range(len(list_quarters[p])):
-                worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
-                worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
-                worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
-                worksheet.write(n+line+1, 4+cell, list_quarters[p][n].quarter_number)
-            cell=cell+5
-        line=line+20
-    workbook.close()
+	projects=Project.objects.all() 
+	line=0
+	list_quarters=[]
+	for i in range(len(projects)):
+	for m in range(4):
+	if len(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))>0:
+	list_quarters.append(ExpensesType.objects.filter(project=projects[i], year=year, quarter_number=m+1))
+	cell=0
+	for p in range(len(list_quarters)):
+	worksheet.write(line, 1+cell, 'Expense Type' )
+	worksheet.write(line, 2+cell, 'Estimates' )
+	worksheet.write(line, 3+cell, 'Direct Charge' )
+	worksheet.write(line, 4+cell, 'Cross Charge' )
+	for n in range(len(list_quarters[p])):
+	worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
+	worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
+	worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
+	worksheet.write(n+line+1, 4+cell, list_quarters[p][n].quarter_number)
+	cell=cell+5
+	line=line+20
+	workbook.close()
 '''

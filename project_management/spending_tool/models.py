@@ -63,6 +63,7 @@ class ExpensesType(models.Model):
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     def __unicode__(self):  # Python 3: def __str__(self):
         return unicode(self.expenses_type) or u''
+        
 class DepartmentNumber(models.Model):
     department_number=models.CharField(max_length=100, null=True, default=None)
     cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=1)
