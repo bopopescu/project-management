@@ -29,15 +29,15 @@ class Project(models.Model):
     business_value_to_cisco = models.TextField(max_length=500, null=True, default=None)
 
     start_date = models.DateField( null=True)
-    funding_approved = models.DecimalField(max_digits=20, decimal_places=2)
-    engineering_mgr = models.CharField(max_length=50, null=True)
+    funding_approved = models.DecimalField(max_digits=20, decimal_places=2, null=True, default=0)
+    engineering_mgr = models.CharField(max_length=50, null=True, default=None)
     target_completion =models.DateField( null=True)
     #spent_qrt = models.CharField(max_length=1, null=True)
-    spent_cost = models.DecimalField(max_digits=20, decimal_places=2) 
-    executive_sponsor = models.CharField(max_length=50, null=True)
+    spent_cost = models.DecimalField(max_digits=20, decimal_places=2, null=True, default=0) 
+    executive_sponsor = models.CharField(max_length=50, null=True, default=None)
     ip_generated = models.CharField(max_length=100, null=True)
-    adoptor = models.CharField(max_length=100, null=True)
-    committee = models.CharField(max_length=100, null=True)
+    adoptor = models.CharField(max_length=100, null=True, default=None)
+    committee = models.CharField(max_length=100, null=True, default=None)
 
     fellow_engineer = models.ForeignKey(EngineerProfile)
     def __unicode__(self):
@@ -69,9 +69,9 @@ class DepartmentNumber(models.Model):
     relates_to=models.ForeignKey(ExpensesType)
     
 class DescriptionType(models.Model):
-    recent_accomplishments = models.TextField(max_length=500, null=True)
-    current_challenges = models.TextField(max_length=500, null=True)
-    next_steps = models.TextField(max_length=500, null=True)
+    recent_accomplishments = models.TextField(max_length=500, null=True, default=None)
+    current_challenges = models.TextField(max_length=500, null=True, default=None)
+    next_steps = models.TextField(max_length=500, null=True, default=None)
     quarter_number=models.DecimalField(max_digits=1, decimal_places=0)
     year = models.DecimalField(max_digits=4, decimal_places=0)
     date=models.DateField( null=True)
@@ -95,6 +95,7 @@ class Report(models.Model):
 
 def create_default_expenses(sender, instance, created, **kwargs):
     if created:
+      today=datetime.today()
       date=return_quarter_year()
       types=['Other','Travel','Intern' ,'Contractor','FTE','Capital Equipment','Equipment']
       for t in types:
@@ -107,6 +108,11 @@ def create_default_expenses(sender, instance, created, **kwargs):
           estimated_cost=0,
           project=instance
           )
+      DescriptionType.objects.create(project=instance,
+                                    quarter_number=date[0],
+                                    year=date[1],
+                                    date=today,
+                                     )
 
 
 

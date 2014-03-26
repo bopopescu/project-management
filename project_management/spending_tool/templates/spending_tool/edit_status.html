@@ -4,7 +4,7 @@
 	<h2 class="page-header">Project Description</h2>
 	<form method="post" action="">{% csrf_token %}
 		<div id="container">
-			<table class="table table-striped" style="width:5000px">
+			<table class="table table-striped" >
 				<tr><td></td><th >Previous Status</th><th>Current Status</th></tr>
 				<tr><th>Date</th><td>{{one_status.date}}</td><td>{{ today }}</td></tr>
 				<tr><th>Recent Accomplishments</th><td>{{one_status.recent_accomplishments}}</td><td><textarea rows="4" cols="42" name="recent_accomplishments"></textarea></td></tr>
