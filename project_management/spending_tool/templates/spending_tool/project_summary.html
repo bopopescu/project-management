@@ -8,6 +8,7 @@
 
 
 			<h4>Project Overview</h4>
+			<p>What is the project about – high level description of project, purpose, objectives:</p>
 			{% if project.project_overview == None %}
 			<p>{{form.project_overview}}</p>
 			{% endif %}
@@ -16,7 +17,7 @@
 			{% endif %}
 				<br>
 			<h4>Business Value to Cisco</h4>
-			
+			<p>What is the business value to Cisco from the adoption / implementation of the project results:</p>
 			{% if project.business_value_to_cisco == None %}
 			<p>{{form.business_value_to_cisco}}</p>
 			{% endif %}
