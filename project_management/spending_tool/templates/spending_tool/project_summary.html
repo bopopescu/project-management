@@ -9,27 +9,19 @@
 
 			<h4>Project Overview</h4>
 			<p>What is the project about – high level description of project, purpose, objectives:</p>
-			{% if project.project_overview == None %}
+
 			<p>{{form.project_overview}}</p>
-			{% endif %}
-			{% if not project.project_overview == None %}
-			<p>{{project.project_overview}}</p>
-			{% endif %}
+
 				<br>
 			<h4>Business Value to Cisco</h4>
 			<p>What is the business value to Cisco from the adoption / implementation of the project results:</p>
-			{% if project.business_value_to_cisco == None %}
 			<p>{{form.business_value_to_cisco}}</p>
-			{% endif %}
-			{% if not project.business_value_to_cisco == None %}
-			<p>{{project.business_value_to_cisco}}</p>
-			{% endif %}
-				<br>
+			<br>
 			
 			</div>
-			{% if project.business_value_to_cisco == None and project.project_overview == None%}
+			
 			<p><input type="submit" href="/milestones/" class="btn btn-primary btn-medium" value="submit" /></p>
-			{% endif %}
+			
 
 		</form>
 	</div>

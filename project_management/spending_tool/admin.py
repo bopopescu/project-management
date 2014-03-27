@@ -68,25 +68,33 @@ class ProjectAdmin(admin.ModelAdmin):
 				worksheet.write(line, 2+cell, 'Estimates' )
 				worksheet.write(line, 3+cell, 'Direct Charge' )
 				worksheet.write(line, 4+cell, 'Cross Charge' )
+				num_of_expenses_per_quarter=len(list_quarters[p])
+				direct_expenses_per_quarter=0
+				cross_expenses_per_quarter=0
 				for n in range(len(list_quarters[p])):
 					worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
 					worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
 					worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
 					worksheet.write(n+line+1, 4+cell, list_quarters[p][n].cross_charge_actual_cost)
-				
+					direct_expenses_per_quarter=direct_expenses_per_quarter+list_quarters[p][n].direct_charge_actual_cost
+					cross_expenses_per_quarter=cross_expenses_per_quarter+list_quarters[p][n].cross_charge_actual_cost
+
+                
+				worksheet.write(num_of_expenses_per_quarter+line+1, 3+cell,'Total: '+ str(direct_expenses_per_quarter))
+				worksheet.write(num_of_expenses_per_quarter+line+1, 4+cell,'Total: '+ str( cross_expenses_per_quarter))
 				#get departments
 				list_dept=[]
-				worksheet.write(line+10, 1+cell, 'Cross Charges')
-				worksheet.write(line+11, 1+cell, 'Expense Type')
-				worksheet.write(line+11, 2+cell, 'Cross Charge')
-				worksheet.write(line+11, 3+cell, 'Dept #')
+				worksheet.write(line+num_of_expenses_per_quarter+3, 1+cell, 'Cross Charges')
+				worksheet.write(line+num_of_expenses_per_quarter+4, 1+cell, 'Expense Type')
+				worksheet.write(line+num_of_expenses_per_quarter+4, 2+cell, 'Cross Charge')
+				worksheet.write(line+num_of_expenses_per_quarter+4, 3+cell, 'Dept #')
 				tmp=0
 				for dept in list_quarters[p]:
 					departments=DepartmentNumber.objects.filter(relates_to=dept)
 					for department in departments:
-						worksheet.write(line+11+tmp, 1+cell, dept.expenses_type)
-						worksheet.write(line+11+tmp, 2+cell, department.cross_charge_actual_cost)
-						worksheet.write(line+11+tmp, 3+cell, department.department_number)
+						worksheet.write(line+num_of_expenses_per_quarter+5+tmp, 1+cell, dept.expenses_type)
+						worksheet.write(line+num_of_expenses_per_quarter+5+tmp, 2+cell, department.cross_charge_actual_cost)
+						worksheet.write(line+num_of_expenses_per_quarter+5+tmp, 3+cell, department.department_number)
 						tmp=tmp+1
 				cell=cell+5
 			line=line+20

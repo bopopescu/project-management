@@ -411,13 +411,13 @@ def project_summary(request):
         engineer = EngineerProfile.objects.get(user=current_user)
         project = Project.objects.get(fellow_engineer=engineer) 
         if request.method == 'POST':
-            form = ProjectsummaryForm(request.POST or None, instance=request.user.get_profile())
+            form = ProjectsummaryForm(request.POST or None, instance=project)
             if form.is_valid():
                 form.save()
                 new_user = form.save()
                 return HttpResponseRedirect('/project_summary/')
         else:
-            form = ProjectsummaryForm(instance = request.user.get_profile())
+            form = ProjectsummaryForm(instance = project)
     return render(request, 'spending_tool/project_summary.html',{'project':project,'form':form})
 
 def input_milestones(request):
