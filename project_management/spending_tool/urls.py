@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^home/$', views.home, name='home'),
     #url(r'^download_document/$', views.download_document, name='download_document'),
    # url(r'^report/$', views.report, name='report'),
+   url(r'^create_report/$', views.create_report, name='create_report'),
 
   
 
