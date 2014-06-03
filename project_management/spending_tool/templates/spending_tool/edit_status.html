@@ -10,7 +10,7 @@
 				<tr><th>Recent Accomplishments</th><td>{{one_status.recent_accomplishments}}</td><td><textarea rows="4" cols="42" name="recent_accomplishments"></textarea></td></tr>
 				<tr><th>Current Challlenges</th><td>{{one_status.current_challenges}}</td><td><textarea rows="4" cols="42" name="current_challenges"></textarea></td></tr>
 				<tr><th>Next Steps</th><td>{{one_status.next_steps}}</td><td><textarea rows="4" cols="42" name="next_steps"></textarea></td></tr>
-				<tr><td></td><td><p><i><a href="/edit?status={{one_status.id}}">Edit status</a></i></p></td><td><input type="submit" class="btn btn-primary btn-medium" value="submit" /></td></tr>
+				<tr><td></td><td><p><i><a href="/edit?status={{one_status.id}}&id={{project.id}}">Edit status</a></i></p></td><td><input type="submit" class="btn btn-primary btn-medium" value="submit" /></td></tr>
 			</table>
 
            <!-- <h3> Q {{quarter_number}}</h3>
@@ -50,7 +50,7 @@
         <p>{{status.current_challenges}}</p>
         <p><b>Next Steps / {{status.date}} </b></p>
         <p>{{status.next_steps}}</p>
-        <p><i><a href="/edit?status={{status.id}}">Edit status</a></i></p>
+        <p><i><a href="/edit?status={{status.id}}&id={{project.id}}">Edit status</a></i></p>
          <hr class="featurette-divider">   
         {% endfor %}
 		

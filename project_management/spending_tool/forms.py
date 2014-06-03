@@ -15,6 +15,8 @@ class MilestoneForm(ModelForm):
 		fields = ('major_milestone', 'due_date', 'percentage_complete')
 '''
 class DetailsForm(ModelForm):
+	start_date = forms.DateField( widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+	target_completion = forms.DateField( widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
 	class Meta:
 		model = Project
 		fields = ('start_date', 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost',

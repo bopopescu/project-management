@@ -29,7 +29,7 @@ class Project(models.Model):
     business_value_to_cisco = models.TextField(max_length=500, null=True, default=None)
 
     start_date = models.DateField( null=True)
-    funding_approved = models.DecimalField(max_digits=20, decimal_places=2, null=True, default=0)
+    funding_approved = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     engineering_mgr = models.CharField(max_length=50, null=True, default=None)
     target_completion =models.DateField( null=True)
     #spent_qrt = models.CharField(max_length=1, null=True)
@@ -39,7 +39,11 @@ class Project(models.Model):
     adoptor = models.CharField(max_length=100, null=True, default=None)
     committee = models.CharField(max_length=100, null=True, default=None)
 
-    fellow_engineer = models.ForeignKey(EngineerProfile)
+
+    modified_by = models.CharField(max_length=100, null=True, default=None)
+
+    updated = models.DateTimeField(auto_now=True)   
+    #fellow_engineer = models.ForeignKey(EngineerProfile)
     def __unicode__(self):
         return unicode(self.name_project) or u''
 class Document(models.Model):
@@ -49,6 +53,14 @@ class Document(models.Model):
   file_name = models.CharField(max_length=50, null=True)
 
   
+
+#class tmpProject(models.Model):
+#    project_id = models.DecimalField(max_digits=3, decimal_places=0)
+class projectTotalExpenses(models.Model):
+    project=models.ForeignKey(Project)
+    actual_spent=models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    funding_approved=models.DecimalField(max_digits=10, decimal_places=0, default=0)
+
 class ExpensesType(models.Model):
     expenses_type=models.CharField(max_length=100, null=True)
     estimated_cost = models.DecimalField(max_digits=5, decimal_places=0)
@@ -68,6 +80,7 @@ class DepartmentNumber(models.Model):
     department_number=models.CharField(max_length=100, null=True, default=None)
     cross_charge_actual_cost=models.DecimalField(max_digits=5, decimal_places=1)
     relates_to=models.ForeignKey(ExpensesType)
+    person=models.CharField(max_length=100, null=True, default=None)
     
 class DescriptionType(models.Model):
     recent_accomplishments = models.TextField(max_length=500, null=True, default=None)
@@ -115,7 +128,9 @@ def create_default_expenses(sender, instance, created, **kwargs):
                                     date=today,
                                      )
 
-
+def create_total_exp(sender, instance, created, **kwargs):
+    if created:
+        projectTotalExpenses.objects.create(project=instance)
 
 def return_quarter_year():
   time=datetime.now()
@@ -158,3 +173,4 @@ def return_quarter_year():
 
 post_save.connect(create_default_expenses, sender=Project)
 
+post_save.connect(create_total_exp, sender=Project)

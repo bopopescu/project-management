@@ -50,6 +50,16 @@ def return_quarter_year():
     date=[quarter_number, year]
     return date
 
+def updateTotal(project):
+    totalExp=projectTotalExpenses.objects.get(project=project)
+    totalExp.funding_approved = project.funding_approved
+    totals=ExpensesType.objects.filter(project=project)
+    total=0
+    for t in totals:
+        total=total+t.cross_charge_actual_cost + t.direct_charge_actual_cost
+    totalExp.actual_spent=total
+    totalExp.save()
+    return project.funding_approved, total
 
 def returnExpenses(project):
     cross_charge_actual_cost_specific=direct_charge_actual_cost=[] 
