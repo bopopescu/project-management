@@ -51,7 +51,10 @@ def home(request):
         return HttpResponseRedirect('/login/')
     return render(request,'spending_tool/home.html')
 
-
+def guidelines(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    return render(request,'spending_tool/guidelines.html')
 
 def financial_info(request):
     if not request.user.is_authenticated():
