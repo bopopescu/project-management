@@ -23,9 +23,16 @@ import smtplib
 
 import re
 
-
-
-
+import xlsxwriter
+date = return_quarter_year()
+quarter_number=date[0]
+year=date[1]
+'''
+def create_tmp_project(request):
+    project_id=request.GET.get('id')
+    tmProject.objects.create(project_id=project_id)
+    return HttpResponseRedirect('/financial_info/')  
+'''
 def login(request):
     username=password=''
     if request.method == 'POST':
@@ -47,102 +54,45 @@ def logout(request):
     return HttpResponseRedirect('/login/')
 
 def home(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
     return render(request,'spending_tool/home.html')
 
 def guidelines(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    return render(request,'spending_tool/guidelines.html')
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        return render(request,'spending_tool/guidelines.html')
 
 def financial_info(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
         current_user=request.user
         cross_charge_actual_cost_specific=direct_charge_actual_cost=[]
-        
-        engineer=EngineerProfile.objects.get(user=current_user)
-        project=Project.objects.get(fellow_engineer=engineer)
+        #engineer=EngineerProfile.objects.get(user=current_user)
+        project=Project.objects.get(pk=project_id)
         expenses_for_previous_quarter, expenses_for_current_quarter, expenses_for_next_quarter=returnExpenses(project)
         date = return_quarter_year()
         quarter_number=date[0]
         year=date[1]
-        '''
-        
-        expenses_for_next_quarter=[]
-        expenses_for_current_quarter=ExpensesType.objects.filter(
-        														year=year,
-        														quarter_number=quarter_number,
-        														project=project)
-        
-        if quarter_number ==2 or quarter_number==3:
-            expenses_for_previous_quarter=ExpensesType.objects.filter(
-        															year=year,
-        															quarter_number=quarter_number-1,
-        															project=project)
-            #expenses_for_next_quarter= expenses_for_next_quarter.append(ExpensesType.objects.filter(
-            #														year=year,
-            #														quarter_number=quarter_number+1,
-            #														project=project) )
-        if quarter_number==1:
-        	expenses_for_previous_quarter=ExpensesType.objects.filter(
-        															year=year-1,
-        															quarter_number=4,
-        															project=project)
-        	#expenses_for_next_quarter.append(ExpensesType.objects.filter(
-            #														year=year,
-            #														quarter_number=2,
-            #														project=project) )
-        if quarter_number==4:
-            expenses_for_previous_quarter=ExpensesType.objects.filter(
-        															year=year,
-        															quarter_number=quarter_number-1,
-        															project=project)
-            #expenses_for_next_quarter.append(ExpensesType.objects.filter(
-            #														year=year+1,
-            #														quarter_number=1,
-            #														project=project) )
-            
-        for expense in expenses_for_current_quarter:
-        	if len(ExpensesType.objects.filter(relates_to=expense)) == 0:
-        		if quarter_number ==1 or quarter_number==2 or quarter_number==3:
-        			expenses_for_next_quarter.append( ExpensesType.objects.create( project=project,
-        										relates_to=expense,
-        										year=year,
-        										quarter_number=quarter_number+1,
-        										expenses_type=expense.expenses_type,
-        										estimated_cost=0,
-        										cross_charge_actual_cost=0,
-        										direct_charge_actual_cost=0) )
-        		if quarter_number == 4:
-        			expenses_for_next_quarter.append( ExpensesType.objects.create( project=project,
-        										relates_to=expense,
-        										year=year+1,
-        										quarter_number=1,
-        										expenses_type=expense.expenses_type,
-        										estimated_cost=0,
-        										cross_charge_actual_cost=0,
-        										direct_charge_actual_cost=0) )
-        	else:
-        	    #if not ExpensesType.objects.get(relates_to=expense) in expenses_for_next_quarter:
-        	    expenses_for_next_quarter.append(ExpensesType.objects.get(relates_to=expense))
-        '''
         list_for_cross_charge=[]
         current_cross_dept=[]
         for exp in expenses_for_current_quarter:
             if exp.cross_charge_actual_cost>0:
                 dept_related_to=DepartmentNumber.objects.filter(relates_to=exp)
-                list_for_cross_charge.append((exp, dept_related_to))
+                sum_depts=0
+                for d in dept_related_to:
+                    sum_depts=sum_depts+d.cross_charge_actual_cost
+                res=exp.cross_charge_actual_cost-sum_depts
+                list_for_cross_charge.append((exp, dept_related_to, sum_depts,res ))
                 for a in dept_related_to:
                     current_cross_dept.append(a)
         add_dept=request.GET.get('add_dept','')
         if len(add_dept)!=0:
             exp=ExpensesType.objects.get(pk=add_dept)
             DepartmentNumber.objects.create(relates_to=exp,cross_charge_actual_cost=0, department_number=0)
-            return HttpResponseRedirect('/financial_info')
+            return HttpResponseRedirect('/financial_info/?id='+project_id)
         if request.method=='POST':
             i=0
             expected_cost=request.POST.getlist('expected_cost')
@@ -150,11 +100,13 @@ def financial_info(request):
             cross_charge_actual_cost=request.POST.getlist('cross_charge_actual_cost')
 
             department_number=request.POST.getlist('department_number')
+            person=request.POST.getlist('person')
             cross_charge_actual_cost_specific=request.POST.getlist('cross_charge_actual_cost_specific')
             n=0
             for dept in current_cross_dept:
                 dept.department_number=department_number[n]
                 dept.cross_charge_actual_cost=cross_charge_actual_cost_specific[n]
+                dept.person=person[n]
                 dept.save()
                 n=n+1
             actual_cost=request.POST.getlist('actual_cost')
@@ -167,13 +119,17 @@ def financial_info(request):
                 expense_for_next_quarter.estimated_cost=expected_cost[i]
                 expense_for_next_quarter.save()
             	i=i+1
-            return HttpResponseRedirect('/financial_info/')
+            return HttpResponseRedirect('/financial_info/?id='+project_id)
             
         #info=financialInfo(request)
+        updateTotal(project)
+        totalExp=projectTotalExpenses.objects.get(project=project)
     return render(request,'spending_tool/financial_info.html',{ 'expenses_for_next_quarter':expenses_for_next_quarter,
     															'expenses_for_current_quarter':expenses_for_current_quarter,
     															'expenses_for_previous_quarter':expenses_for_previous_quarter,
     														    'project':project,
+                                                                'totalExp':totalExp,
+                                                                'year':year,
     															'quarter_number':quarter_number,
                                                                 'list_for_cross_charge':list_for_cross_charge,
     															'current_cross_dept':current_cross_dept,
@@ -182,19 +138,18 @@ def financial_info(request):
                                                                 })
 
 def add_field(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
         current_user=request.user
 
-        engineer=EngineerProfile.objects.get(user=current_user)
-        project=Project.objects.get(fellow_engineer=engineer)
+        #engineer=EngineerProfile.objects.get(user=current_user)
+        project=Project.objects.get(pk=project_id)
         
         date=return_quarter_year()
         quarter_number=date[0]
         year=date[1]
-
-
 
         expense_for_current_quarter=[]
 
@@ -218,7 +173,7 @@ def add_field(request):
                                                 project=project,
                                                 quarter_number=1
                                                 )
-            return HttpResponseRedirect('/financial_info/')
+            return HttpResponseRedirect('/financial_info/?id='+project_id)
             
         if quarter_number==1 or quarter_number==2 or quarter_number==3:
             expense_for_current_quarter=ExpensesType.objects.filter(
@@ -231,17 +186,21 @@ def add_field(request):
                                                                 quarter_number=1,
                                                                 project=project)
         
-    return render(request,'spending_tool/add_field.html',{'quarter_number':quarter_number, 'project':project, 'expense_for_current_quarter':expense_for_current_quarter})
+    return render(request,'spending_tool/add_field.html',{'quarter_number':quarter_number,
+                                                          'year':year,
+                                                          'project':project, 
+                                                          'expense_for_current_quarter':expense_for_current_quarter})
 
 
 def add_current_field(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
         current_user=request.user
 
-        engineer=EngineerProfile.objects.get(user=current_user)
-        project=Project.objects.get(fellow_engineer=engineer)
+        #engineer=EngineerProfile.objects.get(user=current_user)
+        project=Project.objects.get(pk=project_id)
         
         date=return_quarter_year()
         quarter_number=date[0]
@@ -260,36 +219,21 @@ def add_current_field(request):
             							year=year,
             							quarter_number=quarter_number,)
             							#department_number=department_number)
-            '''
-            if quarter_number == 1 or quarter_number == 2 or quarter_number == 3:
-            	ExpensesType.objects.create(project=project,
-            							expenses_type=name,
-            							estimated_cost=expected_cost,
-            							actual_cost=actual_cost,
-            							year=year,
-            							quarter_number=quarter_number+1,
-            							relates_to=current)
-            if quarter_number==4:
-            	ExpensesType.objects.create(project=project,
-            							expenses_type=name,
-            							estimated_cost=expected_cost,
-            							actual_cost=actual_cost,
-            							year=year+1,
-            							quarter_number=1,
-            							relates_to=current)
-			'''
-            return HttpResponseRedirect('/financial_info/')
-    return render(request,'spending_tool/add_current_field.html',{'quarter_number':quarter_number, 'project':project})
+            return HttpResponseRedirect('/financial_info/?id='+project_id)
+    return render(request,'spending_tool/add_current_field.html',{'quarter_number':quarter_number,
+                                                                  'year':year,
+                                                                  'project':project})
 
 
 
 def review_info(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
     	current_user=request.user
-        engineer=EngineerProfile.objects.get(user=current_user)
-        project=Project.objects.get(fellow_engineer=engineer)
+        #engineer=EngineerProfile.objects.get(user=current_user)
+        project=Project.objects.get(pk=project_id)
         total_expenses=ExpensesType.objects.filter(project=project)
         spent_cost=0
         for exp in total_expenses:
@@ -318,6 +262,7 @@ def review_info(request):
             total_exp_current_cross=total_exp_current_cross+exp.cross_charge_actual_cost
         
     return render(request,'spending_tool/review_info.html',{'project':project,
+                                                            'year':year,
     														'quarter_number':quarter_number,
     														'previous_quarter':previous_quarter,
     													 	'current_quarter':current_quarter,
@@ -331,12 +276,13 @@ def review_info(request):
 def edit_status(request):
     time=datetime.now()
     today=time
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer)
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id)
         previous_status=DescriptionType.objects.filter(project=project).order_by('date')
         l=len(previous_status)
         index=l-1
@@ -357,8 +303,9 @@ def edit_status(request):
                                            current_challenges=current_challenges
                 )
    
-            return HttpResponseRedirect('/edit_status/')              
+            return HttpResponseRedirect('/edit_status/?id='+str(project.id))              
     return render(request, 'spending_tool/edit_status.html',{'project':project, 
+                                                             'year':year,
                                                              'quarter_number':quarter_number,
                                                              'one_status':one_status,
                                                              'today':today,
@@ -367,13 +314,14 @@ def edit_status(request):
 
 def edit(request):
     time=datetime.now()
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
         id_status=request.GET['status']
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer)
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id)
         current_status=DescriptionType.objects.get(pk=id_status)
         quarter_number=return_quarter_year()[0]
         if request.method == 'POST':
@@ -381,17 +329,21 @@ def edit(request):
             current_status.current_challenges=request.POST['current_challenges']
             current_status.next_steps=request.POST['next_steps']
             current_status.save()
-            return HttpResponseRedirect('/edit_status')
-    return render(request, 'spending_tool/edit.html', {'project':project, 'quarter_number':quarter_number, 'current_status':current_status})
+            return HttpResponseRedirect('/edit_status/?id='+project_id)
+    return render(request, 'spending_tool/edit.html', {'project':project, 
+                                                       'year':year,
+                                                       'quarter_number':quarter_number,
+                                                       'current_status':current_status})
 
 
 def status(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer) 
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id) 
   
   # This needs to change .... 
 
@@ -402,34 +354,40 @@ def status(request):
             current_challenges = description.current_challenges
             next_steps = description.next_steps
               
-    return render(request, 'spending_tool/status.html',{'project':project, 'recent_accomplishments':recent_accomplishments,
-                                                    'current_challenges':current_challenges,
-                                                    'next_steps':next_steps})
+    return render(request, 'spending_tool/status.html',{'project':project,
+                                                        'year':year, 
+                                                        'recent_accomplishments':recent_accomplishments,
+                                                        'current_challenges':current_challenges,
+                                                        'next_steps':next_steps})
 
 def project_summary(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer) 
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id) 
         if request.method == 'POST':
             form = ProjectsummaryForm(request.POST or None, instance=project)
             if form.is_valid():
-                form.save()
+                #form.save()
                 new_user = form.save()
-                return HttpResponseRedirect('/project_summary/')
+                return HttpResponseRedirect('/project_summary/?id='+project_id)
         else:
             form = ProjectsummaryForm(instance = project)
-    return render(request, 'spending_tool/project_summary.html',{'project':project,'form':form})
+    return render(request, 'spending_tool/project_summary.html',{'project':project,
+                                                                 'year':year,
+                                                                 'form':form})
 
 def input_milestones(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer)
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id)
         previous_milestones = Milestone.objects.filter(project=project).order_by('due_date')
         quarter_number=return_quarter_year()[0]
         today=datetime.today()
@@ -451,49 +409,61 @@ def input_milestones(request):
                 )
             except ValidationError:
                 pass
-            return HttpResponseRedirect('/input_milestones/')              
-    return render(request, 'spending_tool/input_milestones.html',{'quarter_number':quarter_number ,'project':project,'previous_milestones':previous_milestones})
+            return HttpResponseRedirect('/input_milestones/?id='+project_id)              
+    return render(request, 'spending_tool/input_milestones.html',{'quarter_number':quarter_number ,
+                                                                  'year':year,
+                                                                  'project':project,
+                                                                  'previous_milestones':previous_milestones})
 
 def milestones(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer)
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id)
         description = DescriptionType.objects.get(project=project)  
         major_milestone = description.major_milestone
         due_date = description.due_date
         percentage_complete = description.percentage_complete
     return render(request, 'spending_tool/milestones.html',{'project':project,
-                                'major_milestone':major_milestone, 'due_date':due_date,
-                                'percentage_complete':percentage_complete})
+                                                            'major_milestone':major_milestone,
+                                                            'year':year,
+                                                            'due_date':due_date,
+                                                            'quarter_number':quarter_number ,
+                                                            'percentage_complete':percentage_complete})
 
 def project_details(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer) 
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id) 
         if request.method == 'POST':
             form = DetailsForm(request.POST or None, instance=project)
             if form.is_valid():
                 #form.save()
                 new_user = form.save()
-                return HttpResponseRedirect('/project_details/')
+                return HttpResponseRedirect('/project_details/?id='+project_id)
         else:
             form = DetailsForm(instance = project) 
-    return render(request, 'spending_tool/project_details.html',{'project':project,'form':form})
+    return render(request, 'spending_tool/project_details.html',{'project':project,
+                                                                 'quarter_number':quarter_number ,
+                                                                 'form':form,
+                                                                 'year':year,})
 
 
 def attach_document(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer)
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id)
         documents=Document.objects.filter(project=project)
         if request.method == 'POST':
            form = UploadFileForm(request.POST, request.FILES)
@@ -505,16 +475,88 @@ def attach_document(request):
                new_document.project=project
                new_document.date=time
                new_document.save()
-               return HttpResponseRedirect('/attach_document/')
+               return HttpResponseRedirect('/attach_document/?id='+project_id)
         else:
            form = UploadFileForm()
-    return render(request,'spending_tool/attach_document.html',{'project':project, 'form':form, 'documents':documents})
+    return render(request,'spending_tool/attach_document.html',{'project':project,
+                                                                'form':form,
+                                                                'year':year,
+                                                                'quarter_number':quarter_number ,
+                                                                'documents':documents})
 
-def home(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        current_user = request.user
-        engineer = EngineerProfile.objects.get(user=current_user)
-        project = Project.objects.get(fellow_engineer=engineer)
-    return render(request,'spending_tool/home.html',{'project':project})
+
+
+def create_report(request):
+    project_id=request.GET.get('id')
+    if len(project_id)==0:
+        return HttpResponseRedirect('/home/')
+    else:  
+        #current_user = request.user
+        #engineer = EngineerProfile.objects.get(user=current_user)
+        project = Project.objects.get(pk=project_id)
+        try:
+            import cStringIO as StringIO
+        except ImportError:
+            import StringIO
+        output = StringIO.StringIO()
+        title=str(project.name_project)
+        #workbook=xlsxwriter.Workbook('report_%s.xlsx' %(queryset.test))    
+        workbook=xlsxwriter.Workbook(output)
+        #workbook=xlsxwriter.Workbook('blablabla.xlsx')
+        worksheet = workbook.add_worksheet()
+        bold = workbook.add_format({'bold': True})
+        time=datetime.now()
+        year=time.year
+        list_quarters=[]
+        #project_id=queryset.id
+        line=2
+        cell=0
+        worksheet.write(line-2, 1, 'Project', bold)
+        worksheet.write(line-2, 2, str(project.name_project))
+        worksheet.write(line-2, 3, 'Last Updated', bold)
+        worksheet.write(line-2, 4, str(project.updated.month)+'/'+ str(project.updated.day)+'/'+str(project.updated.year))
+        for m in range(4):
+            if len(ExpensesType.objects.filter(project=project, year=year, quarter_number=m+1))>0:
+                list_quarters.append(ExpensesType.objects.filter(project=project, year=year, quarter_number=m+1))
+        for p in range(len(list_quarters)):
+            worksheet.write(line-1, 1+cell, 'Year'+str(list_quarters[p][0].year), bold)
+            worksheet.write(line-1, 2+cell, 'Quarter'+str(list_quarters[p][0].quarter_number), bold)
+            worksheet.write(line, 1+cell, 'Expense Type', bold )
+            worksheet.write(line, 2+cell, 'Estimates', bold  )
+            worksheet.write(line, 3+cell, 'Direct Charge', bold  )
+            worksheet.write(line, 4+cell, 'Cross Charge', bold  )
+            num_of_expenses_per_quarter=len(list_quarters[p])
+            direct_expenses_per_quarter=0
+            cross_expenses_per_quarter=0
+            for n in range(len(list_quarters[p])):
+                worksheet.write(n+line+1, 1+cell, list_quarters[p][n].expenses_type)
+                worksheet.write(n+line+1, 2+cell, list_quarters[p][n].estimated_cost)
+                worksheet.write(n+line+1, 3+cell, list_quarters[p][n].direct_charge_actual_cost)
+                worksheet.write(n+line+1, 4+cell, list_quarters[p][n].cross_charge_actual_cost)
+                direct_expenses_per_quarter=direct_expenses_per_quarter+list_quarters[p][n].direct_charge_actual_cost
+                cross_expenses_per_quarter=cross_expenses_per_quarter+list_quarters[p][n].cross_charge_actual_cost
+
+            
+            worksheet.write(num_of_expenses_per_quarter+line+1, 3+cell,'Total: '+ str(direct_expenses_per_quarter), bold )
+            worksheet.write(num_of_expenses_per_quarter+line+1, 4+cell,'Total: '+ str( cross_expenses_per_quarter), bold )
+            #get departments
+            list_dept=[]
+            worksheet.write(line+num_of_expenses_per_quarter+3, 1+cell, 'Cross Charges', bold )
+            worksheet.write(line+num_of_expenses_per_quarter+4, 1+cell, 'Expense Type', bold )
+            worksheet.write(line+num_of_expenses_per_quarter+4, 2+cell, 'Cross Charge', bold )
+            worksheet.write(line+num_of_expenses_per_quarter+4, 3+cell, 'Dept #', bold )
+            tmp=0
+            for dept in list_quarters[p]:
+                departments=DepartmentNumber.objects.filter(relates_to=dept)
+                for department in departments:
+                    worksheet.write(line+num_of_expenses_per_quarter+5+tmp, 1+cell, dept.expenses_type)
+                    worksheet.write(line+num_of_expenses_per_quarter+5+tmp, 2+cell, department.cross_charge_actual_cost)
+                    worksheet.write(line+num_of_expenses_per_quarter+5+tmp, 3+cell, department.department_number)
+                    tmp=tmp+1
+            cell=cell+5
+
+        workbook.close()
+        output.seek(0)
+        response = HttpResponse(output.read(), mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response['Content-Disposition'] = "attachment; filename="+title
+        return response

@@ -40,12 +40,64 @@
 			</nav>
 		</div>
 
+<<<<<<< HEAD
+<header>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+      		<div class="navbar-inner">
+        		<div class="container-fluid-nav">
+        			<div class="span4">
+          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
+          
+					
+
+				</div>
+        		</div>
+        		<p  class="navbar-text">Tech Fund  |  <i>{{project}}</i> | FY {{year}} - Q {{quarter_number}} </p>
+        		
+      		</div>
+		</div>
+
+
+	
+    </header>
+    
+	<br></br><br></br>
+<!-- Nav bar !-->
+<div class="row-fluid">
+    <div class="span2">
+      	<div class="container-fluid-content">
+			<div class="row">
+
+			
+				<ul class="nav nav-sidebar navbar-left">
+					<li><a href="/home">Home</a></li>
+					 <hr class="featurette-divider">
+					<li><a href="/financial_info/?id={{project.id}}">Edit Current Expenses</a></li>
+					<li><a href="/review_info/?id={{project.id}}">Review Expenses</a></li>
+					 <hr class="featurette-divider">
+					<li><a href="/project_summary/?id={{project.id}}" >Project Summary</a></li>
+					<li><a href="/edit_status/?id={{project.id}}" >Status</a></li>
+					<li><a href="/input_milestones/?id={{project.id}}" >Milestone Schedule</a></li>
+					<li><a href="/project_details/?id={{project.id}}" >Project Details</a></li>
+					 <hr class="featurette-divider">
+					<li><a href="/attach_document/?id={{project.id}}" >Attach Documents</a></li>
+					<li><a href="/create_report/?id={{project.id}}" >Print Report</a></li>
+					 <hr class="featurette-divider">
+					<li><a href="/guidelines/" >Guidelines</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+=======
 <br></br>
 
 	<div class="container-fluid">
 			{% block content %}{% endblock %}
 	</div>
 
+>>>>>>> 1e8f00fa33f528494b75324a34853013a4d5083a
 	</div>
 	</div>
 </div>
