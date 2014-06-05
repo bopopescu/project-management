@@ -3,13 +3,20 @@
 {% block content %}
 		<h2 class="page-header">Tech Fund Finance</h2>
 
-        <h4>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </h4>
+        <p>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </p>
 		<form method='post'>{% csrf_token %}
+	<div class="span12">
 	<table class="table" >
 		<tr>
+
 			<td>
 		<div id="#table1" class="table-responsive">
 			<table class="table table-striped" >
+				<col width="100">
+  				<col width="100">
+  				<col width="100">
+  				<col width="100">
+  				<col width="100">
 				<tr><b>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
 				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %}</b> </tr>
 
@@ -23,7 +30,7 @@
 	<td>
 		<div id="#table2" class="table-responsive">
 			<table class="table table-striped"  >
-				<tr><b>Q {{quarter_number}}</b> </tr>
+				<tr><b style="background-color: #33FF99">Q {{quarter_number}}</b> </tr>
 
 				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
 				{% for expenses in expenses_for_current_quarter %}
@@ -67,6 +74,7 @@
 		</td>
 	</tr>
 	</table>
+</div>
    <input  style="position:fixed;  right:50px; bottom:10px"type="submit" value="Submit Changes" class="btn btn-primary btn-lg"/>
 
 	</form>
