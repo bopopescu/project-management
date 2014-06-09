@@ -1,6 +1,8 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-
+<div class="container">
+	<div style="width:100%" class="row centered">
+    	<div class="col-md-8 col-md-offset-2">
 	<h2 class="page-header">Project Description</h2>
 	<form method="post" action="">{% csrf_token %}
 		<div id="container">
@@ -51,7 +53,11 @@
         <p><b>Next Steps / {{status.date}} </b></p>
         <p>{{status.next_steps}}</p>
         <p><i><a href="/edit?status={{status.id}}&id={{project.id}}">Edit status</a></i></p>
-         <hr class="featurette-divider">   
+         <hr class="featurette-divider">  
+
+         </div>
+</div>
+</div> 
         {% endfor %}
 		
 {% endblock %}

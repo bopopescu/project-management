@@ -1,5 +1,8 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
+<div class="container">
+	<div style="width:100%" class="row centered">
+    	<div class="col-md-8 col-md-offset-2">
 <h3>Attach Documents</h3>
 <form enctype="multipart/form-data" method="post">{% csrf_token %}
 {{form}}
@@ -13,5 +16,8 @@
 	<li><i><a href="http://172.21.174.15:8000/media/{{document.document}}">View</a></i></li>
 	<li>Date uploaded: {{document.date}}</li>
 </ul>
+ </div>
+</div>
+</div> 
 {% endfor %}
 {% endblock %}

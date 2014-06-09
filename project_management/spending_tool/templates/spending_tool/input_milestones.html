@@ -1,5 +1,8 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
+	<div class="container">
+	<div style="width:100%" class="row centered">
+    	<div class="col-md-8 col-md-offset-2">
 	<h2 class="page-header">Milestones: Q{{quarter_number}}</h2>
 		<form method="post" action="">{% csrf_token %}
 
@@ -37,7 +40,9 @@
 				
 			</table>
 
-	
+	 </div>
+</div>
+</div> 
 
 			</div>
 
