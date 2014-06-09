@@ -9,8 +9,9 @@
 
 </head>
 <body>
-<div class="container">
-	<div class="row">
+<div class="span12">
+<div class="container-fluid">
+	<div class="row-fluid">
 
 		<div class="span12">
 			<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -41,12 +42,16 @@
 
 
 
+
+=======
+	<div class="container-fluid">
+			{% block content %}{% endblock %}
+	</div>
+
+	</div>
 	</div>
 </div>
 
-<div style="padding:10px;padding-top:30px;">
-{% block content %}{% endblock %}
-</div>
 
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
