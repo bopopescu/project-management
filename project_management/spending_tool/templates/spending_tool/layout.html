@@ -32,7 +32,14 @@
         				<li><a href="/edit_status/?id={{project.id}}">Status</a></li>
         				<li><a href="/input_milestones/?id={{project.id}}">Milestone Schedule</a></li>
         				<li><a href="/project_details/?id={{project.id}}" >Project Details</a></li>
-        				<li><a href="/attach_document/?id={{project.id}}" >Attach Documents</a></li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/attach_document/?id={{project.id}}" >Attach Documents</a></li>
+                    <li><a href="/create_report/?id={{project.id}}">Create Report</a></li>
+                </ul>
+                </li>
+        				
         				<li><a href="/guidelines/?id={{project.id}}" >Guidelines</a></li>
       					</ul>
 					</div>

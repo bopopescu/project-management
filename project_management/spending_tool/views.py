@@ -63,8 +63,9 @@ def guidelines(request):
     project_id=request.GET.get('id')
     if len(project_id)==0:
         return HttpResponseRedirect('/home/')
-    else:  
-        return render(request,'spending_tool/guidelines.html')
+    else:
+        project=Project.objects.get(pk=project_id)  
+        return render(request,'spending_tool/guidelines.html', {'project':project})
 
 def financial_info(request):
     project_id=request.GET.get('id')
@@ -123,9 +124,9 @@ def financial_info(request):
                     expense_for_next_quarter.estimated_cost=expected_cost[i]
                     expense_for_next_quarter.save()
                     i=i+1
-                    return HttpResponseRedirect('/financial_info/?id='+project_id)               
+                return HttpResponseRedirect('/financial_info/?id='+project_id)               
         except ValidationError:
-            pass
+            pass   
 
         #info=financialInfo(request)
         updateTotal(project)
@@ -147,7 +148,7 @@ def add_field(request):
     project_id=request.GET.get('id')
     if len(project_id)==0:
         return HttpResponseRedirect('/home/')
-    else:  
+    else:
         current_user=request.user
 
         #engineer=EngineerProfile.objects.get(user=current_user)
@@ -160,25 +161,28 @@ def add_field(request):
         expense_for_current_quarter=[]
 
         if request.method == 'POST':
-            name = request.POST['name']
-            expected_cost=request.POST['expected_cost']
-            if quarter_number==1 or quarter_number==2 or quarter_number==3:          
-                ExpensesType.objects.create(year=year,
-                                                expenses_type=name, 
-                                                actual_cost=0,
-                                                estimated_cost=expected_cost,
-                                                project=project,
-                                                quarter_number=quarter_number+1
-                                                )
+            try:
+                name = request.POST['name']
+                expected_cost=request.POST['expected_cost']
+                if quarter_number==1 or quarter_number==2 or quarter_number==3:          
+                    ExpensesType.objects.create(year=year,
+                                                    expenses_type=name, 
+                                                    actual_cost=0,
+                                                    estimated_cost=expected_cost,
+                                                    project=project,
+                                                    quarter_number=quarter_number+1
+                                                    )
 
-            if quarter_number==4:
-                ExpensesType.objects.create(year=year+1,
-                                                expenses_type=name, 
-                                                actual_cost=0,
-                                                estimated_cost=expected_cost,
-                                                project=project,
-                                                quarter_number=1
-                                                )
+                if quarter_number==4:
+                    ExpensesType.objects.create(year=year+1,
+                                                    expenses_type=name, 
+                                                    actual_cost=0,
+                                                    estimated_cost=expected_cost,
+                                                    project=project,
+                                                    quarter_number=1
+                                                    )
+            except ValidationError:
+                pass
             return HttpResponseRedirect('/financial_info/?id='+project_id)
             
         if quarter_number==1 or quarter_number==2 or quarter_number==3:
@@ -212,19 +216,22 @@ def add_current_field(request):
         quarter_number=date[0]
         year=date[1]
         if request.method=='POST':
-            name = request.POST['name']
-            #department_number=request.POST.get('department_number','')
-            cross_charge_actual_cost=request.POST.get('cross_charge_actual_cost','')
-            direct_charge_actual_cost=request.POST.get('direct_charge_actual_cost','')
-            expected_cost=request.POST['expected_cost']
-            current=ExpensesType.objects.create(project=project,
-            							expenses_type=name,
-            							estimated_cost=expected_cost,
-            							cross_charge_actual_cost=cross_charge_actual_cost,
-            							direct_charge_actual_cost=direct_charge_actual_cost,
-            							year=year,
-            							quarter_number=quarter_number,)
-            							#department_number=department_number)
+            try:
+                name = request.POST['name']
+                #department_number=request.POST.get('department_number','')
+                cross_charge_actual_cost=request.POST.get('cross_charge_actual_cost','')
+                direct_charge_actual_cost=request.POST.get('direct_charge_actual_cost','')
+                expected_cost=request.POST['expected_cost']
+                current=ExpensesType.objects.create(project=project,
+                							expenses_type=name,
+                							estimated_cost=expected_cost,
+                							cross_charge_actual_cost=cross_charge_actual_cost,
+                							direct_charge_actual_cost=direct_charge_actual_cost,
+                							year=year,
+                							quarter_number=quarter_number,)
+                							#department_number=department_number)
+            except ValidationError:
+                return HttpResponseRedirect('/add_current_field/?id='+project_id)
             return HttpResponseRedirect('/financial_info/?id='+project_id)
     return render(request,'spending_tool/add_current_field.html',{'quarter_number':quarter_number,
                                                                   'year':year,
