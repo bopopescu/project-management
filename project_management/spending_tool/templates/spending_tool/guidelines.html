@@ -1,6 +1,9 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-	<h2 class="page-header">Tech Fund Tool: Guidelines</h2>	
+<div class="container">
+	<div style="width:100%" class="row centered">
+    	<div class="col-md-8 col-md-offset-2">
+	<h3 class="page-header">Guidelines</h3>
 		<ul> 
 			<p><i>For the best user experience we recommend using Google Chrome.</i><p>
 			<li><strong><a href="/financial_info/?id={{project.id}}">Edit Current Expenses:</a></strong> This information should be updated at the beginning of each quarter. You can view the expense from the previous, current and future quarter.</li>
@@ -20,4 +23,7 @@
 			<li><strong><a href="/attach_document/?id={{project.id}}">Generate Report:</a></strong> ....</li>
        </ul>
        <br></br><br></br>
+        </div>
+</div>
+</div> 
 {% endblock %}
