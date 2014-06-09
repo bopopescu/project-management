@@ -3957,6 +3957,7 @@ input[type="submit"].btn.btn-mini {
   margin-bottom: 20px;
   margin-left: 0;
   list-style: none;
+  padding:7px;
 }
 
 .nav > li > a {
@@ -4814,6 +4815,7 @@ input[type="submit"].btn.btn-mini {
   font-size: 16px;
   font-weight: normal;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
 
 .navbar-inverse .brand:hover,
