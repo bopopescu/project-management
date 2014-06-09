@@ -22,6 +22,7 @@ class Project(models.Model):
     STATUS=(
       ('Complete','Complete'),
       ('Ended','Ended'),
+      ('Active','Active'),
       ('Need Review','Need Review'))
     status=models.CharField(max_length=100, choices=STATUS, default=None, null=True)
     name_project=models.CharField(max_length=100, null=True)

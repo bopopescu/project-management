@@ -54,7 +54,10 @@ def logout(request):
     return HttpResponseRedirect('/login/')
 
 def home(request):
-    return render(request,'spending_tool/home.html')
+    list_active_projects=Project.objects.filter(status='Active').order_by('name_project')
+    list_completed_projects=Project.objects.filter(status='Complete').order_by('name_project')
+    return render(request,'spending_tool/home.html', {'list_active_projects':list_active_projects,
+                                                      'list_completed_projects':list_completed_projects})
 
 def guidelines(request):
     project_id=request.GET.get('id')
@@ -67,60 +70,63 @@ def financial_info(request):
     project_id=request.GET.get('id')
     if len(project_id)==0:
         return HttpResponseRedirect('/home/')
-    else:  
-        current_user=request.user
-        cross_charge_actual_cost_specific=direct_charge_actual_cost=[]
-        #engineer=EngineerProfile.objects.get(user=current_user)
-        project=Project.objects.get(pk=project_id)
-        expenses_for_previous_quarter, expenses_for_current_quarter, expenses_for_next_quarter=returnExpenses(project)
-        date = return_quarter_year()
-        quarter_number=date[0]
-        year=date[1]
-        list_for_cross_charge=[]
-        current_cross_dept=[]
-        for exp in expenses_for_current_quarter:
-            if exp.cross_charge_actual_cost>0:
-                dept_related_to=DepartmentNumber.objects.filter(relates_to=exp)
-                sum_depts=0
-                for d in dept_related_to:
-                    sum_depts=sum_depts+d.cross_charge_actual_cost
-                res=exp.cross_charge_actual_cost-sum_depts
-                list_for_cross_charge.append((exp, dept_related_to, sum_depts,res ))
-                for a in dept_related_to:
-                    current_cross_dept.append(a)
-        add_dept=request.GET.get('add_dept','')
-        if len(add_dept)!=0:
-            exp=ExpensesType.objects.get(pk=add_dept)
-            DepartmentNumber.objects.create(relates_to=exp,cross_charge_actual_cost=0, department_number=0)
-            return HttpResponseRedirect('/financial_info/?id='+project_id)
-        if request.method=='POST':
-            i=0
-            expected_cost=request.POST.getlist('expected_cost')
-            direct_charge_actual_cost=request.POST.getlist('direct_charge_actual_cost')
-            cross_charge_actual_cost=request.POST.getlist('cross_charge_actual_cost')
+    else:
+        try: 
+            current_user=request.user
+            cross_charge_actual_cost_specific=direct_charge_actual_cost=[]
+            #engineer=EngineerProfile.objects.get(user=current_user)
+            project=Project.objects.get(pk=project_id)
+            expenses_for_previous_quarter, expenses_for_current_quarter, expenses_for_next_quarter=returnExpenses(project)
+            date = return_quarter_year()
+            quarter_number=date[0]
+            year=date[1]
+            list_for_cross_charge=[]
+            current_cross_dept=[]
+            for exp in expenses_for_current_quarter:
+                if exp.cross_charge_actual_cost>0:
+                    dept_related_to=DepartmentNumber.objects.filter(relates_to=exp)
+                    sum_depts=0
+                    for d in dept_related_to:
+                        sum_depts=sum_depts+d.cross_charge_actual_cost
+                    res=exp.cross_charge_actual_cost-sum_depts
+                    list_for_cross_charge.append((exp, dept_related_to, sum_depts,res ))
+                    for a in dept_related_to:
+                        current_cross_dept.append(a)
+            add_dept=request.GET.get('add_dept','')
+            if len(add_dept)!=0:
+                exp=ExpensesType.objects.get(pk=add_dept)
+                DepartmentNumber.objects.create(relates_to=exp,cross_charge_actual_cost=0, department_number=0)
+                return HttpResponseRedirect('/financial_info/?id='+project_id)
+            if request.method=='POST':
+                i=0
+                expected_cost=request.POST.getlist('expected_cost')
+                direct_charge_actual_cost=request.POST.getlist('direct_charge_actual_cost')
+                cross_charge_actual_cost=request.POST.getlist('cross_charge_actual_cost')
 
-            department_number=request.POST.getlist('department_number')
-            person=request.POST.getlist('person')
-            cross_charge_actual_cost_specific=request.POST.getlist('cross_charge_actual_cost_specific')
-            n=0
-            for dept in current_cross_dept:
-                dept.department_number=department_number[n]
-                dept.cross_charge_actual_cost=cross_charge_actual_cost_specific[n]
-                dept.person=person[n]
-                dept.save()
-                n=n+1
-            actual_cost=request.POST.getlist('actual_cost')
-            for expense in expenses_for_current_quarter:
-            	expense.direct_charge_actual_cost=direct_charge_actual_cost[i]
-                expense.cross_charge_actual_cost=cross_charge_actual_cost[i]
-                #expense.department_number=department_number[i]
-            	expense.save()
-            	expense_for_next_quarter=ExpensesType.objects.get(relates_to=expense)
-                expense_for_next_quarter.estimated_cost=expected_cost[i]
-                expense_for_next_quarter.save()
-            	i=i+1
-            return HttpResponseRedirect('/financial_info/?id='+project_id)
-            
+                department_number=request.POST.getlist('department_number')
+                person=request.POST.getlist('person')
+                cross_charge_actual_cost_specific=request.POST.getlist('cross_charge_actual_cost_specific')
+                n=0
+                for dept in current_cross_dept:
+                    dept.department_number=department_number[n]
+                    dept.cross_charge_actual_cost=cross_charge_actual_cost_specific[n]
+                    dept.person=person[n]
+                    dept.save()
+                    n=n+1
+                actual_cost=request.POST.getlist('actual_cost')
+                for expense in expenses_for_current_quarter:
+                    expense.direct_charge_actual_cost=direct_charge_actual_cost[i]
+                    expense.cross_charge_actual_cost=cross_charge_actual_cost[i]
+                    #expense.department_number=department_number[i]
+                    expense.save()
+                    expense_for_next_quarter=ExpensesType.objects.get(relates_to=expense)
+                    expense_for_next_quarter.estimated_cost=expected_cost[i]
+                    expense_for_next_quarter.save()
+                    i=i+1
+                    return HttpResponseRedirect('/financial_info/?id='+project_id)               
+        except ValidationError:
+            pass
+
         #info=financialInfo(request)
         updateTotal(project)
         totalExp=projectTotalExpenses.objects.get(project=project)

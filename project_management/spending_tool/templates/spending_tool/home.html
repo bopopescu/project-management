@@ -2,54 +2,22 @@
 {% block content %}
 	<h2 class="page-header">Tech Fund: Funded Projects</h2>	
 	<h4 style="background-color: #FFCC66">Active Projects</h4>
-		<ul> 	
-			<li><strong><a href="/financial_info/?id=1">A Virtualized CMTS</a></strong></li>
-			<br>
-			<li><strong><a href="#">Adaptive Streaming in Managed Networks</a></strong></li>
-			<br>
-			<li><strong><a href="#">Augmented Collaboration (Spring Roll)</a></strong></li>
-			<br>
-			<li><strong><a href="#">Automated Centralized Traffic Engineering</a></strong></li>
-			<br>
-			<li><strong><a href="#">Big Data</a></strong></li>
-			<br>
-			<li><strong><a href="#">Cisco Internet Research Lab (CIRL)</a></strong></li>
-			<br>
-			<li><strong><a href="#">Distributed Network Analytics (DNA)</a></strong></li>
-			<br>
-			<li><strong><a href="#">Green Rack Model</a></strong></li>
-			<br>
-			<li><strong><a href="#">Hierarchical Network Registry</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Interface to the Services System (I2SS)</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Investigation of future use-cases and extensions for Segment Routing</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Named Data Networking (NDN)</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Programmable Seamless Virtual Cloud Framework (PSVC)</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Stateless Multipoint Replication</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Subscriber Premises Networking "HomeNet"</a></strong></li>	
-			<br>
-			<li><strong><a href="#">TCG based POC system with hardware based root of trust up through cloud services</a></strong></li>	
-			<br>
-			<li><strong><a href="#">Vector Packet Processing Engine</a></strong></li>	
-			<br>
-			<li><strong><a href="#">World Connect</a></strong></li>
-       </ul>
+	<ul>
+	   {% for project in list_active_projects %}
+	   <br>
+	   
+	   	 <li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
+	   {% endfor %}
+	</ul>
 		<br>
     <h4 style="background-color: #82E6CD">Completed Projects</h4>
-       	<ul> 	
-			<li><strong><a href="#">Autonomic Networking (AN)</a></strong></li>
-			<br>
-			<li><strong><a href="#">Buffer bloat</a></strong></li>
-			<br>
-			<li><strong><a href="#">Fog Computing</a></strong></li>
-			<br>
-		</ul>
-		<br></br><br></br>
+       <ul>
+	   {% for project in list_completed_projects %}
+	   <br>
+	   	 <li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
 
+	   {% endfor %}
+	   </ul>
+		<br>
 {% endblock %}
 
