@@ -12,7 +12,7 @@
 			<td>
 		<div id="#table1" class="table-responsive">
 			<table class="table table-striped" >
-				<tr><b style="font-size:20px;"><strong>Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %} {{year}}</strong></b> </tr>
+				<tr><b style="font-size:20px;"><strong>FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}</strong></b> </tr>
 
 				<tr><th >Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th><th>Dept #</th></tr>
 				{% for expenses in expenses_for_previous_quarter %}
@@ -24,7 +24,7 @@
 	<td>
 		<div id="#table2" class="table-responsive">
 			<table class="table table-striped" >
-				<tr><b style="color:crimson;font-size:20px;"><strong>Q{{quarter_number}} {{year}}</strong></b> </tr>
+				<tr><b style="color:crimson;font-size:20px;"><strong>FY {{year}} Q{{quarter_number}}</strong></b> </tr>
 
 				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
 				{% for expenses in expenses_for_current_quarter %}
@@ -37,8 +37,8 @@
 	<td>
 		<div id="#table3" class="table-responsive"  >
 			<table class="table table-striped">
-				<tr><b style="font-size:20px;"><strong>Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
-				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %} {{year}}</strong></b> </tr>
+				<tr><b style="font-size:20px;"><strong>FY {{year}} {% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
+				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %} </strong></b> </tr>
 
 				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
 				{% for expenses in expenses_for_next_quarter %}
