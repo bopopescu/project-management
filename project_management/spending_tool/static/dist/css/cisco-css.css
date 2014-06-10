@@ -615,9 +615,8 @@ a:focus {
 }
 
 .container {
-  margin-right: auto;
-  margin-left: auto;
   *zoom: 1;
+  margin: 0 auto;
 }
 
 .container:before,
@@ -641,6 +640,7 @@ a:focus {
   padding-right: 50px;
   padding-left: 50px;
   *zoom: 1;
+  margin: 0 auto;
 }
 
 .container-fluid:before,
@@ -2008,9 +2008,9 @@ table {
 }
 
 .table {
-  width: 50%;
+  width: 100%;
   margin-bottom: 20px;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .table th,
