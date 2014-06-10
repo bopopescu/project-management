@@ -12,13 +12,7 @@
 			<td>
 		<div id="#table1" class="table-responsive">
 			<table class="table table-striped" >
-				<col width="100">
-  				<col width="100">
-  				<col width="100">
-  				<col width="100">
-  				<col width="100">
-				<tr><b>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
-				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %}</b> </tr>
+				<tr><b style="font-size:20px;"><strong>Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %} {{year}}</strong></b> </tr>
 
 				<tr><th >Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th><th>Dept #</th></tr>
 				{% for expenses in expenses_for_previous_quarter %}
@@ -29,8 +23,8 @@
 	</td>
 	<td>
 		<div id="#table2" class="table-responsive">
-			<table class="table table-striped"  >
-				<tr><b style="background-color: #33FF99">Q {{quarter_number}}</b> </tr>
+			<table class="table table-striped" >
+				<tr><b style="background-color: #;font-size:20px;"><strong>Q{{quarter_number}} {{year}}</strong></b> </tr>
 
 				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
 				{% for expenses in expenses_for_current_quarter %}
@@ -43,8 +37,8 @@
 	<td>
 		<div id="#table3" class="table-responsive"  >
 			<table class="table table-striped">
-				<tr><b>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
-				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %}</b> </tr>
+				<tr><b style="font-size:20px;"><strong>Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
+				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %} {{year}}</strong></b> </tr>
 
 				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
 				{% for expenses in expenses_for_next_quarter %}

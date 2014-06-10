@@ -9,8 +9,7 @@
 			<td>
 			<div id="#table1" class="table-responsive">
 			<table class="table table-striped">
-				<tr>Q {% if quarter_number == 1%} 4 {% endif %} {% if quarter_number == 2%} 1
-				 {% endif %} {% if quarter_number == 3%} 2 {% endif %}  {% if quarter_number == 4%} 3 {% endif %} </tr>
+				<tr>Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %} {{year}}</tr>
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
 				{% for expenses in previous_quarter %}
@@ -22,7 +21,7 @@
 	<td>
 		<div id="#table2" class="table-responsive">
 			<table class="table table-striped">
-				<tr>Q {{quarter_number}} </tr>
+				<tr>Q{{quarter_number}} {{year}}</tr>
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
 				{% for expenses in current_quarter %}
@@ -35,8 +34,8 @@
 	<td>
 		<div id="#table3" class="table-responsive">
 			<table class="table table-striped">
-				<tr>Q {% if quarter_number == 1%} 2 {% endif %} {% if quarter_number == 2%} 3
-				 {% endif %} {% if quarter_number == 3%} 4 {% endif %}  {% if quarter_number == 4%} 1 {% endif %} </tr>
+				<tr>Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
+				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %} {{year}}</tr>
 
 				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
 				{% for expenses in next_quarter %}

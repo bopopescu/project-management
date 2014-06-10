@@ -3,27 +3,33 @@
 <div class="container">
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
-	<h3 class="page-header">Tech Fund: Funded Projects</h3>	
-	<h4 style="background-color: #FFCC66">Active Projects</h4>
-	<ul>
-	   {% for project in list_active_projects %}
-	   <br>
-	   
-	   	 <li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
-	   {% endfor %}
-	</ul>
-		<br>
-    <h4 style="background-color: #82E6CD">Completed Projects</h4>
-       <ul>
-	   {% for project in list_completed_projects %}
-	   <br>
-	   	 <li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
+    		<h3 class="page-header">Tech Fund: Funded Projects</h3>
+    		
 
-	   {% endfor %}
-	   </ul>
-		<br>
-		 </div>
-</div>
+
+	
+				<h4 style="background-color: #">Active Projects</h4>
+					<ul>
+	   					{% for project in list_active_projects %}
+	   					<br>
+	   	 				<li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
+	   					{% endfor %}
+					</ul>
+<br>
+		
+				<h4 style="background-color: #">Completed Projects</h4>
+       				<ul>
+	   					{% for project in list_completed_projects %}
+	   					<br>
+	   	 				<li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
+						{% endfor %}
+	   				</ul>
+
+
+
+		
+		</div>
+	</div>
 </div> 
 {% endblock %}
 
