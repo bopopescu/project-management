@@ -1,11 +1,11 @@
 
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-		<h3 class="page-header">Tech Fund Finance - Approved: {{ totalExp.funding_approved}} Spent: {{totalExp.actual_spent}}</h3>
+<div class="container-fluid" style="padding:20px;">
+	<h3 class="page-header">Tech Fund Finance - Approved: {{ totalExp.funding_approved}} Spent: {{totalExp.actual_spent}}</h3>
+	<p>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </p>
+	<form method='post'>{% csrf_token %}
 
-        <p>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </p>
-		<form method='post'>{% csrf_token %}
-	<div class="span12">
 	<table class="table" >
 		<tr>
 
@@ -80,12 +80,12 @@
 		</td>
 	</tr>
 	</table>
-</div>
+
    <input  style="position:fixed;  right:50px; bottom:10px"type="submit" value="Submit Changes" class="btn btn-primary btn-lg"/>
 
 	</form>
 
-
+</div>
 
 
 

@@ -10,40 +10,28 @@
 </head>
 <body>
 
-<header>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-      		<div class="navbar-inner">
-        		<div class="container-fluid-nav">
-        			<div class="span10">
-          			<a  class="pull-left" href="http://www.cisco.com"><img src="/static/dist/img/logocopy.png" width="75px" height="40px"></a>
-          
-					
-
-				</div>
-        		</div>
-        		<p style="margin-left:300px;" class="navbar-text">Tech Fund  /  <i>{{project}}</i></p>
-        		
-      		</div>
+		<div class="span12">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container-fluid-nav">
+      					<a  class="pull-left" style="padding:10px;" href="http://www.cisco.com"><img src="/static/dist/img/cisco-logo.png" width="75px" height="40px"></a>
+      					
+					</div>
+				</div><!-- /.container-fluid -->
+			</nav>
 		</div>
-    </header>
-    
-	<br></br><br></br>
-<!-- Nav bar !-->
-<div class="row-fluid">
-    <div class="span2">
-      	<div class="container-fluid-content">
-			<div class="row">
-				<ul class="nav nav-sidebar">
-					<li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
 
-<div class="span6">
-	{% block content %}{% endblock %}
-</div>
+<br></br><br></br>
 
+
+
+			{% block content %}{% endblock %}
+
+
+
+
+
+<hr class="featurette-divider">
 <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -55,3 +43,4 @@ Copyright © Cisco</div>
 
 </body>
 </html> 
+
