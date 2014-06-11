@@ -11,7 +11,7 @@
 			<table class="table table-striped">
 				<tr>FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}</tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
+				<tr><td>Type</td><td>Expected Cost ($K)</td><td>Direct Charge Actual cost ($K)</td><td>Cross Charge Actual cost ($K)</td><td>Dept #</td></tr>
 				{% for expenses in previous_quarter %}
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
 				{% endfor %}
@@ -23,7 +23,7 @@
 			<table class="table table-striped">
 				<tr>FY {{year}} Q{{quarter_number}}</tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
+				<tr><td>Type</td><td>Expected Cost ($K)</td><td>Direct Charge Actual cost ($K)</td><td>Cross Charge Actual cost ($K)</td><td>Dept #</td></tr>
 				{% for expenses in current_quarter %}
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
 				{% endfor %}
@@ -37,7 +37,7 @@
 				<tr>FY {{year}} Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
 				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %}</tr>
 
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
+				<tr><td>Type</td><td>Expected Cost ($K)</td><td>Direct Charge Actual cost ($K)</td><td>Cross Charge Actual cost ($K)</td><td>Dept #</td></tr>
 				{% for expenses in next_quarter %}
 				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
 				{% endfor %}

@@ -12,10 +12,10 @@
 
 			<td>
 		<div id="#table1" class="table-responsive">
-			<table class="table table-striped" >
+			<table class="table table-striped">
 				<tr><b style="font-size:20px;"><strong>FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}</strong></b> </tr>
 
-				<tr><th >Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th><th>Dept #</th></tr>
+				<tr ><th style="word-wrap: break-word">Type</th><th style="word-wrap: break-word">Expected Cost ($K)</th><th style="word-wrap: break-word">Direct Charge Actual cost ($K)</th><th style="word-wrap: break-word">Cross Charge Actual Cost ($K)</th><th>Dept #</th></tr>
 				{% for expenses in expenses_for_previous_quarter %}
 				<tr><td >{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td><td>{{expenses.department_number }}</td></tr>
 				{% endfor %}
