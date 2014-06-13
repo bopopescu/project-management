@@ -17,7 +17,13 @@
 				<thead>
 					<tr>
 						<b style="font-size:20px;">
-							FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}
+							FY 
+							{% if quarter_number == 1%} {{year}} {% endif %}
+							{% if quarter_number == 2%} {{year}} {% endif %}
+							{% if quarter_number == 3%} {{year}} {% endif %}
+							{% if quarter_number == 4%} {{year|add:"-1"}} {% endif %}
+
+							Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}
 						</b>
 					</tr>
 					<tr>
@@ -82,7 +88,13 @@
 				<thead>
 					<tr>
 						<b style="font-size:20px;">
-							FY {{year}} Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %}
+							FY 
+							{% if quarter_number == 1%} {{year|add:"+1"}} {% endif %}
+							{% if quarter_number == 2%} {{year}} {% endif %}
+							{% if quarter_number == 3%} {{year}} {% endif %}
+							{% if quarter_number == 4%} {{year}} {% endif %}
+
+							Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %}
 						</b>
 					</tr>
 					<tr>
