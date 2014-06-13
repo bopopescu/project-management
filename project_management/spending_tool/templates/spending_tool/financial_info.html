@@ -2,7 +2,8 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
 <div class="container-fluid" style="padding:20px;">
-	<h3 class="page-header">Project: {{project.name_project}}</h3>
+	<!--<h3 class="page-header">Project: {{project.name_project}}</h3> -->
+	<h3 class="page-header">Edit Expenses</h3>
 	<h4>Approved: <b style="color:crimson;">${{ totalExp.funding_approved}}K</b> Spent: <b style="color:crimson;">${{totalExp.actual_spent}}K</b></h4>
 	<p>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </p>
 	<form method='post'>{% csrf_token %}
