@@ -3,7 +3,7 @@
 	<div class="container">
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
-	<h3 class="page-header">Milestones: Q{{quarter_number}}</h3>
+	<h3 class="page-header">Milestones</h3>
 		<form method="post" action="">{% csrf_token %}
 
 			<div id="container">
@@ -35,7 +35,7 @@
 					</td>
 				</tr>
 				{% for milestone in previous_milestones %}
-				<tr><td>{{milestone.major_milestone}} / Q {{milestone.quarter_number}}</td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
+				<tr><td>{{milestone.major_milestone}} </td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
 				{% endfor %}
 				
 			</table>

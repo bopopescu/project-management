@@ -10,13 +10,12 @@
 </head>
 <body>
 
-		<div class="span12">
+
 			<nav class="navbar navbar-inverse navbar-fixed-top">
 				<div class="navbar-inner">
 					<div class="container-fluid-nav">
-      					<a  class="pull-left" style="padding:10px;" href="http://www.cisco.com"><img src="/static/dist/img/cisco-logo.png" width="75px" height="40px"></a>
+      					<a  class="pull-left" style="padding:7px;" href="http://www.cisco.com"><img src="/static/dist/img/cisco-logo.png" width="65px" height="25px"></a>
       					<ul class="nav navbar-nav">
-      					<!--<li><a class="navbar-brand" href="#">Project name</a></li> -->
        					<li><a href="/home/">Home</a></li>
        					<li class="dropdown">
        					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Expenses <b class="caret"></b></a>
@@ -26,11 +25,11 @@
          				</ul>
         				</li>
         				<li><a href="/project_summary/?id={{project.id}}">Project Summary</a></li>
+                <li><a href="/project_details/?id={{project.id}}" >Project Details</a></li>
         				<li><a href="/edit_status/?id={{project.id}}">Status</a></li>
         				<li><a href="/input_milestones/?id={{project.id}}">Milestone Schedule</a></li>
-        				<li><a href="/project_details/?id={{project.id}}" >Project Details</a></li>
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documents<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="/attach_document/?id={{project.id}}" >Attach Documents</a></li>
                     <li><a href="/create_report/?id={{project.id}}">Create Report</a></li>
@@ -38,13 +37,14 @@
                 </li>
         				
         				<li><a href="/guidelines/?id={{project.id}}" >Guidelines</a></li>
+                <li><a>Project: <strong>{{project.name_project}}</strong></a></li>
       					</ul>
 					</div>
 				</div><!-- /.container-fluid -->
 			</nav>
-		</div>
 
-<br></br><br></br>
+
+<br></br>
 
 
 

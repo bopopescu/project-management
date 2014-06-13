@@ -4,19 +4,17 @@
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
 	<h3 class="page-header">Project Summary</h3>	
-	 <p><b>Please complete all the fields before submitting</b></p>
+
 		<form method="post" action="">{% csrf_token %}
 
 
 			<div id="container">
 
 
-			<h4>Project Overview</h4>
-			<p>What is the project about – high level description of project, purpose, objectives:</p>
+			<p><strong>Project Overview: </strong>What is the project about – high level description of project, purpose, objectives:</p>
 			<p>{{form.project_overview}}</p>
 
-			<h4>Business Value to Cisco</h4>
-			<p>What is the business value to Cisco from the adoption / implementation of the project results:</p>
+			<p><strong>Business Value to Cisco: </strong>What is the business value to Cisco from the adoption / implementation of the project results:</p>
 			<p>{{form.business_value_to_cisco}}</p>
 			<br>
 			

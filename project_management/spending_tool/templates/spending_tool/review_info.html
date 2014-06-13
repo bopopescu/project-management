@@ -1,54 +1,103 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-<div class="container-fluid" style="padding:20px;">
 
-		<h3 class="page-header">Tech Fund Finance</h3>
-			<div class="table-responsive">
-			<table class="table">
-			<tr>
-			<td>
-			<div id="#table1" class="table-responsive">
+<div class="container">
+	<h3 class="page-header">Review Expenes</h3>
+		
+	<div class="row">
+
+	<div class="col-xs-4">
+		<div id="#table1">
 			<table class="table table-striped">
-				<tr>Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %} {{year}}</tr>
-
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
-				{% for expenses in previous_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
-				{% endfor %}
+				<thead>
+				<tr><b>FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}</b></tr>
+				<tr>
+					<td>Type</td>
+					<td>Expected Cost ($K)</td>
+					<td>Direct Charge Actual cost ($K)</td>
+					<td>Cross Charge Actual cost ($K)</td>
+					<td>Dept #</td>
+				</tr>
+				</thead>
+				<tbody>
+					{% for expenses in previous_quarter %}
+				<tr>
+					<td>{{ expenses.expenses_type }}</td>
+					<td>{{ expenses.estimated_cost}}</td>
+					<td>{{ expenses.direct_charge_actual_cost}}</td>
+					<td>{{ expenses.cross_charge_actual_cost}}</td>
+					<td>{{ expenses.department_number}}</td>
+				</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 		</div>
-	</td>
-	<td>
-		<div id="#table2" class="table-responsive">
+	</div>
+		
+	<div class="col-xs-4">			
+		<div id="#table2">
 			<table class="table table-striped">
-				<tr>Q{{quarter_number}} {{year}}</tr>
-
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
+				<thead>
+				<tr><b style="color:crimson;">FY {{year}} Q{{quarter_number}}</b></tr>
+				<tr>
+					<td>Type</td>
+					<td>Expected Cost ($K)</td>
+					<td>Direct Charge Actual cost ($K)</td>
+					<td>Cross Charge Actual cost ($K)</td>
+					<td>Dept #</td>
+				</tr>
+				</thead>
+				<tbody>
 				{% for expenses in current_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
+				<tr>
+					<td>{{ expenses.expenses_type }}</td>
+					<td>{{ expenses.estimated_cost}}</td>
+					<td>{{ expenses.direct_charge_actual_cost}}</td>
+					<td>{{ expenses.cross_charge_actual_cost}}</td>
+					<td>{{ expenses.department_number}}</td>
+				</tr>
 				{% endfor %}
-				<tr><td>Total Direct Charge:</td><td>{{total_exp_current_direct}}</td><td>Total Cross Charge:</td><td>{{total_exp_current_cross}}</td></tr>
+				<tr>
+					<td>Total Direct Charge:</td>
+					<td>{{total_exp_current_direct}}</td>
+					<td>Total Cross Charge:</td>
+					<td>{{total_exp_current_cross}}</td>
+				</tr>
+				</tbody>
 			</table>
 		</div>
-	</td>
-	<td>
-		<div id="#table3" class="table-responsive">
+	</div>
+	
+	<div class="col-xs-4">
+		<div id="#table3">
 			<table class="table table-striped">
-				<tr>Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
-				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %} {{year}}</tr>
-
-				<tr><td>Type</td><td>Expected Cost</td><td>Direct Charge Actual cost</td><td>Cross Charge Actual cost</td><td>Dept #</td></tr>
+				<thead>
+				<tr><b>FY {{year}} Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
+				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %}</b></tr>
+				<tr>
+					<td>Type</td>
+					<td>Expected Cost ($K)</td>
+					<td>Direct Charge Actual cost ($K)</td>
+					<td>Cross Charge Actual cost ($K)</td>
+					<td>Dept #</td>
+				</tr>
+			</thead>
+			<tbody>
 				{% for expenses in next_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost}}</td><td>{{ expenses.department_number}}</td></tr>
+				<tr>
+					<td>{{ expenses.expenses_type }}</td>
+					<td>{{ expenses.estimated_cost}}</td>
+					<td>{{ expenses.direct_charge_actual_cost}}</td>
+					<td>{{ expenses.cross_charge_actual_cost}}</td>
+					<td>{{ expenses.department_number}}</td>
+				</tr>
 				{% endfor %}
+				</tbody>
 			</table>
 		</div>
-	</td>
-	</tr>
-	</table>
+	</div>
 
-	</div>
-	</div>
+	</div>	
 
 </div>
 
