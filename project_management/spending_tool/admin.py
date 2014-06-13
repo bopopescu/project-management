@@ -30,8 +30,8 @@ class ProjectAdmin(admin.ModelAdmin):
 	 'ip_generated', 'adoptor', 'committee']}),
 
 	]
-	readonly_fields=['project_overview','business_value_to_cisco','start_date',
-	 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost', 'executive_sponsor',
+	readonly_fields=['project_overview','business_value_to_cisco','start_date', 'engineering_mgr',
+	 'target_completion',  'executive_sponsor',
 	 'ip_generated', 'adoptor', 'committee']
 	actions=['print_report']
 

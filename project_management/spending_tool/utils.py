@@ -51,14 +51,14 @@ def return_quarter_year():
     return date
 
 def updateTotal(project):
-    totalExp=projectTotalExpenses.objects.get(project=project)
-    totalExp.funding_approved = project.funding_approved
+    #totalExp=projectTotalExpenses.objects.get(project=project)
+    #totalExp.funding_approved = project.funding_approved
     totals=ExpensesType.objects.filter(project=project)
     total=0
     for t in totals:
         total=total+t.cross_charge_actual_cost + t.direct_charge_actual_cost
-    totalExp.actual_spent=total
-    totalExp.save()
+    project.spent_cost=total
+    project.save()
     return project.funding_approved, total
 
 def returnExpenses(project):
