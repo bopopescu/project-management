@@ -47,7 +47,7 @@ def return_quarter_year():
     	quarter_number=4
     if month==7 and day<27:
     	quarter_number=4
-    date=[quarter_number, year]
+    date=[quarter_number, year, month]
     return date
 
 def updateTotal(project):
@@ -60,6 +60,14 @@ def updateTotal(project):
     project.spent_cost=total
     project.save()
     return project.funding_approved, total
+
+def returnTotal(exps):
+    cross=direct=0
+    for exp in exps:
+        cross=cross+exp.cross_charge_actual_cost
+        direct=direct+exp.direct_charge_actual_cost
+    return direct, cross
+
 
 def returnExpenses(project):
     cross_charge_actual_cost_specific=direct_charge_actual_cost=[] 

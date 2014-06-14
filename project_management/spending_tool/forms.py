@@ -19,7 +19,7 @@ class DetailsForm(ModelForm):
 	target_completion = forms.DateField( widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
 	class Meta:
 		model = Project
-		fields = ('start_date', 'funding_approved', 'engineering_mgr', 'target_completion', 'spent_cost',
+		fields = ('start_date', 'engineering_mgr', 'target_completion',
 		 'executive_sponsor', 'ip_generated', 'adoptor', 'committee')
 			
 class ProjectsummaryForm(ModelForm):

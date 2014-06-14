@@ -81,6 +81,7 @@ def financial_info(request):
             date = return_quarter_year()
             quarter_number=date[0]
             year=date[1]
+            month=date[2]
             list_for_cross_charge=[]
             current_cross_dept=[]
             for exp in expenses_for_current_quarter:
@@ -130,6 +131,7 @@ def financial_info(request):
 
         #info=financialInfo(request)
         updateTotal(project)
+        total_current_direct, total_current_cross=returnTotal(expenses_for_current_quarter)
         totalExp=projectTotalExpenses.objects.get(project=project)
     return render(request,'spending_tool/financial_info.html',{ 'expenses_for_next_quarter':expenses_for_next_quarter,
     															'expenses_for_current_quarter':expenses_for_current_quarter,
@@ -137,6 +139,9 @@ def financial_info(request):
     														    'project':project,
                                                                 'totalExp':totalExp,
                                                                 'year':year,
+                                                                'month':month,
+                                                                'total_current_direct':total_current_direct,
+                                                                'total_current_cross':total_current_cross,
     															'quarter_number':quarter_number,
                                                                 'list_for_cross_charge':list_for_cross_charge,
     															'current_cross_dept':current_cross_dept,

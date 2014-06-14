@@ -74,6 +74,12 @@
 							<td><input step="0.1" style="width:80px" size="5" value="{{ expenses.cross_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.cross_charge_actual_cost}}"  name="cross_charge_actual_cost"/></td
 						</tr>
 					{% endfor %}
+					    <tr>
+					    	<td></td>
+					    	<td>Total</td>
+					    	<td>{{total_current_direct}}</td>
+					    	<td>{{total_current_cross}}</td>
+					    </tr>
 						<tr>
 							<td><input onClick="location.href='/add_current_field/?id={{project.id}}'" type="button" class="btn btn-primary btn-xs" value="Add Expense for this quarter"></td>
 						</tr>
@@ -128,16 +134,16 @@
 			</tr>
 				{% for exp, depts, sum, result in list_for_cross_charge %}
 			<tr>
-				<td>Total: {{exp.cross_charge_actual_cost}}</td>
-				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
-			</tr>
-			<tr>
 				<td><b>{{exp.expenses_type}}</b></td>
 				<td><b>Amount ($K)</b></td>
 				<td><b>Dept. #</b></td>
 					{% if exp.expenses_type == 'FTE' %}
 				<td><b>Person</b></td>
 					{% endif %}
+			</tr>
+			<tr>
+				<td>Total: {{exp.cross_charge_actual_cost}}</td>
+				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
 			</tr>
 				   {% for dept in depts  %}
 			<tr>
