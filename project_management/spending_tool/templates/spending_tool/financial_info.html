@@ -1,89 +1,156 @@
 
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-<div class="container-fluid" style="padding:20px;">
-	<!--<h3 class="page-header">Project: {{project.name_project}}</h3> -->
+
+<div class="container">
 	<h3 class="page-header">Edit Expenses</h3>
 	<h4>Approved: <b style="color:crimson;">${{ totalExp.funding_approved}}K</b> Spent: <b style="color:crimson;">${{totalExp.actual_spent}}K</b></h4>
 	<p>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </p>
-	<form method='post'>{% csrf_token %}
 
-	<table class="table" >
-		<tr>
+<form method='post'>{% csrf_token %}
 
-			<td>
-		<div id="#table1" class="table-responsive">
+<div class="row">
+
+	<div class="col-xs-4">	
+		<div id="#table1">
 			<table class="table table-striped">
-				<tr><b style="font-size:20px;"><strong>FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}</strong></b> </tr>
-
-				<tr ><th style="word-wrap: break-word">Type</th><th style="word-wrap: break-word">Expected Cost ($K)</th><th style="word-wrap: break-word">Direct Charge Actual cost ($K)</th><th style="word-wrap: break-word">Cross Charge Actual Cost ($K)</th><th>Dept #</th></tr>
-				{% for expenses in expenses_for_previous_quarter %}
-				<tr><td >{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td><td>{{expenses.department_number }}</td></tr>
-				{% endfor %}
+				<thead>
+					<tr>
+						<b style="font-size:20px;">
+							FY {{year}} Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}
+						</b>
+					</tr>
+					<tr>
+						<th style="word-wrap: break-word">Type</th>
+						<th style="word-wrap: break-word">Expected Cost ($K)</th>
+						<th style="word-wrap: break-word">Direct Charge Actual cost ($K)</th>
+						<th style="word-wrap: break-word">Cross Charge Actual Cost ($K)</th>
+						<th>Dept #</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for expenses in expenses_for_previous_quarter %}
+						<tr>
+							<td>{{ expenses.expenses_type }}</td>
+							<td>{{ expenses.estimated_cost}}</td>
+							<td>{{ expenses.direct_charge_actual_cost}}</td>
+							<td>{{ expenses.cross_charge_actual_cost }}</td>
+							<td>{{expenses.department_number }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 		</div>
-	</td>
-	<td>
-		<div id="#table2" class="table-responsive">
-			<table class="table table-striped" >
-				<tr><b style="color:crimson;font-size:20px;"><strong>FY {{year}} Q{{quarter_number}}</strong></b> </tr>
-
-				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
-				{% for expenses in expenses_for_current_quarter %}
-				<tr><td >{{ expenses.expenses_type }}</td><td>{{ expenses.estimated_cost}}</td><td><input style="width:80px"size="5" step="0.1" value="{{ expenses.direct_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.direct_charge_actual_cost}}"  name="direct_charge_actual_cost"/></td><td><input step="0.1" style="width:80px" size="5" value="{{ expenses.cross_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.cross_charge_actual_cost}}"  name="cross_charge_actual_cost"/></td> </tr>
-				{% endfor %}
-				<tr><td><input onClick="location.href='/add_current_field/?id={{project.id}}'" type="button" class="btn btn-primary btn-xs" value="Add Expense for this quarter"></td></tr>
-			</table>
-		</div>
-	</td>
-	<td>
-		<div id="#table3" class="table-responsive"  >
-			<table class="table table-striped">
-				<tr><b style="font-size:20px;"><strong>FY {{year}} {% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
-				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %} </strong></b> </tr>
-
-				<tr><th>Type</th><th>Expected Cost ($K)</th><th>Direct Charge Actual cost ($K)</th><th>Cross Charge Actual Cost ($K)</th></tr>
-				{% for expenses in expenses_for_next_quarter %}
-				<tr><td>{{ expenses.expenses_type }}</td><td><input step="0.1" style="width:80px" size="5" value="{{ expenses.estimated_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.estimated_cost}}" name="expected_cost"/></td><td>{{ expenses.direct_charge_actual_cost}}</td><td>{{ expenses.cross_charge_actual_cost }}</td></tr>
-				{% endfor %}
-				<!--<tr><td><input onClick="location.href='/add_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for next quarter"></td></tr>-->
-		</table>
+	</div>
 	
-		</div>
-	</td>
-	</tr>
-	<tr>
-		<td>
-			<table>
-				<tr><h3>Define Cross Charges</h3></tr>
-				{% for exp, depts, sum, result in list_for_cross_charge %}
-				<tr><td>Total: {{exp.cross_charge_actual_cost}}</td><td> Defined: {{sum}}</td><td> Missing: {{ result }}</td></tr>
-				<tr><td><b>{{exp.expenses_type}}</b></td><td><b>Amount ($K)</b></td><td><b>Dept. #</b></td>{% if exp.expenses_type == 'FTE' %}<td><b>Person</b></td>{% endif %}</tr>
-				   {% for dept in depts  %}
-				<tr><td>{{exp.expenses_type}}</td>
-					<td><input style="width:80px" size="5" step="0.1" value="{{ dept.cross_charge_actual_cost }}" type="number" min="0" max="1000" placeholder="{{dept.cross_charge_actual_cost}}" name="cross_charge_actual_cost_specific"/></td>
-					<td><input style="width:80px" size="9" step="0.1" value="{{ dept.department_number }}" type="number" min="0" max="999999999" placeholder="{{dept.department_number}}" name="department_number"/></td>
-					{% if exp.expenses_type == 'FTE' %}
-					<td><input style="width:80px" value="{{ dept.person }}" type="text"  placeholder="{{dept.person}}" name="person"/></td>
-					{% else %}
-					<input style="width:80px" value="" type="hidden"  placeholder="{{dept.person}}" name="person"/>
-					{% endif %}
-				</tr>
-				   {% endfor %}
-				<tr><td><p><a href="/financial_info?add_dept={{exp.id}}&id={{project.id}}">Add dept.</a></p></td></tr>
-				{% endfor %}
+	<div class="col-xs-4">
+		<div id="#table2">
+			<table class="table table-striped" >
+				<thead>
+					<tr>
+						<b style="color:crimson;font-size:20px;">
+							FY {{year}} Q{{quarter_number}}
+						</b> 
+					</tr>
+					<tr>
+						<th>Type</th>
+						<th>Expected Cost ($K)</th>
+						<th>Direct Charge Actual cost ($K)</th>
+						<th>Cross Charge Actual Cost ($K)</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for expenses in expenses_for_current_quarter %}
+						<tr>
+							<td >{{ expenses.expenses_type }}</td>
+							<td>{{ expenses.estimated_cost}}</td>
+							<td><input style="width:80px"size="5" step="0.1" value="{{ expenses.direct_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.direct_charge_actual_cost}}"  name="direct_charge_actual_cost"/></td>
+							<td><input step="0.1" style="width:80px" size="5" value="{{ expenses.cross_charge_actual_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.cross_charge_actual_cost}}"  name="cross_charge_actual_cost"/></td
+						</tr>
+					{% endfor %}
+						<tr>
+							<td><input onClick="location.href='/add_current_field/?id={{project.id}}'" type="button" class="btn btn-primary btn-xs" value="Add Expense for this quarter"></td>
+						</tr>
+				</tbody>		
 			</table>
-		</td>
-	</tr>
-	</table>
+		</div>
+	</div>	
 
-   <input  style="position:fixed;  right:50px; bottom:10px"type="submit" value="Submit Changes" class="btn btn-primary btn-lg"/>
+	<div class="col-xs-4">
+		<div id="#table3">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<b style="font-size:20px;">
+							FY {{year}} Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %}
+						</b>
+					</tr>
+					<tr>
+						<th>Type</th>
+						<th>Expected Cost ($K)</th>
+						<th>Direct Charge Actual cost ($K)</th>
+						<th>Cross Charge Actual Cost ($K)</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for expenses in expenses_for_next_quarter %}
+						<tr>
+							<td>{{ expenses.expenses_type }}</td>
+							<td><input step="0.1" style="width:80px" size="5" value="{{ expenses.estimated_cost }}" type="number" min="0" max="99999" placeholder="{{expenses.estimated_cost}}" name="expected_cost"/></td>
+							<td>{{ expenses.direct_charge_actual_cost}}</td>
+							<td>{{ expenses.cross_charge_actual_cost }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>		
+				<!--<tr><td><input onClick="location.href='/add_field'" type="button" class="btn btn-primary btn-xs" value="Add Expense for next quarter"></td></tr>-->
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+		<table>
+			<tr>
+				<h3>Define Cross Charges</h3>
+			</tr>
+				{% for exp, depts, sum, result in list_for_cross_charge %}
+			<tr>
+				<td>Total: {{exp.cross_charge_actual_cost}}</td>
+				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
+			</tr>
+			<tr>
+				<td><b>{{exp.expenses_type}}</b></td>
+				<td><b>Amount ($K)</b></td>
+				<td><b>Dept. #</b></td>
+					{% if exp.expenses_type == 'FTE' %}
+				<td><b>Person</b></td>
+					{% endif %}
+			</tr>
+				   {% for dept in depts  %}
+			<tr>
+				<td>{{exp.expenses_type}}</td>
+				<td><input style="width:80px" size="5" step="0.1" value="{{ dept.cross_charge_actual_cost }}" type="number" min="0" max="1000" placeholder="{{dept.cross_charge_actual_cost}}" name="cross_charge_actual_cost_specific"/></td>
+				<td><input style="width:80px" size="9" step="0.1" value="{{ dept.department_number }}" type="number" min="0" max="999999999" placeholder="{{dept.department_number}}" name="department_number"/></td>
+					{% if exp.expenses_type == 'FTE' %}
+				<td><input style="width:80px" value="{{ dept.person }}" type="text"  placeholder="{{dept.person}}" name="person"/></td>
+					{% else %}
+				<input style="width:80px" value="" type="hidden"  placeholder="{{dept.person}}" name="person"/>
+					{% endif %}
+			</tr>
+				   {% endfor %}
+			<tr>
+				<td><p><a href="/financial_info?add_dept={{exp.id}}&id={{project.id}}">Add dept.</a></p></td>
+			</tr>
+				{% endfor %}
+		</table>
+   		<input  style="position:fixed;  right:50px; bottom:10px"type="submit" value="Submit Changes" class="btn btn-primary btn-lg"/>
+
+
 
 	</form>
 
 </div>
-
-
 
     
 {% endblock %}
