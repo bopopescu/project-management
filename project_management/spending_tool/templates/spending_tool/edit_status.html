@@ -3,17 +3,48 @@
 <div style="margin:50px"class="container">
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
-	<h3 class="page-header">Project Description</h3>
-	<form method="post" action="">{% csrf_token %}
-		<div id="container">
-			<table class="table table-striped" >
-				<tr><td></td><th >Previous Status</th><th>Current Status</th></tr>
-				<tr><th>Date</th><td>{{one_status.date}}</td><td>{{ today }}</td></tr>
-				<tr><th>Recent Accomplishments</th><td>{{one_status.recent_accomplishments}}</td><td><textarea rows="4" cols="42" name="recent_accomplishments"></textarea></td></tr>
-				<tr><th>Current Challlenges</th><td>{{one_status.current_challenges}}</td><td><textarea rows="4" cols="42" name="current_challenges"></textarea></td></tr>
-				<tr><th>Next Steps</th><td>{{one_status.next_steps}}</td><td><textarea rows="4" cols="42" name="next_steps"></textarea></td></tr>
-				<tr><td></td><td><p><i><a href="/edit?status={{one_status.id}}&id={{project.id}}">Edit status</a></i></p></td><td><input type="submit" class="btn btn-primary btn-medium" value="submit" /></td></tr>
-			</table>
+	
+			<h4 class="page-header">
+				Project: <strong>{{project.name_project}}</strong>
+			</h4>
+
+			<form method="post" action="">{% csrf_token %}
+				<div id="container">
+					<table class="table table-striped" >
+						<tr>
+							<td>
+							</td>
+							<th >Previous Status</th>
+							<th>Current Status</th>
+						</tr>
+						<tr>
+							<th>Date</th>
+							<td>{{one_status.date}}</td>
+							<td>{{ today }}</td>
+						</tr>
+						<tr>
+							<th>Recent Accomplishments</th>
+							<td>{{one_status.recent_accomplishments}}</td>
+							<td><textarea rows="4" cols="42" name="recent_accomplishments"></textarea></td>
+						</tr>
+						<tr>
+							<th>Current Challlenges</th>
+							<td>{{one_status.current_challenges}}</td>
+							<td><textarea rows="4" cols="42" name="current_challenges"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>Next Steps</th>
+							<td>{{one_status.next_steps}}</td>
+							<td><textarea rows="4" cols="42" name="next_steps"></textarea></td>
+						</tr>
+						<tr>
+							<td>		
+							</td>
+							<td><p><i><a href="/edit?status={{one_status.id}}&id={{project.id}}">Edit status</a></i></p></td>
+							<td><input type="submit" class="btn btn-primary btn-medium" value="submit" /></td>
+						</tr>
+					</table>
 
            <!-- <h3> Q {{quarter_number}}</h3>
 			<h4>Recent Accomplishments</h4>
@@ -37,27 +68,28 @@
 			
 			<textarea rows="4" cols="42" name="next_steps"></textarea> 
 				<br>-->
-			</div> 
+				
+				</div> 
+			</form>
+			<br>
+			<br>
 
-		
-		</form>
-		<br>
-		<br>
         <h3>Previous Statuses</h3>
         <hr class="featurette-divider">
-        {% for status in previous_status %}
-        <p><b>Recent Accomplishments / {{status.date}}  </b></p>
-        <p>{{status.recent_accomplishments}}</p>
-        <p><b>Current Challenges / {{status.date}}  </b></p>
-        <p>{{status.current_challenges}}</p>
-        <p><b>Next Steps / {{status.date}} </b></p>
-        <p>{{status.next_steps}}</p>
-        <p><i><a href="/edit?status={{status.id}}&id={{project.id}}">Edit status</a></i></p>
-         <hr class="featurette-divider">  
+        	{% for status in previous_status %}
+        	<p><b>Recent Accomplishments / {{status.date}}  </b></p>
+        	<p>{{status.recent_accomplishments}}</p>
+        	<p><b>Current Challenges / {{status.date}}  </b></p>
+        	<p>{{status.current_challenges}}</p>
+        	<p><b>Next Steps / {{status.date}} </b></p>
+        	<p>{{status.next_steps}}</p>
+        	<p><i><a href="/edit?status={{status.id}}&id={{project.id}}">Edit status</a></i></p>
+        <hr class="featurette-divider">  
 
-         </div>
-</div>
+        </div>
+	</div>
 </div> 
-        {% endfor %}
+
+{% endfor %}
 		
 {% endblock %}

@@ -3,37 +3,38 @@
 <div style="margin:50px"class="container">
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
-<h3 class="page-header">Project Description</h3>
-	<form method="post" action="">{% csrf_token %}
-		<div id="container">
 
-            <h3> Q {{quarter_number}}</h3>
-			<h4>Recent Accomplishments</h4>
-			<p>
-			Highlight any results or findings that will have value to Cisco or the industry
-			</p>
-			<!--<p>{{form.recent_accomplishments}}</p>-->
-			<textarea rows="4" cols="42" name="recent_accomplishments">{{current_status.recent_accomplishments}}</textarea>
-			   <br> 
-			<h4>Current Challenges</h4>
-			<p>
-			Highlight any results or findings that will have value to Cisco or the industry
-			</p>
-			<!--<p>{{form.current_challenges}}</p>-->
-			<textarea rows="4" cols="42" name="current_challenges">{{current_status.current_challenges}}</textarea> 
-				<br>
-			<h4>Next Steps</h4>
-			<p>
-			Highlight any of the challenges that are likely to risk to the project
-			</p>
-			<!--<p>{{form.next_steps}}</p>-->
-			<textarea rows="4" cols="42" name="next_steps">{{current_status.next_steps}}</textarea> 
-				<br>
-			</div>
+    		<h4 class="page-header">
+				Project: <strong>{{project.name_project}}</strong>
+			</h4>
 
-			<p><input type="submit" class="btn btn-primary btn-large" value="submit" /></p>
-		</form>
+
+			<form method="post" action="">{% csrf_token %}
+				<div id="container">
+
+            		<h3> Q {{quarter_number}}</h3>
+					<h4>Recent Accomplishments</h4>
+					<p>Highlight any results or findings that will have value to Cisco or the industry</p>
+					<!--<p>{{form.recent_accomplishments}}</p>-->
+					<textarea rows="4" cols="42" name="recent_accomplishments">{{current_status.recent_accomplishments}}</textarea>
+			   		<br> 
+					<h4>Current Challenges</h4>
+					<p>Highlight any results or findings that will have value to Cisco or the industry</p>
+					<!--<p>{{form.current_challenges}}</p>-->
+					<textarea rows="4" cols="42" name="current_challenges">{{current_status.current_challenges}}</textarea> 
+					<br>
+					<h4>Next Steps</h4>
+					<p>Highlight any of the challenges that are likely to risk to the project</p>
+					<!--<p>{{form.next_steps}}</p>-->
+					<textarea rows="4" cols="42" name="next_steps">{{current_status.next_steps}}</textarea> 
+					<br>
 				</div>
-						</div>
-								</div>
+
+				<p><input type="submit" class="btn btn-primary btn-large" value="submit" /></p>
+			</form>
+				
+		</div>
+	</div>
+</div>
+
 {% endblock %}

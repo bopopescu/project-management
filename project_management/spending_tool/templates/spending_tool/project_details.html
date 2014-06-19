@@ -1,55 +1,68 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
+<<<<<<< HEAD
 <div style="margin:50px"class="container">
+=======
+
+<div class="container">
+>>>>>>> 2901f6d10edefe012c07f0281ab550e66c364133
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
-		<h3 class="page-header">Project Details</h3>
-        <p><b>Please complete all the fields before submitting</b></p>
-	<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
+		
+			<h4 class="page-header">
+				Project: <strong>{{project.name_project}}</strong>
+			</h4>
+        
+        	<p><b>Please complete all the fields before submitting</b></p>
+				<div id="content" style="background-color:#EEEEEE;height:80%;width:85%;float:left;">
+					<form method="post" action="">{% csrf_token %}
+						<div id="container">
+							<table class="table table-striped" class="table-responsive" width="100%">
+								<tr>
+									<td>Project Start Date</td>
+									<td>{{form.start_date}}</td>
+								</tr>
+								<tr>
+									<td>Funding Approved ($K)</td>
+									<td>{{project.funding_approved}}</td>
+								</tr>
+								<tr>
+									<td>Engineering Mgr</td>
+									<td>{{form.engineering_mgr}}</td>
+								</tr>
+								<tr>
+									<td>Target Completion</td>
+									<td>{{form.target_completion}}</td>
+								</tr>
+								<tr>
+									<td>Spent ($K) As Of</td>
+									<td>{{project.spent_cost}}
+								</tr>
+								<tr>
+									<td>Executive Sponsor</td>
+									<td>{{form.executive_sponsor}}</td>
+								</tr>
+									<td>IP Generated (patents, papers, standards)</td>
+									<td>{{form.ip_generated}}</td>
+								</tr>
+								<tr>
+									<td>Planned Adoptor(s) of Project Results</td>
+									<td>{{form.adoptor}}</td>
+								</tr>
+								<tr>
+									<td>Review Committee</td>
+									<td>{{form.committee}}</td>
+								</tr>
+							</table>
+						</div>
+						<p><input type="submit"class="btn btn-primary btn-medium" value="submit" /></p>
+					</form>
+				</div>
 
-		<form method="post" action="">{% csrf_token %}
-			<div id="container">
-
-			<table class="table table-striped" class="table-responsive" width="100%">
-				<tr>
-					<td>Project Start Date</td><td>{{form.start_date}}</td>
-				</tr>
-				<tr>
-
-					<td>Funding Approved ($K)</td><td>{{project.funding_approved}}</td>
-
-				</tr>
-				<tr>
-					<td>Engineering Mgr</td><td>{{form.engineering_mgr}}</td>
-				</tr>
-				<tr>
-					<td>Target Completion</td><td>{{form.target_completion}}</td>
-				</tr>
-				<tr>
-
-					<td>Spent ($K) As Of</td><td>{{project.spent_cost}}
-
-				</tr>
-				<tr>
-					<td>Executive Sponsor</td><td>{{form.executive_sponsor}}</td>
-				</tr>
-					<td>IP Generated (patents, papers, standards)</td><td>{{form.ip_generated}}</td>
-				</tr>
-				<tr>
-					<td>Planned Adoptor(s) of Project Results</td><td>{{form.adoptor}}</td>
-				</tr>
-				<tr>
-					<td>Review Committee</td><td>{{form.committee}}</td>
-				</tr>
-				</tr>
-			</table>
-			</div>
-			<p><input type="submit"class="btn btn-primary btn-medium" value="submit" /></p>
-		</form>
+		</div>
 	</div>
 </div>
-</div>
-</div>
+
 {% endblock %}
 
 

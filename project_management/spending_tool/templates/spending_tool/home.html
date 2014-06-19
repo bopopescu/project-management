@@ -1,13 +1,15 @@
 {% extends "spending_tool/layout_home.html" %}
 {% block content %}
+<<<<<<< HEAD
 <div style="margin:50px"class="container">
+=======
+
+<div class="container">
+>>>>>>> 2901f6d10edefe012c07f0281ab550e66c364133
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
+
     		<h3 class="page-header">Funded Projects</h3>
-    		
-
-
-	
 				<h4 style="background-color: #">Active Projects</h4>
 					<ul>
 	   					{% for project in list_active_projects %}
@@ -15,8 +17,7 @@
 	   	 				<li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
 	   					{% endfor %}
 					</ul>
-<br>
-		
+					<br>
 				<h4 style="background-color: #">Completed Projects</h4>
        				<ul>
 	   					{% for project in list_completed_projects %}
@@ -24,12 +25,10 @@
 	   	 				<li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
 						{% endfor %}
 	   				</ul>
-
-
-
 		
 		</div>
 	</div>
 </div> 
+
 {% endblock %}
 
