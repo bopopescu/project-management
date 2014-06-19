@@ -11,11 +11,8 @@
 			<table class="table table-striped">
 				<thead>
 				<tr><b>
-					FY 
-							{% if quarter_number == 1%} {{year}} {% endif %}
-							{% if quarter_number == 2%} {{year}} {% endif %}
-							{% if quarter_number == 3%} {{year}} {% endif %}
-							{% if quarter_number == 4%} {{year|add:"-1"}} {% endif %}
+					FY{% if quarter_number == 1%}{{year|add:"-1"}}{% endif %}{% if quarter_number == 2%} {{year}}{% endif %}{% if quarter_number == 3%}{{year}}{% endif %}{% if quarter_number == 4%}{{year}}{% endif %}
+
 					Q{% if quarter_number == 1%}4{% endif %}{% if quarter_number == 2%}1{% endif %}{% if quarter_number == 3%}2{% endif %}{% if quarter_number == 4%}3{% endif %}</b></tr>
 				<tr>
 					<td>Type</td>
@@ -44,7 +41,7 @@
 		<div id="#table2">
 			<table class="table table-striped">
 				<thead>
-				<tr><b style="color:crimson;">FY {{year}} Q{{quarter_number}}</b></tr>
+				<tr><b style="color:crimson;">FY{{year}} Q{{quarter_number}}</b></tr>
 				<tr>
 					<td>Type</td>
 					<td>Expected Cost ($K)</td>
@@ -79,11 +76,8 @@
 			<table class="table table-striped">
 				<thead>
 				<tr><b>
-					FY 
-					{% if quarter_number == 1%} {{year|add:"+1"}} {% endif %}
-					{% if quarter_number == 2%} {{year}} {% endif %}
-					{% if quarter_number == 3%} {{year}} {% endif %}
-					{% if quarter_number == 4%} {{year}} {% endif %} 
+					FY{% if quarter_number == 1%}{{year}}{% endif %}{% if quarter_number == 2%}{{year}}{% endif %}{% if quarter_number == 3%}{{year}}{% endif %}{% if quarter_number == 4%}{{year|add:"+1"}}{% endif %}
+					
 					Q{% if quarter_number == 1%}2{% endif %}{% if quarter_number == 2%}3
 				{% endif %}{% if quarter_number == 3%}4{% endif %}{% if quarter_number == 4%}1{% endif %}</b></tr>
 				<tr>
