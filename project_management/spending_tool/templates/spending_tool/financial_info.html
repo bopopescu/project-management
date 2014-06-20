@@ -12,7 +12,7 @@
 <div class="container">
 
 	<div class="page-header">
-	<h4>Project: <strong>{{project.name_project}}</strong>, Approved: <b style="color:crimson;">${{ totalExp.funding_approved}}K</b> Spent: <b style="color:crimson;">${{totalExp.actual_spent}}K</b></h4>
+	<h4>Project: <strong>{{project.name_project}}</strong></h4>
 
 	<p>For every cross charge expense added please make sure you define it at the bottom of the page under <i>Define Cross Charges</i> </p>
 	</div>
@@ -143,10 +143,7 @@
 				<td><b>Person</b></td>
 					{% endif %}
 			</tr>
-			<tr>
-				<td>Total: {{exp.cross_charge_actual_cost}}</td>
-				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
-			</tr>
+
 				   {% for dept in depts  %}
 			<tr>
 				<td>{{exp.expenses_type}}</td>
@@ -159,6 +156,10 @@
 					{% endif %}
 			</tr>
 				   {% endfor %}
+		    <tr>
+				<td>Total: {{exp.cross_charge_actual_cost}}</td>
+				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
+			</tr>
 			<tr>
 				<td><p><a href="/financial_info?add_dept={{exp.id}}&id={{project.id}}">Add dept.</a></p></td>
 			</tr>
