@@ -20,7 +20,7 @@ from utils import *
 from datefunction import return_quarter_year
 # Create your views here.
 import smtplib
-
+from createReport import createReport
 import re
 
 import xlsxwriter
@@ -512,6 +512,8 @@ def create_report(request):
         #current_user = request.user
         #engineer = EngineerProfile.objects.get(user=current_user)
         project = Project.objects.get(pk=project_id)
+        return createReport(project)
+        '''
         try:
             import cStringIO as StringIO
         except ImportError:
@@ -578,3 +580,4 @@ def create_report(request):
         response = HttpResponse(output.read(), mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         response['Content-Disposition'] = "attachment; filename="+title
         return response
+        '''
