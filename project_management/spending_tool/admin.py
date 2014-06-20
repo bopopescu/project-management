@@ -32,7 +32,7 @@ class ProjectAdmin(admin.ModelAdmin):
 	]
 	readonly_fields=['project_overview','business_value_to_cisco','start_date', 'engineering_mgr',
 	 'target_completion',  'executive_sponsor',
-	 'ip_generated', 'adoptor', 'committee']
+	 'ip_generated', 'adoptor', 'committee', 'spent_cost']
 	actions=['print_report']
 
 	def print_report(modeladmin, request, queryset):
