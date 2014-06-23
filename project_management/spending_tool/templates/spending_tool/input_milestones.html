@@ -1,50 +1,56 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-	<div class="container">
+
+<div class="container">
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
-	<h3 class="page-header">Milestones</h3>
-		<form method="post" action="">{% csrf_token %}
+	
+			<h4 class="page-header">
+				Project: <strong>{{project.name_project}}</strong>
+			</h4>
 
-			<div id="container">
+			<form method="post" action="">{% csrf_token %}
+				<div id="container">
+					<table class="table" class="table-responsive" width="100%">
+						<tr>
+							<th>Major Milestone Schedule</th><th>Due Date (YYYY-MM-DD)</th><th>% Complete</th>
+						</tr>
+						<tr>
+							<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="YYYY-MM-DD"></td>
+							<td>
+								<select name="percentage">
+									<option value="0">0%</option>
+									<option value="10">10%</option>
+									<option value="20">20%</option>
+									<option value="30">30%</option>
+									<option value="40">40%</option>
+									<option value="50">50%</option>
+									<option value="60">60%</option>
+									<option value="70">70%</option>
+									<option value="80">80%</option>
+									<option value="90">90%</option>
+									<option value="100">100%</option>
+								</select></p>
+							</td>
+							<!--<td>{{form.major_milestone}}</td><td>{{form.due_date}}</td><td>{{form.percentage_complete}}</td>-->
+							<td>
+							<input type="submit" href="/milestones/" class="btn btn-primary btn-medium" value="submit" />
+							</td>
+						</tr>
+						{% for milestone in previous_milestones %}
+						<tr>
+							<td>{{milestone.major_milestone}} </td>
+							<td>{{milestone.due_date}}</td>
+							<td>{{milestone.percentage_complete}}</td>
+						</tr>
+						{% endfor %}
+					</table>
+	 			</div>
+	 		</form>
 
-								
-
-			<table class="table" class="table-responsive" width="100%">
-				<tr>
-					<th>Major Milestone Schedule</th><th>Due Date (YYYY-MM-DD)</th><th>% Complete</th>
-				</tr>
-				<tr>
-					<td><input type="text" name="schedule"></td><td><input type="text" name="date" placeholder="YYYY-MM-DD"></td><td>
-							 <select name="percentage">
-							<option value="0">0%</option>
-							<option value="10">10%</option>
-							<option value="20">20%</option>
-							<option value="30">30%</option>
-							<option value="40">40%</option>
-							<option value="50">50%</option>
-							<option value="60">60%</option>
-							<option value="70">70%</option>
-							<option value="80">80%</option>
-							<option value="90">90%</option>
-							<option value="100">100%</option>
-							</select></p></td>
-					<!--<td>{{form.major_milestone}}</td><td>{{form.due_date}}</td><td>{{form.percentage_complete}}</td>-->
-					<td>
-						<input type="submit" href="/milestones/" class="btn btn-primary btn-medium" value="submit" />
-					</td>
-				</tr>
-				{% for milestone in previous_milestones %}
-				<tr><td>{{milestone.major_milestone}} </td><td>{{milestone.due_date}}</td><td>{{milestone.percentage_complete}}</td></tr>
-				{% endfor %}
-				
-			</table>
-
-	 </div>
+		</div>
+	</div> 
 </div>
-</div> 
-
-			</div>
 
 	
  <!--                <div class="container">
