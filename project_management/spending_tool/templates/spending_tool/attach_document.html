@@ -1,30 +1,32 @@
 {% extends "spending_tool/layout.html" %}
 {% block content %}
-<div class="container">
+<div style="margin:50px"class="container">
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
 
-			<h4 class="page-header">
-				Project: <strong>{{project.name_project}}</strong>
-			</h4>
-
+			<h3 class="page-header">Attach Documents</h3>
+			<div>
 			<form enctype="multipart/form-data" method="post">{% csrf_token %}
 				{{form}}
-				<br><br>
+			<br><br>
 				<p><input type="submit" href="/attach_document/" class="btn btn-primary " value="Upload"></p>
 			</form>
-
+		</div>
 			<hr class="featurette-divider">
 			{% for document in documents %}
-			<p><b>{{document.file_name}}</b></p>
-			<ul>
-				<li><i><a href="http://172.21.174.15:8000/media/{{document.document}}">View</a></i></li>
-				<li>Date uploaded: {{document.date}}</li>
-			</ul>
+			<div style="margin-left:50px" >
+				<p><b>{{document.file_name}}</b></p>
+				<ul>
+					<li><i><a href="/media/{{document.document}}">View</a></i></li>
+					<li>Date uploaded: {{document.date}}</li>
+				</ul>
+			</div>
 
-		</div>
-	</div>
-</div> 
 
 {% endfor %}
+
+ </div>
+</div>
+</div> 
+
 {% endblock %}

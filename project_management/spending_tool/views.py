@@ -61,7 +61,7 @@ def home(request):
 
 def guidelines(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:
         project=Project.objects.get(pk=project_id)  
@@ -69,7 +69,7 @@ def guidelines(request):
 
 def financial_info(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:
         try: 
@@ -151,7 +151,7 @@ def financial_info(request):
 
 def add_field(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:
         current_user=request.user
@@ -209,7 +209,7 @@ def add_field(request):
 
 def add_current_field(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         current_user=request.user
@@ -226,7 +226,7 @@ def add_current_field(request):
                 #department_number=request.POST.get('department_number','')
                 cross_charge_actual_cost=request.POST.get('cross_charge_actual_cost','')
                 direct_charge_actual_cost=request.POST.get('direct_charge_actual_cost','')
-                expected_cost=request.POST['expected_cost']
+                expected_cost=0 #request.POST.get('expected_cost','')
                 current=ExpensesType.objects.create(project=project,
                 							expenses_type=name,
                 							estimated_cost=expected_cost,
@@ -246,7 +246,7 @@ def add_current_field(request):
 
 def review_info(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
     	current_user=request.user
@@ -295,7 +295,7 @@ def edit_status(request):
     time=datetime.now()
     today=time
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -333,7 +333,7 @@ def edit_status(request):
 def edit(request):
     time=datetime.now()
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -356,7 +356,7 @@ def edit(request):
 
 def status(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -380,7 +380,7 @@ def status(request):
 
 def project_summary(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -400,7 +400,7 @@ def project_summary(request):
 
 def input_milestones(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -435,7 +435,7 @@ def input_milestones(request):
 
 def milestones(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -454,7 +454,7 @@ def milestones(request):
 
 def project_details(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -476,7 +476,7 @@ def project_details(request):
 
 def attach_document(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
@@ -506,7 +506,7 @@ def attach_document(request):
 
 def create_report(request):
     project_id=request.GET.get('id')
-    if len(project_id)==0:
+    if project_id is None or len(project_id)==0:
         return HttpResponseRedirect('/home/')
     else:  
         #current_user = request.user
