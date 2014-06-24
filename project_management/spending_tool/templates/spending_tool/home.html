@@ -1,7 +1,12 @@
 {% extends "spending_tool/layout_home.html" %}
 {% block content %}
 
+
+<div style="margin:50px"class="container">
+
+
 <div class="container">
+
 	<div style="width:100%" class="row centered">
     	<div class="col-md-8 col-md-offset-2">
 
@@ -19,7 +24,7 @@
        				<ul>
 	   					{% for project in list_completed_projects %}
 	   					<br>
-	   	 				<li><strong><a href="/financial_info/?id={{project.id}}">{{project.name_project}}</a></strong></li>
+	   	 				<li><strong>{{project.name_project}}</strong></li>
 						{% endfor %}
 	   				</ul>
 		
