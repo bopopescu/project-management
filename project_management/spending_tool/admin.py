@@ -53,11 +53,10 @@ class ProjectAdmin(admin.ModelAdmin):
 		#workbook=xlsxwriter.Workbook('blablabla.xlsx')
 		worksheet = workbook.add_worksheet()
 		line=1
-		
-		list_quarters=[]
 		#project_id=queryset.id
 		for query in queryset:
 			cell=0
+			list_quarters=[]
 			for m in range(4):
 				if len(ExpensesType.objects.filter(project=query, year=year, quarter_number=m+1))>0:
 					list_quarters.append(ExpensesType.objects.filter(project=query, year=year, quarter_number=m+1))

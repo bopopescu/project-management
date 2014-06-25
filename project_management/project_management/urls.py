@@ -17,11 +17,13 @@ urlpatterns = patterns('',
     url(r'^', include('spending_tool.urls', namespace="spending_tool")),
 )
 urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        #(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        (r'^home/localadmin/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}))
 if settings.DEBUG:
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        #(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        (r'^home/localadmin/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}))
