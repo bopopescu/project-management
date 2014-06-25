@@ -42,7 +42,7 @@ $ sudo easy_install psycopg2
 --------
 **OVERVIEW**
 
-We used a Model–view–controller (MVC) architecture. The structure of every object ( student, manager, university admin etc. ) is defined in /spending_tool/models.py. /spending_tool/views.py controls the views and the requests of the users and in /spending_tool/templates/spending_tool/ you will find all the templates used. For help understanding the template tags used in Django visit http://jinja.pocoo.org/docs/templates/.
+We used a Model–view–controller (MVC) architecture. The structure of every object is defined in /spending_tool/models.py. /spending_tool/views.py controls the views and the requests of the users and in /spending_tool/templates/spending_tool/ you will find all the templates used. For help understanding the template tags used in Django visit http://jinja.pocoo.org/docs/templates/.
 
 In the folder project_management you will find settings.py; spending_tool is the actual Django app.
 
@@ -64,7 +64,7 @@ This is actual app, where all the models, the views and the controller are.
   
 **The Views**
 
-  In /templates/ciip/ you will find all the templates that define the views, familiarize on the way we pass variables from the controller to the view ( we pass a variable, eg. x,  when we render the page and then we use {{ x }} within a template.
+  In /templates/spending_tool/ you will find all the templates that define the views, familiarize on the way we pass variables from the controller to the view ( we pass a variable, eg. x,  when we render the page and then we use {{ x }} within a template.
   
 **Other files**
   
@@ -96,43 +96,12 @@ This is actual app, where all the models, the views and the controller are.
 This is where the settings are, you rarely touch the files in /mysite/.
 
 
-SOUTH
+POSTGRESQL
 -----
 
 **OVERVIEW**
 
-South is used to migrate your database anytime you make a change to your models. South is now integrated with Django 1.7 but since we are using Django 1.5.4 you will have some basic commands that you need to do to migrate succssefully the database.
 
-Firstly have a look at this South introduction, http://south.readthedocs.org/en/latest/tutorial/part1.html . 
-
-The Process:
-
-Usually any time I make a change I apply this kind of workflow:
-
-  1.Change a field in my models
-  
-  2.Create Migration file:
-  ```
-  $ python manage.py schemamigration ciip --auto
-  ```
-  
-  3.Apply migration on the local postgresql database:
-  ```
-  $ python manage.py migrate ciip
-  ```
-  
-  4.Push the changes to GitHub and Heroku
-  ```
-  $ git push origin master
-  ```
-  ```
-  $ git push heroku master
-  ```
-  
-  5.Apply migration on the postgresql database hosted on heroku
-  ```
-  $ heroku run python manage.py migrate ciip
-  ```
 
 ========================================================================================
   
@@ -149,47 +118,4 @@ Below there is a short 'map' of the templates and what contents they contain.
 
 
 **THE CONTENT MAP**
-
-**A.Landing page and open to the public**
-
-* /ciip/templates/ciip/info.html  -- This is the landing page ( https://www.ciip4me.com/ciip/info). Basic info about the program are given and also some other general info.
-
-* /ciip/templates/ciip/faq.html -- This is the FAQ page ( https://www.ciip4me.com/ciip/faq ). I guess you know what it contains...
-
-* /ciip/templates/ciip/contact_us.html --  https://www.ciip4me.com/ciip/contact_us . Contact page
-
-
-**B.Students' app**
-
-* /ciip/templates/ciip/login.html --  https://www.ciip4me.com/ciip/login . Login for Students
-
-
-* /ciip/templates/ciip/home.html --  https://www.ciip4me.com/ciip/home . Homepage for students
-
-
-* /ciip/templates/ciip/academic_info.html --  https://www.ciip4me.com/ciip/academic_info . Overview of academic info
- 
-
-* /ciip/templates/ciip/edit_academic_info.html --  https://www.ciip4me.com/ciip/edit_academic_info . Edit academic info
-
-
-* /ciip/templates/ciip/profile_contact_info.html --  https://www.ciip4me.com/ciip/profile_contact_info . Overview of contact informations and general info about the student
-
-
-* /ciip/templates/ciip/edit_contact_info.html --  https://www.ciip4me.com/ciip/edit_contact_info . Edit basic ocntact info
-
-
-* /ciip/templates/ciip/upload_file.html --  https://www.ciip4me.com/ciip/upload_file . Upload CV
-
-
-* /ciip/templates/ciip/cover_letter.html --  https://www.ciip4me.com/ciip/cover_letter . Upload Cover Letter
-
-
-* /ciip/templates/ciip/work_internship.html --  https://www.ciip4me.com/ciip/work_internship . Overview of internships and work experience
- 
-
-* /ciip/templates/ciip/edit_work_internship.html --  https://www.ciip4me.com/ciip/edit_work_internship . Edit internships and work experience info
-
-
-
 
