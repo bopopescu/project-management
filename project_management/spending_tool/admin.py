@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import *
 import xlsxwriter 
 from django.http import HttpResponse
+from createReport import createReport
 '''
 class EngineerAdmin(admin.ModelAdmin):
 	model=EngineerProfile
@@ -36,6 +37,8 @@ class ProjectAdmin(admin.ModelAdmin):
 	actions=['print_report']
 
 	def print_report(modeladmin, request, queryset):
+		return createReport(queryset)
+		'''
 		try:
 			import cStringIO as StringIO
 		except ImportError:
@@ -102,6 +105,7 @@ class ProjectAdmin(admin.ModelAdmin):
 		response = HttpResponse(output.read(), mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 		response['Content-Disposition'] = "attachment; filename="+title
 		return response
+		'''
 
 	print_report.short_description = "Export to Excel"
 
