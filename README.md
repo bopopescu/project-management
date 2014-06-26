@@ -56,10 +56,10 @@ This is the actual app, where all the models, the views and the controller are.
   In models.py you will find all the objects used in Tech Fund Finance. Each field describes a property of the object.
   
   **ATTENTION:** If you change a field in models make sure to create a new database afterward to update from your old database schema to your new database structure. Then run:
-
+  ```
   $ python manage.py syncdb
   ```
-
+  
 **The Controller**
 
   In views.py you will find all the logic that handles the different requests. 
