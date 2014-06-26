@@ -143,10 +143,7 @@
 				<td><b>Person</b></td>
 					{% endif %}
 			</tr>
-			<tr>
-				<td>Total: {{exp.cross_charge_actual_cost}}</td>
-				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
-			</tr>
+
 				   {% for dept in depts  %}
 			<tr>
 				<td>{{exp.expenses_type}}</td>
@@ -159,6 +156,10 @@
 					{% endif %}
 			</tr>
 				   {% endfor %}
+		    <tr>
+				<td>Total: {{exp.cross_charge_actual_cost}}</td>
+				<td> Defined: {{sum}}</td><td> Missing: {{ result }}</td>
+			</tr>
 			<tr>
 				<td><p><a href="/financial_info?add_dept={{exp.id}}&id={{project.id}}">Add dept.</a></p></td>
 			</tr>
