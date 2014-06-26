@@ -14,13 +14,6 @@ The web app has been built using the Django framework and is currently hosted on
 
 The OS we suggest is Ubuntu 12.04 and all the following instructions that you will see assume that you are using Ubuntu 12.04. 
 
-# Install Django
-pip install django>=1.4
-# Clone the repo
-git clone git://github.com/mlavin/django-app-template.git
-# Use the template
-django-admin.py startapp --template=django-app-template/template --extension=py,rst,in <app_name>
-
 1.The Set-Up:
 -------------
 Firstly let's setup our enviroment in order to have Django ready.
