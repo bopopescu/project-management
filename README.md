@@ -3,7 +3,7 @@ TECH FUND FINANCE Documentation
 
 **Introduction**
 
-  Tech Fund Finance is a Django app to automate how expenses are entered for Tech Fund projects. The tool allows the user to enter Direct and Cross Charges for expenses each quarter. At the same time users can enter details about thr project as well as entering quarterly milestones and statuses.
+  Tech Fund Finance is a Django app used to record quarterly expenses for Cisco Tech Funded projects. Each quarter the project owner is able to enter the amount for each expense and enter an estimate for next quarter. The tool also allows the project owners to manage their project by entering quarterly milestones, status's and generating reports.
   
 ===================================================================
 
