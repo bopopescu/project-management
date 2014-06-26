@@ -58,15 +58,16 @@ This is the actual app, where all the models, the views and the controller are.
   **ATTENTION:** If you change a field in models make sure to create a new database afterward to update from your old database schema to your new database structure. Then run:
 
   $ python manage.py syncdb
+  ```
 
 **The Controller**
 
   In views.py you will find all the logic that handles the different requests. 
-  In every method we handle a different requests. 
+  In every method we handle a different request. 
   
 **The Views**
 
-  In /templates/spending_tool/ you will find all the templates that define the views, familiarize on the way we pass variables from the controller to the view ( we pass a variable, eg. x,  when we render the page and then we use {{ x }} within a template.
+  In /templates/spending_tool/ you will find all the templates that define the views, familiarize on the way we pass variables from the controller to the view. If we pass a variable, eg. x,  then we render the page and will use {{ x }} within a template.
   
 **Other files**
   
