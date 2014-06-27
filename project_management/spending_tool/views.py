@@ -98,7 +98,7 @@ def financial_info(request):
             if len(add_dept)!=0:
                 exp=ExpensesType.objects.get(pk=add_dept)
                 DepartmentNumber.objects.create(relates_to=exp,cross_charge_actual_cost=0, department_number=0)
-                return HttpResponseRedirect('/financial_info/?id='+project_id)
+                return HttpResponseRedirect('/financial_info/?id='+project_id+'#'+str(exp.id))
             if request.method=='POST':
                 i=0
                 expected_cost=request.POST.getlist('expected_cost')

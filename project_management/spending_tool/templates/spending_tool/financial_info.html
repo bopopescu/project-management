@@ -129,14 +129,14 @@
 				</div>
 			</div>
 		</div>
-        <section id="dept"></section>
+        
 		<table>
 			<tr>
 				<h3>Define Cross Charges</h3>
 			</tr>
 				{% for exp, depts, sum, result in list_for_cross_charge %}
 			<tr>
-				<td><b>{{exp.expenses_type}}</b></td>
+				<td><b>{{exp.expenses_type}}<span id="{{exp.id}}"></span></b></td>
 				<td><b>Amount ($K)</b></td>
 				<td><b>Dept. #</b></td>
 					{% if exp.expenses_type == 'FTE' %}
