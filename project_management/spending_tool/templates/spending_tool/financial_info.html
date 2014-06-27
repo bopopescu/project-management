@@ -165,12 +165,27 @@
 			</tr>
 				{% endfor %}
 		</table>
-   		<input  style="position:fixed;  right:50px; bottom:10px"type="submit" value="Submit Changes" class="btn btn-primary btn-lg"/>
+   		<input id="submit" style="position:fixed;  right:50px; bottom:10px"type="submit" value="Submit Changes" class="btn btn-default btn-lg"/>
 
 		</div>
 	</form>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
 
+    // jQuery 
+    $("input[type='number']").keyup(function(){
+
+        if ($('#submit').val() !== ''){
+            $('#submit').attr('class', 'btn btn-danger')
+
+        } else {
+            $('#submit').attr('class', 'btn btn-warning')
+        }
+
+    });
+
+</script>
     
 {% endblock %}
